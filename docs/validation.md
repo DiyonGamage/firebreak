@@ -8,11 +8,14 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Check | Gate | Result |
 |---|---|---|
 | Extraction audit | >= 95% field accuracy | **100%** (60/60 fields; 30/30 raw rows preserved) |
-| Rule and application tests | 55/55 | **55/55 pytest tests pass** |
+| Rule and application tests | 63/63 | **63/63 pytest tests pass** |
 | End-to-end smoke test | PASS | **7/7 API assessments, UI form, assistant, Cactus route** |
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
 | ML-2 coverage detector | held-out cases | **5/5** expected labels |
 | ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.811**; O2-only AUC 0.605; 80% conformal coverage 0.896 |
+| Investigations | 11 named, 6 extracted | **11 catalogued; 5 catalogued-only show zero rows** |
+| Evidence court | 4 rule-driven voices | **4/4 voices on every assessment; 0 model-written facts** |
+| Mission readiness | no invented coverage | **ISS 2/8 anchored · airlock 0/8 · lunar 0/8 · suit not graded** |
 | Case studies | 6 cases documented | **6/6** documented with source-linked evidence |
 | Reproducible build | one command per artifact | Yes; deterministic seeds |
 | Offline runtime | works without network | Yes, after build |

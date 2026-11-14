@@ -9,6 +9,7 @@ from firebreak.ml.evidence import match_evidence
 from firebreak.ml.severity import predict_severity
 from firebreak.rules.engine import assess, atmosphere_presets, gap_map, load_config, open_connection
 from firebreak.services.dossier import build_dossier
+from firebreak.services.investigations import build_investigations
 
 ATMOSPHERE_ALIASES = {
     "iss": "iss_internal",
@@ -184,6 +185,56 @@ def build_dossier(
     return result
 
 
+def investigation_lookup(environment: str = "iss_internal", pillar: str = "") -> dict[str, Any]:
+    """Rank NASA combustion investigations by relevance to a crew environment."""
+    key = resolve_atmosphere(environment)
+    connection = open_connection()
+    try:
+        payload = build_investigations(connection, key, load_config())
+    finally:
+        connection.close()
+    rows = payload["investigations"]
+    if pillar:
+        rows = [row for row in rows if row["pillar"].lower() == pillar.lower()]
+    return {
+        "environment": key,
+        "environment_label": atmosphere_presets()[key]["label"],
+        "totals": payload["totals"],
+        "investigations": [
+            {
+                "name": row["name"],
+                "pillar": row["pillar"],
+                "extracted": row["extracted"],
+                "records": row["records"],
+                "relevance_note": row["relevance_note"],
+                "source_url": row["source_url"],
+            }
+            for row in rows[:6]
+        ],
+    }
+
+
+def pillar_coverage() -> dict[str, Any]:
+    """Summarize prevention, detection and suppression coverage in the corpus."""
+    connection = open_connection()
+    try:
+        payload = build_investigations(connection, "iss_internal", load_config())
+    finally:
+        connection.close()
+    return {
+        "pillars": payload["pillars"],
+        "readiness": [
+            {
+                "label": row["label"],
+                "condition": row["condition"],
+                "supported": row["supported"],
+                "classes": row["classes"],
+            }
+            for row in payload["readiness"]
+        ],
+    }
+
+
 def tool_map() -> dict[str, Any]:
     return {
         "assess_material": assess_material,
@@ -192,6 +243,8 @@ def tool_map() -> dict[str, Any]:
         "severity_estimate": severity_estimate,
         "find_gaps": find_gaps,
         "build_dossier": build_dossier,
+        "investigation_lookup": investigation_lookup,
+        "pillar_coverage": pillar_coverage,
     }
 
 

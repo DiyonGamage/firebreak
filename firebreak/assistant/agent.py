@@ -9,6 +9,8 @@ from firebreak.assistant.tools import (
     assess_material,
     coverage_check,
     find_gaps,
+    investigation_lookup,
+    pillar_coverage,
     resolve_atmosphere,
     retrieve_evidence,
     severity_estimate,
@@ -69,6 +71,30 @@ def _fallback(query: str) -> dict[str, Any]:
     lowered = query.lower()
     material = _extract_material(query)
     atmosphere = resolve_atmosphere(query)
+    if "pillar" in lowered or "detection" in lowered or "suppression" in lowered:
+        result = pillar_coverage()
+        answer = "Pillar coverage: " + "; ".join(
+            f"{row['pillar']} {row['extracted']}/{row['investigations']} investigations "
+            f"({row['status']})"
+            for row in result["pillars"]
+        ) + "."
+        return {"engine": "fallback", "answer": answer, "tool": "pillar_coverage", "result": result}
+    if (
+        "investigation" in lowered
+        or "saffire" in lowered
+        or "bass" in lowered
+        or "spice" in lowered
+    ):
+        result = investigation_lookup(atmosphere)
+        answer = f"Top investigations for {result['environment_label']}: " + "; ".join(
+            (
+                f"{row['name']} ({row['pillar']}, {row['records']} rows)"
+                if row["extracted"]
+                else f"{row['name']} (catalogued only)"
+            )
+            for row in result["investigations"][:4]
+        ) + "."
+        return {"engine": "fallback", "answer": answer, "tool": "investigation_lookup", "result": result}
     if "gap" in lowered:
         result = find_gaps(atmosphere)
         answer = (
@@ -181,6 +207,28 @@ def _answer_from_trace(trace: list[dict[str, Any]]) -> str:
             )
         elif name == "build_dossier" and "grade" in result:
             lines.append(_assess_answer(result))
+        elif name == "investigation_lookup" and "investigations" in result:
+            lines.append(
+                f"Investigations for {result['environment_label']}: "
+                + "; ".join(
+                    (
+                        f"{row['name']} ({row['pillar']}, {row['records']} rows)"
+                        if row["extracted"]
+                        else f"{row['name']} (catalogued only)"
+                    )
+                    for row in result["investigations"][:4]
+                )
+                + "."
+            )
+        elif name == "pillar_coverage" and "pillars" in result:
+            lines.append(
+                "Pillar coverage: "
+                + "; ".join(
+                    f"{row['pillar']} {row['extracted']}/{row['investigations']}"
+                    for row in result["pillars"]
+                )
+                + "."
+            )
         elif "error" in result:
             lines.append(f"Tool error: {result['error']}")
     return " ".join(lines) if lines else "The evidence router did not return a usable result."

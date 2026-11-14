@@ -157,6 +157,30 @@
       </article>
     </section>
 
+    <section class="panel court-panel" id="court">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">EVIDENCE COURT</div>
+          <h2>How this grade was reasoned</h2>
+        </div>
+        <span class="model-badge">4 voices · rule-driven</span>
+      </div>
+      <p class="court-lede">
+        Four roles examine the same matched rows. None of them is a language model,
+        so none of them can invent a fact.
+      </p>
+      <div class="court-grid">
+        {% for voice in court.voices %}
+        <article class="court-voice">
+          <div class="court-role">{{ voice.role }}</div>
+          <p class="court-question">{{ voice.question }}</p>
+          <p class="court-statement">{{ voice.statement }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <p class="court-note">{{ court.note }}</p>
+    </section>
+
     <section class="panel model-panel" id="model">
       <div class="panel-head">
         <div>

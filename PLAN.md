@@ -3,7 +3,7 @@
 **Team:** LFR
 **Event:** NASA Space Apps Challenge 2026 — Kandy, Sri Lanka (virtual)
 **Deadline:** 15 Nov 2026, 23:59 SLST (UTC+5:30)
-**Challenge:** Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data
+**Challenge:** Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data
 **Repo:** public, open license, no restricted data
 
 ## Current status (2026-11-14)

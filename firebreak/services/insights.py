@@ -388,6 +388,23 @@ def build_dashboard(
     lunar_ab = sum(1 for row in lunar_rows if row["grade"] in {"A", "B"})
     findings = _findings(counts, lunar_ab, len(lunar_rows))
 
+    readiness = [
+        {
+            "key": key,
+            "label": label,
+            "supported": sum(
+                1 for row in maps[key].values() if row["grade"] in {"A", "B"}
+            ),
+            "total": len(maps[key]),
+            "supported_names": [
+                row["material_class"]
+                for row in maps[key].values()
+                if row["grade"] in {"A", "B"}
+            ],
+        }
+        for key, label in MATRIX_ATMOSPHERES
+    ]
+
     ml_metrics = stats.get("ml_metrics") or {}
     auc = ml_metrics.get("auc", 0.811)
     o2_auc = ml_metrics.get("o2_only_auc", 0.605)
@@ -405,6 +422,7 @@ def build_dashboard(
         "kpis": kpis,
         "counts": counts,
         "findings": findings,
+        "readiness": readiness,
         "cards": cards,
         "matrix": matrix,
         "matrix_atmospheres": [

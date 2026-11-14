@@ -17,7 +17,9 @@ from firebreak.services.dossier import (
     get_stats,
     search_documents,
 )
+from firebreak.services.court import build_court
 from firebreak.services.insights import build_dashboard
+from firebreak.services.investigations import build_investigations
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "web"
@@ -72,9 +74,11 @@ def _render(
             query["flow"] or None,
             config=config,
         )
+        label = config["atmospheres"][query["atmosphere"]]["label"]
         context = {
             "request": request,
             "result": result,
+            "court": build_court(result, label),
             "form": query,
             "presets": [
                 {"key": key, **value} for key, value in atmosphere_presets(config).items()
@@ -168,6 +172,44 @@ def api_assess(
             query["flow"] or None,
             config=config,
         )
+        payload["court"] = build_court(
+            payload, config["atmospheres"][query["atmosphere"]]["label"]
+        )
+    finally:
+        connection.close()
+    return JSONResponse(content=jsonable_encoder(payload))
+
+
+@app.get("/investigations", response_class=HTMLResponse)
+def investigations_page(request: Request, environment: str = "iss_internal"):
+    config = load_config()
+    connection = open_connection()
+    try:
+        payload = build_investigations(connection, environment, config)
+        material_options = inventory(connection)
+    finally:
+        connection.close()
+    return templates.TemplateResponse(
+        request=request,
+        name="investigations.html",
+        context={
+            "request": request,
+            "inv": payload,
+            "form": {"material": "PMMA", "atmosphere": environment},
+            "presets": [
+                {"key": key, **value} for key, value in atmosphere_presets(config).items()
+            ],
+            "inventory": material_options,
+        },
+    )
+
+
+@app.get("/api/investigations")
+def api_investigations(environment: str = "iss_internal"):
+    config = load_config()
+    connection = open_connection()
+    try:
+        payload = build_investigations(connection, environment, config)
     finally:
         connection.close()
     return JSONResponse(content=jsonable_encoder(payload))

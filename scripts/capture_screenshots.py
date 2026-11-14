@@ -45,6 +45,21 @@ def capture(browser, base_url: str) -> None:
     for name, selector in (
         ("02-assessment.png", ".result-grid"),
         ("03-gap-map.png", "#gaps"),
+        ("08-court.png", "#court"),
+    ):
+        page.locator(selector).screenshot(path=str(OUT / name))
+        print(f"wrote docs/screenshots/{name}")
+
+    page.goto(base_url + "/investigations?environment=lunar_surface", wait_until="networkidle")
+    reveal(page)
+    page.screenshot(path=str(OUT / "07-investigations.png"), full_page=True)
+    print("wrote docs/screenshots/07-investigations.png")
+    hide_topbar(page)
+    for name, selector in (
+        ("09-pillars.png", "#pillars"),
+        ("10-ranked.png", "#ranked"),
+        ("11-readiness.png", "#readiness"),
+        ("12-contradictions.png", "#contradictions"),
     ):
         page.locator(selector).screenshot(path=str(OUT / name))
         print(f"wrote docs/screenshots/{name}")

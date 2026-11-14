@@ -7,6 +7,7 @@
   <div class="mission">NASA Space Apps 2026 <span>/</span> Flame in Freefall</div>
   <nav class="topnav" aria-label="Primary">
     <a href="/" {% if request.url.path == '/' %}aria-current="page"{% endif %}>Dashboard</a>
+    <a href="/investigations" {% if request.url.path == '/investigations' %}aria-current="page"{% endif %}>Investigations</a>
     <a href="/assess" {% if request.url.path == '/assess' %}aria-current="page"{% endif %}>Dossier</a>
     <a href="/library" {% if request.url.path == '/library' %}aria-current="page"{% endif %}>Library</a>
   </nav>

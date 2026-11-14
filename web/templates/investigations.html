@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebreak — Investigations</title>
+  <meta name="description" content="NASA combustion investigations ranked by crew-environment relevance, with pillar coverage and evidence gaps.">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css?v=12">
+</head>
+<body>
+  {% include "partials/topbar.html" %}
+
+  <main class="shell">
+    <section class="dash-hero">
+      <div class="dash-hero-copy">
+        <p class="eyebrow">INVESTIGATION INTELLIGENCE</p>
+        <h1>Eleven investigations. Three pillars. One honest answer.</h1>
+        <p class="lede">
+          NASA named the combustion investigations that matter for crew environments.
+          Firebreak ranks them by relevance, shows which ones are actually extracted,
+          and marks the pillars where the evidence stops.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">{{ inv.totals.investigations }} investigations</span>
+          <span class="badge">{{ inv.totals.extracted }} with extracted rows</span>
+          <span class="badge">{{ inv.totals.records }} curated records</span>
+          <span class="badge">Prevention · Detection · Suppression</span>
+        </div>
+        <div class="hero-note">
+          Relevance is an analyst weighting for crew-environment fit, not a NASA score.
+          A catalogued investigation with no rows is shown as catalogued, never graded.
+          The {{ inv.totals.outside_catalog }} rows outside this list are a 1-g NASA technical
+          bulletin (TB 26-05), which is a document, not an investigation.
+        </div>
+      </div>
+
+      <div class="dash-search">
+        <div class="card-kicker">Rank for a crew environment</div>
+        <div class="env-tabs">
+          {% for env in inv.environments %}
+          <a class="env-tab {% if env.key == inv.environment %}is-active{% endif %}"
+             href="/investigations?environment={{ env.key }}">
+            <strong>{{ env.label }}</strong>
+            <span>{{ env.condition }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        <p class="form-note">
+          Switching the environment re-ranks every investigation.
+          The grades themselves live in the <a href="/">evidence dashboard</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="dash-section" id="pillars">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">THREE PILLARS</p>
+          <h2>Fire safety is prevention, detection, and suppression.</h2>
+        </div>
+        <span class="micro">coverage computed from the local corpus</span>
+      </div>
+      <div class="pillar-grid">
+        {% for pillar in inv.pillars %}
+        <article class="pillar-card {% if pillar.status == 'covered' %}is-covered{% endif %}">
+          <div class="pillar-top">
+            <span class="pillar-name">{{ pillar.pillar }}</span>
+            <span class="pillar-status">{{ pillar.status }}</span>
+          </div>
+          <div class="pillar-count">{{ pillar.extracted }} / {{ pillar.investigations }}</div>
+          <p class="pillar-detail">
+            investigations with extracted rows · {{ pillar.records }} records
+          </p>
+          <p class="pillar-names">{{ pillar.names|join(' · ') }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dash-section" id="ranked">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">RANKED FOR {{ inv.environment|replace('_', ' ')|upper }}</p>
+          <h2>Which investigation should you read first?</h2>
+        </div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix inv-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Investigation</th>
+              <th>Pillar</th>
+              <th>Platform</th>
+              <th>Records</th>
+              <th>O₂ range</th>
+              <th>Why it ranks here</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in inv.investigations %}
+            <tr>
+              <td class="inv-rank">{{ loop.index }}</td>
+              <td class="matrix-material">
+                <a href="{{ row.source_url }}" target="_blank" rel="noopener">{{ row.name }} ↗</a>
+                <span>{{ row.full_name }}</span>
+              </td>
+              <td><span class="pillar-tag">{{ row.pillar }}</span></td>
+              <td>{{ row.platform }}</td>
+              <td>
+                {% if row.extracted %}
+                  {{ row.records }}
+                  <span class="inv-sub">{{ row.outcomes }} outcome{{ '' if row.outcomes == 1 else 's' }}</span>
+                {% else %}
+                  <span class="inv-sub">not extracted</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if row.o2 %}
+                  {{ row.o2[0] }}–{{ row.o2[1] }}%
+                {% else %}—{% endif %}
+              </td>
+              <td class="inv-note">{{ row.relevance_note }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="dash-section" id="readiness">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">MISSION READINESS</p>
+          <h2>What the evidence anchors, per crew environment.</h2>
+        </div>
+        <span class="micro">A = anchored · B = provisional · C/D = gap</span>
+      </div>
+      <div class="readiness-grid">
+        {% for env in inv.readiness %}
+        <article class="readiness-card {% if env.anchored %}has-support{% endif %}">
+          <div class="readiness-head">
+            <h3>{{ env.label }}</h3>
+            <span class="readiness-condition">{{ env.condition }}</span>
+          </div>
+          {% if env.classes %}
+          <div class="readiness-score">{{ env.anchored }} / {{ env.classes }}</div>
+          <p class="readiness-note">
+            anchored by a documented microgravity outcome ·
+            {{ env.provisional }} provisional · {{ env.gap }} gaps
+          </p>
+          {% if env.gaps %}
+          <ul class="readiness-list">
+            {% for item in env.gaps %}
+            <li>
+              <span class="readiness-class">{{ item.material_class }}</span>
+              <span class="grade-pill grade-{{ item.grade|lower }}">{{ item.grade }}</span>
+              <span class="readiness-missing">{{ item.missing }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% else %}
+          <div class="readiness-score">—</div>
+          <p class="readiness-note">{{ env.note }}</p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      <p class="matrix-note">
+        An A grade measures the strength of the evidence, not the safety of the material —
+        PMMA and SIBAL are anchored precisely because microgravity tests document spread.
+        Nothing here is certification or flight approval.
+      </p>
+    </section>
+
+    <section class="dash-section" id="contradictions">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">CONTRADICTIONS</p>
+          <h2>Where ground tests and microgravity disagree.</h2>
+        </div>
+      </div>
+      <div class="contra-grid">
+        {% for item in inv.contradictions %}
+        <article class="contra-card">
+          <div class="contra-head">
+            <span class="finding-tag">{{ item.material }}</span>
+            {% if item.margin_pp %}
+            <span class="contra-margin">{{ item.margin_pp }} pp</span>
+            {% endif %}
+          </div>
+          <h3>{{ item.title }}</h3>
+          <div class="contra-rows">
+            <div class="contra-row">
+              <span class="contra-key">1-g</span>
+              <span>{{ item.one_g.condition }}</span>
+              <strong>{{ item.one_g.outcome }}</strong>
+            </div>
+            <div class="contra-row">
+              <span class="contra-key">µg</span>
+              <span>{{ item.microgravity.condition }}</span>
+              <strong>{{ item.microgravity.outcome }}</strong>
+            </div>
+          </div>
+          <p class="contra-reading">{{ item.reading }}</p>
+          <a class="source-link" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.source_label }} ↗</a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <p class="boundary">{{ inv.boundary }}</p>
+  </main>
+
+  {% include "partials/footer.html" %}
+</body>
+</html>

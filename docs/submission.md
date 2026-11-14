@@ -1,7 +1,7 @@
 # Firebreak — Submission Package
 
 NASA Space Apps Challenge 2026 · Kandy, Sri Lanka (virtual)
-Challenge: **Flame in Freefall — AI-Powered Fire Safety Insights from Microgravity Combustion Data**
+Challenge: **Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data**
 Deadline: **15 Nov 2026, 23:59 SLST**
 Team: **LFR**
 
@@ -18,15 +18,27 @@ Replace `{{VIDEO_URL}}` before publishing.
 
 ### One-line pitch
 
-Know what the evidence actually supports: source-linked A–D flammability evidence
-grades, explicit gaps, and the next test to run — offline.
+Know what the evidence actually supports: every NASA combustion investigation ranked
+for your crew environment, source-linked A–D material grades, three-pillar coverage,
+and the exact test that would change the answer — offline.
 
 ### Short description
 
 Firebreak turns NASA microgravity combustion data, standards, and literature into
-source-linked evidence grades. Given a material and cabin atmosphere, it shows the
-closest tests, why the grade was assigned, what is missing, and what evidence would
+source-linked evidence grades. It ranks all eleven investigations the challenge names
+against ISS, airlock, lunar and spacesuit environments, marks which fire-safety pillars
+have extracted evidence, and then drills into a material: the closest tests, a
+four-role evidence court explaining the grade, what is missing, and what evidence would
 change the answer. It is screening support, not certification.
+
+## Challenge alignment
+
+| Challenge requirement | Firebreak response |
+|---|---|
+| Build an SI-powered, web-based dashboard that summarizes, ranks and interprets combustion investigations | `/investigations` ranks 11 investigations per crew environment; `/` ranks material findings by decision impact; every interpretation is rule-generated |
+| Identify investigations most relevant to habitable crew environments | Relevance ranking for ISS cabin, Airlock/Gateway, lunar surface, and spacesuit, with the reasoning shown per investigation |
+| Extract data that supports predictive modeling of flammability | 637 curated rows, 8 ML inputs, one validated monotonic severity model with 80% conformal sets and abstention |
+| Highlight research informing next-generation fire safety controls | Findings are tagged to prevention, detection and suppression, including the two pillars where the corpus has no extracted rows |
 
 ### 20-second AI answer — place above the fold
 

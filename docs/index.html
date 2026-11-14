@@ -585,9 +585,37 @@
       </figcaption>
     </figure>
 
+    <section id="investigations" class="prose">
+      <span class="secnum">§3</span>
+      <h2>Investigations, pillars, and what the corpus refuses to answer</h2>
+      <p>NASA's brief is stated at the level of investigations, not materials. Firebreak therefore ranks every investigation the challenge names against a chosen crew environment, and separates what the corpus can speak to from what it cannot.</p>
+      <p>Eleven investigations are catalogued. Six carry extracted rows; five are named, linked, and explicitly marked as catalogued only. The three fire-safety pillars are reported separately: prevention has extracted evidence, detection and suppression are catalogued without extracted rows. No row is invented to fill a pillar.</p>
+      <p>At the lunar-surface preset, no material class reaches grade A. At the ISS cabin preset, two classes are anchored and two are provisional. The spacesuit environment — 4.3 psia, 100% oxygen — is not graded at all, because no ingested row reports that condition.</p>
+    </section>
+
+    <figure class="bleed">
+      <div class="figframe">
+        <img src="screenshots/07-investigations.png" alt="Investigations page: eleven NASA investigations ranked for the lunar-surface environment, three-pillar coverage, mission readiness per crew environment, and the PMMA 1-g versus microgravity contradiction.">
+      </div>
+      <figcaption>
+        <span class="figlabel">Figure 5</span>
+        <b>The investigations view.</b> Every investigation the challenge names, ranked for the chosen crew environment. Relevance is an analyst weighting for crew-environment fit, not a NASA score, and catalogued investigations show zero records rather than invented ones.
+      </figcaption>
+    </figure>
+
+    <figure class="bleed">
+      <div class="figframe">
+        <img src="screenshots/08-court.png" alt="Evidence court: Curator, Critic, Safety Officer and Experimentalist examine the same matched rows and explain the grade.">
+      </div>
+      <figcaption>
+        <span class="figlabel">Figure 6</span>
+        <b>The evidence court.</b> Four rule-driven roles explain the grade from the same matched rows. No language model writes the verdict or the citations, so the explanation cannot drift from the evidence.
+      </figcaption>
+    </figure>
+
     <section id="results">
       <div class="prose">
-        <span class="secnum">§3</span>
+        <span class="secnum">§4</span>
         <h2>Results</h2>
         <p>Table 3 applies the engine to seven representative material–environment pairs. The pattern is consistent: microgravity evidence supports actionable grades for materials that have flown, and it is absent for the environments that matter most for lunar-surface operations.</p>
       </div>
@@ -658,7 +686,7 @@
     </section>
 
     <section id="limits" class="prose">
-      <span class="secnum">§4</span>
+      <span class="secnum">§5</span>
       <h2>Limitations</h2>
       <p>The system is deliberately conservative, and several of its limits are structural rather than temporary.</p>
       <ol class="limits">
@@ -686,7 +714,7 @@
     </section>
 
     <section id="code" class="prose">
-      <span class="secnum">§5</span>
+      <span class="secnum">§6</span>
       <h2>Reproducibility</h2>
       <p>The full system runs offline. It requires Python 3.11 and no external services; the corpus, models, and web application are all local. The evaluation suite covers retrieval, coverage, severity, rules, and the explanation audit.</p>
       <pre><code>python -m venv .venv
@@ -698,7 +726,7 @@ pytest -q                        # 55 passed</code></pre>
     </section>
 
     <section id="data" class="prose">
-      <span class="secnum">§6</span>
+      <span class="secnum">§7</span>
       <h2>Data, code, and citation</h2>
       <p>The corpus is assembled from public NASA sources: the Physical Sciences Informatics system, NASA Technical Reports Server documents including the BASS-II summary report and TB 26-05, and NASA standards JSC 29353D and NASA-STD-6001B. Each record retains its source identifier and page reference, and the repository includes the ingestion scripts that rebuild the SQLite corpus from the raw documents. Full citations are in <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/sources.md">docs/sources.md</a>.</p>
       <p>The photographic plates are real NASA imagery, not generated illustrations. NASA IDs, centers, and usage terms are listed in <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/credits.md">image credits</a>; NASA does not endorse this project.</p>
@@ -726,7 +754,7 @@ pytest -q                        # 55 passed</code></pre>
     <div class="footgrid">
       <div>
         <p><b style="color:var(--ink-2)">Firebreak</b> · Team LFR · NASA Space Apps Challenge 2026</p>
-        <p>Last updated 14 November 2026 · Built from the local SQLite corpus · 55 tests passing</p>
+        <p>Last updated 15 November 2026 · Built from the local SQLite corpus · 63 tests passing</p>
       </div>
       <div class="footlinks" aria-label="Project links">
         <a href="https://github.com/DiyonGamage/firebreak">Repository</a>

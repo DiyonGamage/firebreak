@@ -5,7 +5,7 @@
 Source-linked, decision-grade screening for spacecraft material flammability.
 
 **NASA Space Apps Challenge 2026** · Team LFR, Kandy, Sri Lanka
-Challenge: *Flame in Freefall — AI-Powered Fire Safety Insights from Microgravity Combustion Data*
+Challenge: *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data*
 
 <p align="center">
   <a href="https://diyongamage.github.io/firebreak/"><b>Technical report</b></a> ·
@@ -35,6 +35,12 @@ change it.
 ## What it does
 
 - Grades evidence **A/B/C/D** with a verdict and confidence — strength of evidence, not safety.
+- Ranks all **11 NASA-named combustion investigations** for a chosen crew environment and marks
+  which of the three fire-safety pillars (prevention, detection, suppression) have extracted rows.
+- Shows a **four-role evidence court** behind every grade — Curator, Critic, Safety Officer,
+  Experimentalist — generated from rules, never from a language model.
+- Surfaces **contradictions** between 1-g and microgravity evidence (PMMA: 2.4 percentage points).
+- Reports mission readiness per environment, including the spacesuit case it refuses to grade.
 - Shows source-linked microgravity and 1-g evidence, including negative margins.
 - Flags out-of-envelope conditions and missing pressure or flow data.
 - Ranks material classes by evidence gaps for a selected atmosphere.
@@ -71,6 +77,19 @@ extrapolating. It cannot write the grade.
 |---|---|
 | **ML-3 panel.** Monotonic GBM, conformal set, explicit support region. Advisory only. | **Library.** Full-text search across nine public NASA documents (501 pages). |
 
+## Investigations
+
+<a href="docs/screenshots/07-investigations.png"><img src="docs/screenshots/07-investigations.png" alt="Investigations page: eleven NASA investigations grouped by fire-safety pillar, ranked for the lunar-surface environment, with mission readiness and the PMMA 1-g versus microgravity contradiction." width="100%"></a>
+
+NASA's challenge asks for investigations, not just materials. Firebreak ranks every named
+investigation for a chosen crew environment, shows which ones actually have extracted rows, and
+marks the two pillars — detection and suppression — where the corpus stops. Catalogued
+investigations show zero records rather than invented ones.
+
+| <a href="docs/screenshots/08-court.png"><img src="docs/screenshots/08-court.png" alt="Evidence court: four rule-driven roles examine the same matched rows and explain the grade."></a> | <a href="docs/screenshots/11-readiness.png"><img src="docs/screenshots/11-readiness.png" alt="Mission readiness: ISS cabin anchors 2 of 8 classes, airlock and lunar surface anchor none, and the spacesuit is not graded at all."></a> |
+|---|---|
+| **Evidence court.** Four roles, zero model-written facts. | **Readiness.** What the evidence anchors, and what it cannot. |
+
 ## Real NASA imagery
 
 No image in this project is AI-generated. Both plates are NASA photographs, credited in
@@ -90,7 +109,10 @@ No image in this project is AI-generated. Both plates are NASA photographs, cred
 | ML-3 severity | AUC 0.811 vs 0.605 O₂-only; Brier 0.148; ECE 0.035 |
 | 80% conformal sets | 89.6% coverage, 1.45 mean set size |
 | Monotonicity | 0 O₂ violations (unconstrained variant: 28, rejected) |
-| Test suite | 55 passed |
+| Test suite | 63 passed |
+| Investigations | 11 catalogued, 6 with extracted rows, 0 invented rows |
+| Evidence court | 4 rule-driven voices per assessment, 0 model-written facts |
+| Mission readiness | ISS 2/8 anchored · airlock 0/8 · lunar 0/8 · suit not graded |
 | End-to-end | 7 API assessments, Gap Map, document search, 5 assistant routes, one live Cactus route |
 
 ## Quick start
@@ -117,8 +139,10 @@ python scripts\build_docs.py
 |---|---|
 | `GET /` | Evidence dashboard: corpus KPIs, ranked findings, material × atmosphere matrix |
 | `GET /assess` | Query-string dossier: grade card, ledger, Gap Map, assistant |
+| `GET /investigations` | Eleven investigations ranked by crew-environment relevance, pillars, readiness, contradictions |
 | `GET /library` | Full-text search over the indexed NASA source documents |
-| `GET /api/assess?material=PMMA&atmosphere=iss_internal` | JSON assessment |
+| `GET /api/assess?material=PMMA&atmosphere=iss_internal` | JSON assessment, including the evidence court |
+| `GET /api/investigations?environment=lunar_surface` | Investigation catalog, pillar coverage, readiness, contradictions |
 | `GET /api/gap-map?atmosphere=iss_internal` | Ranked evidence gaps |
 | `GET /api/stats` | Dataset and document counts |
 | `GET /api/documents?q=...` | Source-document search |

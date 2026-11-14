@@ -2559,3 +2559,194 @@ footer strong {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* ---------- Investigations, pillars, readiness, contradictions ---------- */
+.verdict-band {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 32px;
+  align-items: center;
+  margin: 40px 0 8px;
+  padding: 32px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+.verdict-mark {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 76px);
+  line-height: .9;
+  letter-spacing: -.03em;
+  color: var(--accent);
+}
+.verdict-copy h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 400;
+  margin: 6px 0 8px;
+}
+.verdict-copy p { color: var(--muted); margin: 0; font-size: 15px; max-width: 62ch; }
+.verdict-link {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.verdict-link:hover { color: var(--accent); border-color: var(--accent); }
+
+.env-tabs { display: grid; gap: 8px; }
+.env-tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+}
+.env-tab span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.env-tab:hover { border-color: var(--ink); }
+.env-tab.is-active { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.env-tab.is-active span { color: var(--paper-3); }
+
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.pillar-card {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 20px;
+}
+.pillar-card.is-covered { border-color: var(--ink); }
+.pillar-top { display: flex; justify-content: space-between; align-items: baseline; }
+.pillar-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.pillar-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pillar-card.is-covered .pillar-status { color: var(--a); }
+.pillar-count {
+  font-family: var(--serif);
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 14px 0 4px;
+}
+.pillar-detail { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+.pillar-names { font-family: var(--mono); font-size: 11px; color: var(--faint); margin: 0; }
+
+.inv-table th { white-space: nowrap; }
+.inv-rank { font-family: var(--mono); color: var(--accent); }
+.inv-sub { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.inv-note { font-size: 12.5px; color: var(--muted); min-width: 220px; }
+.pillar-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+.readiness-card { border: 1px solid var(--rule); padding: 20px; background: var(--paper); }
+.readiness-card.has-support { border-color: var(--a); }
+.readiness-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.readiness-head h3 { font-family: var(--serif); font-size: 19px; font-weight: 400; margin: 0; }
+.readiness-condition { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.readiness-score {
+  font-family: var(--serif);
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 12px 0 2px;
+}
+.readiness-note { font-size: 12.5px; color: var(--muted); margin: 0 0 12px; }
+.readiness-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.readiness-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+}
+.readiness-class { font-family: var(--mono); font-size: 11.5px; }
+.readiness-missing { grid-column: 1 / -1; font-size: 12px; color: var(--muted); }
+
+.contra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+.contra-card { border: 1px solid var(--rule); padding: 20px; background: var(--paper); }
+.contra-head { display: flex; justify-content: space-between; align-items: center; }
+.contra-margin { font-family: var(--serif); font-size: 26px; color: var(--accent); }
+.contra-card h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin: 10px 0 14px; }
+.contra-rows { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+.contra-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 2px 10px;
+  padding: 10px 12px;
+  background: var(--paper-2);
+  font-size: 13px;
+}
+.contra-row strong { grid-column: 2; font-weight: 600; }
+.contra-key { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.contra-reading { font-size: 13px; color: var(--muted); margin: 14px 0 10px; }
+
+.court-panel { margin-top: 28px; }
+.court-lede { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 70ch; }
+.court-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+.court-voice { padding: 18px; border-right: 1px solid var(--rule); background: var(--paper); }
+.court-voice:last-child { border-right: 0; }
+.court-role {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.court-question {
+  font-family: var(--serif);
+  font-size: 16px;
+  margin: 6px 0 10px;
+  color: var(--ink);
+}
+.court-statement { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+.court-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  margin: 12px 0 0;
+}
+
+@media (max-width: 860px) {
+  .verdict-band { grid-template-columns: 1fr; gap: 16px; }
+  .readiness-grid { grid-template-columns: 1fr; }
+  .pillar-grid { grid-template-columns: 1fr; }
+  .court-voice { border-right: 0; border-bottom: 1px solid var(--rule); }
+}

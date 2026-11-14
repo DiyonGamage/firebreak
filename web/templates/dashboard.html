@@ -74,6 +74,20 @@
       </form>
     </section>
 
+    {% set lunar = dashboard.readiness[2] %}
+    <section class="verdict-band" aria-label="Headline finding">
+      <div class="verdict-mark">{{ lunar.supported }} / {{ lunar.total }}</div>
+      <div class="verdict-copy">
+        <p class="eyebrow">THE HEADLINE</p>
+        <h2>No material class is supported for lunar-surface use on the current NASA data.</h2>
+        <p>
+          Not one class reaches grade A or B at {{ 37 }}% O₂ / 8.2 psia.
+          That is missing evidence, not lower hazard — and Firebreak says so instead of guessing.
+        </p>
+      </div>
+      <a class="verdict-link" href="/investigations">See the gap by investigation →</a>
+    </section>
+
     <section class="kpi-strip" aria-label="Corpus summary">
       {% for kpi in dashboard.kpis %}
       <article class="kpi">
