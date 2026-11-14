@@ -72,7 +72,7 @@ def test_severity_gate(conn):
 
 
 def test_severity_prediction(conn):
-    result = predict_severity(conn, "PMMA", 22.2, thickness_mm=0.1, width_mm=20.0)
+    result = predict_severity(conn, "PMMA", 22.2, thickness_mm=0.1)
     assert result["enabled"] is True
     assert 0.0 <= result["probability_delta_co2_gt_0.5"] <= 1.0
     assert result["band"] in {"low", "high"}
@@ -81,3 +81,54 @@ def test_severity_prediction(conn):
 def test_severity_unseen_material(conn):
     result = predict_severity(conn, "Kevlar/PBI", 37.0)
     assert result["enabled"] is False
+
+
+def test_severity_support_is_bounded(conn):
+    metrics = train_and_evaluate(conn)["metrics"]
+    assert metrics["min_class_support"] == 10
+    assert metrics["supported_classes"] == ["PMMA", "SIBAL"]
+    assert "Nomex" in metrics["excluded_classes"]
+    assert metrics["o2_support"] == [13.6, 22.2]
+
+
+def test_severity_abstains_below_class_support(conn):
+    result = predict_severity(conn, "Nomex", 22.2)
+    assert result["enabled"] is False
+    assert result["status"] == "low_support"
+
+
+def test_severity_abstains_outside_o2_support(conn):
+    result = predict_severity(conn, "PMMA", 24.1)
+    assert result["enabled"] is False
+    assert result["status"] == "outside_support"
+    assert result["nearest_supported_o2"] == 22.2
+
+
+def test_severity_conformal_is_explicit(conn):
+    resolved = predict_severity(conn, "PMMA", 22.2)
+    assert resolved["status"] == "resolved"
+    assert resolved["conformal"]["labels"] == [resolved["band"]]
+    unresolved = predict_severity(conn, "PMMA", 16.0, thickness_mm=2.0)
+    assert unresolved["status"] == "indeterminate"
+    assert unresolved["conformal"]["labels"] == ["low", "high"]
+
+
+def test_severity_is_monotonic_in_o2(conn):
+    probabilities = [
+        predict_severity(conn, "PMMA", o2, thickness_mm=2.0)[
+            "probability_delta_co2_gt_0.5"
+        ]
+        for o2 in (14.0, 16.0, 18.0, 20.0, 22.2)
+    ]
+    assert probabilities == sorted(probabilities)
+    metrics = train_and_evaluate(conn)["metrics"]
+    assert metrics["monotonic"]["violations"] == 0
+    assert metrics["unconstrained"]["monotonicity_violations"] > 0
+
+
+def test_severity_conformal_evaluation(conn):
+    conformal = train_and_evaluate(conn)["metrics"]["conformal"]
+    assert conformal["target_coverage"] == 0.8
+    assert conformal["coverage"] >= 0.8
+    assert conformal["evaluated_rows"] > 0
+    assert 0.0 <= conformal["abstention_rate"] < 1.0

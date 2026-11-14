@@ -389,15 +389,15 @@ def build_dashboard(
     findings = _findings(counts, lunar_ab, len(lunar_rows))
 
     ml_metrics = stats.get("ml_metrics") or {}
-    auc = ml_metrics.get("auc", 0.834)
-    o2_auc = ml_metrics.get("o2_only_auc", 0.607)
+    auc = ml_metrics.get("auc", 0.811)
+    o2_auc = ml_metrics.get("o2_only_auc", 0.605)
     pipeline = [
         dict(stage, detail=stage["detail"].replace("delta-CO2", "ΔCO₂"))
         for stage in PIPELINE
     ]
     pipeline[2]["detail"] = (
-        f"ML-3 flags BASS-II ΔCO₂ > 0.5 severity for seen classes "
-        f"(grouped CV AUC {auc}; O₂-only {o2_auc}). It does not predict ignition."
+        f"ML-3 screens BASS-II ΔCO₂ > 0.5 for PMMA and SIBAL only, abstains outside support, "
+        f"and never predicts ignition (grouped CV AUC {auc}; O₂-only {o2_auc})."
     )
 
     return {
@@ -423,7 +423,7 @@ def build_dashboard(
             for label, material, atmosphere in CASE_LINKS
         ],
         "si_note": (
-            "The optional Cactus 3 router runs locally and calls the same tools. "
+            "The optional Cactus Needle router runs locally and calls the same tools. "
             "No API key, no external network. The final grade is always the rule "
             "engine's, never a model's."
         ),

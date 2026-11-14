@@ -52,8 +52,8 @@ def check_api(base: str) -> list[str]:
         if stats.get(key) != expected:
             failures.append(f"stats.{key}={stats.get(key)!r}, expected {expected!r}")
     auc = (stats.get("ml_metrics") or {}).get("auc")
-    if auc != 0.834:
-        failures.append(f"stats.ml_metrics.auc={auc!r}, expected 0.834")
+    if auc != 0.811:
+        failures.append(f"stats.ml_metrics.auc={auc!r}, expected 0.811")
 
     for material, atmosphere, grade, verdict in CASES:
         query = urllib.parse.urlencode({"material": material, "atmosphere": atmosphere})

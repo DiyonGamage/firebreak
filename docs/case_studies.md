@@ -9,7 +9,7 @@ The canonical negative-margin case: 1-g blow-off at 16% O2 versus steady microgr
 - Query: PMMA at 24.1% O2, 14.5 psia
 - Result: **Grade A** — high_risk; confidence 0.95; coverage in_distribution.
 - Outside tested envelope: no.
-- BASS-II CO2-rise screen: high (67%).
+- BASS-II CO2-rise screen: abstains — 24.1% O₂ is outside the BASS-II training range (13.6–22.2%).
 
 Why:
 - Retrieved 12 solid-material tests; 1 microgravity and 0 1-g rows carry a documented outcome.
@@ -33,7 +33,7 @@ Beyond the tested O2 envelope; the grade must downgrade even for a well-studied 
 - Query: PMMA at 37.0% O2, 8.2 psia
 - Result: **Grade C** — test_needed; confidence 0.85; coverage out_of_distribution.
 - Outside tested envelope: yes.
-- BASS-II CO2-rise screen: high (67%).
+- BASS-II CO2-rise screen: abstains — 37.0% O₂ is outside the BASS-II training range (13.6–22.2%).
 
 Why:
 - Retrieved 12 solid-material tests; 2 microgravity and 0 1-g rows carry a documented outcome.
@@ -59,6 +59,7 @@ Microgravity no-spread for silicone versus 1.2 mm/s in 1-g; SIBAL spreads at 2.1
 - Query: Silicone at 22.1% O2, 14.5 psia, concurrent flow
 - Result: **Grade B** — test_needed; confidence 0.64; coverage in_distribution.
 - Outside tested envelope: no.
+- BASS-II CO2-rise screen: abstains — Unseen material class 'Silicone' for the BASS-II severity model.
 
 Why:
 - Retrieved 4 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.
@@ -81,7 +82,7 @@ A documented microgravity spread outcome at 22.1% O2; the PSI table omits pressu
 - Query: SIBAL at 22.1% O2, 14.5 psia, concurrent flow
 - Result: **Grade A** — high_risk; confidence 0.95; coverage in_distribution.
 - Outside tested envelope: no.
-- BASS-II CO2-rise screen: low (7%).
+- BASS-II CO2-rise screen: low (9%).
 
 Why:
 - Retrieved 12 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.
@@ -105,7 +106,7 @@ Three BASS-II Nomex conditions; no documented spread outcome and no brand/weight
 - Query: Nomex at 24.1% O2, 14.5 psia
 - Result: **Grade B** — test_needed; confidence 0.51; coverage in_distribution.
 - Outside tested envelope: no.
-- BASS-II CO2-rise screen: low (25%).
+- BASS-II CO2-rise screen: abstains — Nomex has 2 BASS-II training rows; the minimum is 10.
 
 Why:
 - Retrieved 3 solid-material tests; 0 microgravity and 0 1-g rows carry a documented outcome.
@@ -129,6 +130,7 @@ TB 26-05 is now ingested as two explicitly labeled 1-g rows at 8.2 psia; no micr
 - Query: Kevlar/PBI at 37.0% O2, 8.2 psia
 - Result: **Grade C** — test_needed; confidence 0.47; coverage in_distribution.
 - Outside tested envelope: no.
+- BASS-II CO2-rise screen: abstains — Unseen material class 'Kevlar/PBI' for the BASS-II severity model.
 
 Why:
 - Retrieved 2 solid-material tests; 0 microgravity and 2 1-g rows carry a documented outcome.

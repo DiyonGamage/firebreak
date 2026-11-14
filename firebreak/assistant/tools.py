@@ -84,15 +84,15 @@ def assess_material(
             "score": coverage["coverage_score"],
             "gaps": coverage["gaps"],
         },
-        "severity": (
-            {
-                "enabled": severity["enabled"],
-                "band": severity.get("band"),
-                "probability": severity.get("probability_delta_co2_gt_0.5"),
-            }
-            if severity.get("enabled")
-            else {"enabled": False, "reason": severity.get("reason")}
-        ),
+        "severity": {
+            "enabled": severity["enabled"],
+            "status": severity.get("status"),
+            "band": severity.get("band"),
+            "probability": severity.get("probability_delta_co2_gt_0.5"),
+            "conformal_set": (severity.get("conformal") or {}).get("labels"),
+            "reason": severity.get("reason"),
+            "nearest_supported_o2": severity.get("nearest_supported_o2"),
+        },
         "top_evidence": [
             {
                 "experiment_id": item["experiment_id"],
@@ -136,14 +136,14 @@ def coverage_check(material: str, atmosphere: str = "iss_internal") -> dict[str,
     }
 
 
-def severity_estimate(material: str) -> dict[str, Any]:
-    """Estimate the BASS-II CO2-rise severity band for a material at the 22.2% O2 reference condition."""
+def severity_estimate(material: str, o2_pct: float = 22.2) -> dict[str, Any]:
+    """Estimate the BASS-II CO2-rise severity band for a material at an O2 level (default 22.2%)."""
     connection = open_connection()
     try:
         result = predict_severity(
             connection,
             material,
-            22.2,
+            float(o2_pct),
         )
     finally:
         connection.close()

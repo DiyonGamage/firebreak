@@ -9,7 +9,7 @@
 ## Current status (2026-11-14)
 
 Core is built and validated: PSI/NTRS/standards ingestion, 637-row SQLite corpus,
-A/B/C/D rule engine, 48 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
+A/B/C/D rule engine, 55 passing tests, ML gates passed, FastAPI UI, optional Cactus Needle
 assistant, extraction audit at 100%, and six generated case studies. Page-cited external
 rows from the BASS-II summary and TB 26-05 add pressure-resolved evidence, so PMMA and
 SIBAL now reach Grade A while materials without pressure-bearing evidence stay capped.
@@ -87,7 +87,7 @@ Standards -> text/rules
         -> Severity Classifier (ML-3, gated)
         -> Rule Engine + Evidence Grades
         -> Verdict + citations + sensitivity + Gap Map
-        -> Dossier + UI + Cactus 3 assistant
+        -> Dossier + UI + Cactus Needle assistant
 ```
 
 Runtime is offline. Build step downloads and hashes sources. No external API at demo time.
@@ -128,7 +128,7 @@ Versioned YAML + Python evaluator. Every rule has a citation, unit test, and fai
 9. Outside tested envelope downgrades the grade.
 10. Cross-material transfer only with explicit similarity; otherwise D.
 
-Gate: 48/48 tests pass (rules, insights, ML, assistant). A is awarded only when a documented
+Gate: 55/55 tests pass (rules, insights, ML, assistant). A is awarded only when a documented
 microgravity outcome has reported pressure; PSI solid rows lack pressure and cap at B,
 while page-cited BASS-II rows at 1 atm enable A for PMMA and SIBAL. TB 26-05 is 1-g, so
 Kevlar/PBI caps at C.
@@ -139,12 +139,12 @@ Kevlar/PBI caps at C.
 |---|---|---|---|---|
 | ML-1 Evidence Matcher | Retrieve analogous tests | 129 BASS-II + 9 Saffire-II + metadata | Recall@3 on case queries | >= 0.8 (actual 1.0) |
 | ML-2 Coverage Detector | Inside/near/outside tested envelope | All solid-material conditions | Held-out material cases | 5/5 expected labels |
-| ML-3 Severity Classifier | High/low dCO2 (BASS-II) | 121 usable rows | GroupKFold by material; baseline | AUC 0.834 vs O2-only 0.607 |
+| ML-3 Severity Classifier | High/low dCO2 (BASS-II) | 121 usable rows | GroupKFold by material; baseline | AUC 0.811 vs O2-only 0.605; 80% conformal coverage 0.896 |
 
 ML-3 is exploratory, never certification. dO2 is not used as a target (calibration artifacts).
 SPICE smoke-point model is optional and cut unless core is done by 18:00.
 
-Cactus 3 is the orchestrator, not the predictor. Strict enum schemas; visible call trace;
+Cactus Needle is the orchestrator, not the predictor. Strict enum schemas; visible call trace;
 deterministic fallback router. Tools: assess_material, retrieve_evidence, coverage_check,
 severity_estimate, find_gaps, build_dossier. Manual smoke tests route correctly; a
 formal 25-query routing benchmark is optional and not yet run. No fine-tuning.
@@ -158,7 +158,7 @@ Demo must work with Wi-Fi disabled.
 ## Validation
 
 1. Extraction audit: 30 stratified rows; 60/60 fields, 30/30 rows; 100%.
-2. Rule/application tests: 48/48 pass.
+2. Rule/application tests: 55/55 pass.
 3. Case studies:
    - PMMA: negative 2.4% O2 margin; pressure-bearing BASS-II NTRS row at 20.7% O2.
    - Saffire-II: silicone/SIBAL micro-g vs 1-g behavior.

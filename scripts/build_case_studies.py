@@ -129,6 +129,10 @@ def main() -> None:
                 f"- BASS-II CO2-rise screen: {record['severity']['band']} "
                 f"({round(record['severity']['probability_delta_co2_gt_0.5'] * 100)}%)."
             )
+        else:
+            lines.append(
+                f"- BASS-II CO2-rise screen: abstains — {record['severity'].get('reason', 'outside model scope')}"
+            )
         lines.append("")
         lines.append("Why:")
         for reason in record["reasons"]:

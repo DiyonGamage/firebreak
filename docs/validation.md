@@ -8,11 +8,11 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Check | Gate | Result |
 |---|---|---|
 | Extraction audit | >= 95% field accuracy | **100%** (60/60 fields; 30/30 raw rows preserved) |
-| Rule and application tests | 48/48 | **48/48 pytest tests pass** |
+| Rule and application tests | 55/55 | **55/55 pytest tests pass** |
 | End-to-end smoke test | PASS | **7/7 API assessments, UI form, assistant, Cactus route** |
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
 | ML-2 coverage detector | held-out cases | **5/5** expected labels |
-| ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.834**; O2-only AUC 0.607 |
+| ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.811**; O2-only AUC 0.605; 80% conformal coverage 0.896 |
 | Case studies | 6 cases documented | **6/6** documented with source-linked evidence |
 | Reproducible build | one command per artifact | Yes; deterministic seeds |
 | Offline runtime | works without network | Yes, after build |
@@ -61,7 +61,7 @@ note rows.
 
 ## Rule and application tests
 
-`python -m pytest -q` -> **48 passed**.
+`python -m pytest -q` -> **55 passed**.
 
 Coverage includes:
 
@@ -156,24 +156,36 @@ target because the BASS-II export contains calibration artifacts (including nega
 and implausibly large values).
 
 - 121 usable rows, 35 positive, 86 negative.
-- Random forest with numeric imputation/scaling and one-hot material class.
-- **GroupKFold(5), grouped by material description: AUC 0.834**, accuracy 0.744,
-  balanced accuracy 0.693, F1 0.563.
-- O2-only baseline AUC 0.607; majority-class accuracy 0.711.
-- Gate: AUC >= 0.75 and beats baseline; **passed**.
+- Histogram gradient boosting (depth 2, 200 iterations) with median thickness
+  imputation and one-hot material class, constrained monotonic in O2.
+- **GroupKFold(5), grouped by material description: AUC 0.811**, accuracy 0.826,
+  balanced accuracy 0.751, F1 0.656, Brier 0.148, ECE 0.035.
+- O2-only baseline AUC 0.605; majority-class accuracy 0.711 (86/121).
+- The unconstrained variant scored AUC 0.815 but produced **28 monotonicity
+  violations** (higher O2 lowering predicted risk); it was rejected in favour of
+  the constrained model. The constrained model has 0 violations.
+- Support floor: 10 rows per class. PMMA (90 rows, 35 positive) and SIBAL (25 rows,
+  0 positive) are supported; Nomex (2) and Other (4) are excluded and cause an
+  abstention. O2 support is 13.6-22.2%; queries outside it abstain rather than
+  extrapolate, including the 24.1% ISS cabin preset.
+- Uncertainty: 80% CV+ conformal prediction sets over five material-grouped folds,
+  evaluated with nested GroupKFold(5 outer x 3 inner) on supported classes:
+  **coverage 0.896**, mean set size 1.45, abstention 45.2% (PMMA 48.9%,
+  SIBAL 32.0%). An abstention means the set contains both bands and the record is
+  routed to testing, not that the material is safe.
+- Gate: AUC >= 0.75, beats baseline, and 0 monotonicity violations; **passed**.
 - Headline claim: a modest, scoped CO2-rise screen, not a flammability predictor.
-- Scope: BASS-II classes only (PMMA, SIBAL, Nomex, Other). It is **not validated for
-  unseen material classes**; a class-held-out check is not statistically meaningful
-  with four classes. The model is disabled for unseen classes.
+- Scope: BASS-II classes only. The model is **not validated for unseen material
+  classes** and is disabled for them.
 
 Artifacts: `artifacts/ml_severity_metrics.json`, `artifacts/ml_eval.json`.
 
-## Cactus 3 assistant
+## Cactus Needle assistant
 
 Six tools: `assess_material`, `retrieve_evidence`, `coverage_check`,
 `severity_estimate`, `find_gaps`, `build_dossier`.
 
-- Cactus is the optional local router; answers are generated only from tool JSON.
+- Cactus Needle is the optional local router; answers are generated only from tool JSON.
 - Deterministic fallback router is the default for speed and reliability.
 - No Cactus fine-tuning was performed. Schema/description tightening was sufficient.
 - Manual smoke tests: assess, lunar assessment, gap query, airlock coverage, severity,

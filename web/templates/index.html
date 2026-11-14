@@ -6,7 +6,7 @@
   <title>Firebreak — Microgravity flammability evidence</title>
   <meta name="description" content="Source-linked, evidence-graded spacecraft material flammability screening from NASA microgravity data.">
   <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/style.css?v=10">
+  <link rel="stylesheet" href="/static/style.css?v=11">
 </head>
 <body>
   {% include "partials/topbar.html" %}
@@ -119,7 +119,9 @@
           {% if result.outside_envelope %}<span class="flag warn">Outside tested envelope</span>{% endif %}
           {% if result.sensitivity_flips %}<span class="flag">Sensitive to ±2</span>{% endif %}
           {% if result.severity.enabled %}
-          <span class="flag">ΔCO₂ screen: {{ result.severity.band }} ({{ (result.severity['probability_delta_co2_gt_0.5'] * 100)|round(0)|int }}%)</span>
+          <span class="flag">ΔCO₂ screen: {{ result.severity.band }}</span>
+          {% elif result.severity.reason %}
+          <span class="flag">ΔCO₂ screen: abstains</span>
           {% endif %}
         </div>
       </article>
@@ -153,6 +155,68 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <section class="panel model-panel" id="model">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">LEARNED SCREEN · BASS-II</div>
+          <h2>CO₂-rise severity model</h2>
+        </div>
+        {% if result.severity.enabled and result.severity.status == 'resolved' %}
+        <span class="model-badge model-badge-ok">RESOLVED</span>
+        {% elif result.severity.enabled %}
+        <span class="model-badge model-badge-warn">UNRESOLVED</span>
+        {% else %}
+        <span class="model-badge">ABSTAINS</span>
+        {% endif %}
+      </div>
+
+      {% if result.severity.enabled %}
+      <div class="model-grid">
+        <div class="model-readout">
+          <div class="model-number">{{ (result.severity['probability_delta_co2_gt_0.5'] * 100)|round(0)|int }}<span>%</span></div>
+          <div class="model-label">P(ΔCO₂ &gt; 0.5%)</div>
+          <div class="model-set">
+            {% if result.severity.conformal.labels|length == 1 %}
+            80% prediction set: <strong>{{ result.severity.conformal.labels[0] }}</strong>
+            {% else %}
+            80% prediction set: <strong>{{ result.severity.conformal.labels|join(' or ') }}</strong>
+            {% endif %}
+          </div>
+        </div>
+        <div class="model-body">
+          {% if result.severity.status == 'resolved' %}
+          <p>The model separates the two bands at 80% confidence for this material class and condition. The output is a CO₂-rise screen, not a flammability or ignition prediction.</p>
+          {% else %}
+          <p>The 80% conformal set contains both bands. The model is telling you the CO₂-rise question is unresolved at this condition; the grade's test requirement still governs.</p>
+          {% endif %}
+          <dl class="model-facts">
+            <div><dt>{{ result.severity.material_class }} training rows</dt><dd>{{ result.severity.support.class_rows }} <span>· {{ result.severity.support.class_positives }} positive</span></dd></div>
+            <div><dt>Model support</dt><dd>{{ result.severity.support.o2_min }}–{{ result.severity.support.o2_max }}% O₂</dd></div>
+            <div><dt>Grouped CV AUC</dt><dd>{{ result.severity.metrics.auc }} <span>vs {{ result.severity.metrics.o2_only_auc }} O₂-only</span></dd></div>
+            <div><dt>Brier / ECE</dt><dd>{{ result.severity.metrics.brier }} / {{ result.severity.metrics.ece }}</dd></div>
+            <div><dt>80% conformal coverage</dt><dd>{{ (result.severity.conformal.coverage * 100)|round(1) }}% <span>nested, supported classes</span></dd></div>
+            <div><dt>Monotonic O₂ violations</dt><dd>{{ result.severity.metrics.monotonic.violations }}</dd></div>
+          </dl>
+          {% if result.severity.thickness_imputed %}
+          <p class="model-note">Thickness was not supplied; the model used the BASS-II median of {{ result.severity.metrics.thickness_median_mm }} mm.</p>
+          {% endif %}
+          {% if result.severity.metrics.unconstrained %}
+          <p class="model-note">The unconstrained variant scored AUC {{ result.severity.metrics.unconstrained.auc }} but produced {{ result.severity.metrics.unconstrained.monotonicity_violations }} monotonicity violations; it was rejected.</p>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="model-abstain">
+        <p><strong>The model abstains.</strong> {{ result.severity.reason }}</p>
+        <p class="model-note">Support floor: {{ result.severity.support.min_rows }} BASS-II rows per class. Supported: {{ result.severity.metrics.supported_classes|join(', ') }}. Excluded: {{ result.severity.metrics.excluded_classes|join(', ') }}. The model also abstains outside {{ result.severity.support.o2_min }}–{{ result.severity.support.o2_max }}% O₂.</p>
+        {% if result.severity.nearest_supported_o2 %}
+        <a class="ghost" href="/assess?material={{ form.material|urlencode }}&atmosphere={{ form.atmosphere }}&o2={{ result.severity.nearest_supported_o2 }}&pressure={{ form.pressure }}&flow={{ form.flow }}">Evaluate at nearest supported O₂ ({{ result.severity.nearest_supported_o2 }}%)</a>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="model-foot">Learned output is advisory. The evidence grade above is assigned by deterministic rules R1–R10 and is never generated by this model.</div>
     </section>
 
     <section class="panel ledger">
@@ -265,7 +329,7 @@
           <div class="panel-kicker">OFFLINE EVIDENCE ROUTER</div>
           <h2>Ask Firebreak</h2>
         </div>
-        <span class="micro">Cactus 3 · local · no API key</span>
+        <span class="micro">Cactus Needle · local · no API key</span>
       </div>
       <form class="search assistant-form" id="assistant-form">
         <input id="assistant-query" type="text" placeholder="Assess SIBAL at ISS internal, find gaps, check PMMA coverage…" autocomplete="off">

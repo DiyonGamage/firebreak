@@ -18,8 +18,9 @@ needed next. Every result links to a PSI test row, NTRS page, or NASA standard c
 - Shows source-linked microgravity and 1-g evidence, including negative margins.
 - Flags out-of-envelope conditions and missing pressure or flow data.
 - Ranks material classes by evidence gaps for a selected atmosphere.
-- Screens BASS-II CO2-rise severity with a scoped, validated ML model.
-- Provides an optional local Cactus 3 assistant with visible tool traces.
+- Screens BASS-II CO2-rise severity with one monotonic model, 80% conformal sets, and
+  explicit abstention outside training support.
+- Provides an optional local Cactus Needle assistant with visible tool traces.
 - Exports a printable dossier; runs offline after the build.
 
 ## Quick start
@@ -50,11 +51,12 @@ python -m pytest -q
 python scripts\smoke_e2e.py --cactus
 ```
 
-Current results: extraction audit 100% (60/60 fields, 30/30 rows), 48 tests passing,
-ML-1 recall@3 1.0 with 0.0 false-match rate, ML-2 5/5 coverage cases, ML-3 AUC 0.834
-versus 0.607 for the O2-only baseline. The end-to-end smoke test passes against the
-running app: 7 API assessments, Gap Map, document search, 5 assistant routes, browser
-form + assistant, and one live Cactus route. See `docs/validation.md`.
+Current results: extraction audit 100% (60/60 fields, 30/30 rows), ML-1 recall@3 1.0
+with 0.0 false-match rate, ML-2 5/5 coverage cases, ML-3 AUC 0.811 versus 0.605 for
+the O2-only baseline, with 80% conformal sets covering 89.6% of supported-class cases
+and abstention outside PMMA/SIBAL or 13.6-22.2% O2. The end-to-end smoke test passes
+against the running app: 7 API assessments, Gap Map, document search, 5 assistant
+routes, browser form + assistant, and one live Cactus route. See `docs/validation.md`.
 
 ## API
 
@@ -81,8 +83,10 @@ slow on CPU (~12-36 s in testing), so the UI exposes it as an optional checkbox.
   condition. Only the page-cited BASS-II NTRS rows currently satisfy that, so PMMA
   and SIBAL at ISS-internal conditions reach A. PSI solid rows without reported
   pressure cap at B rather than inventing a pressure.
-- ML-3 predicts only BASS-II `delta_CO2 > 0.5` severity for material classes seen in
-  training. It does not predict ignition or flame spread.
+- ML-3 predicts only BASS-II `delta_CO2 > 0.5` severity for PMMA and SIBAL, the two
+  classes with at least ten training rows, and only within 13.6-22.2% O2. It abstains
+  outside that support instead of extrapolating and does not predict ignition or flame
+  spread.
 - SPICE gas-jet data is retained for the library but is not used to grade solids.
 - MAPTIS is excluded because it requires authenticated access.
 

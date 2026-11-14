@@ -47,6 +47,24 @@ def _extract_material(query: str) -> str | None:
     return None
 
 
+def _severity_sentence(severity: dict[str, Any], label: str) -> str:
+    if severity.get("enabled"):
+        probability = severity.get("probability_delta_co2_gt_0.5")
+        if probability is None:
+            probability = severity.get("probability")
+        if severity.get("status") == "resolved" and probability is not None:
+            return (
+                f"{label}: {severity['band']} band "
+                f"({round(probability * 100)}% probability)."
+            )
+        labels = (severity.get("conformal") or {}).get("labels") or ["low", "high"]
+        return (
+            f"{label}: unresolved at 80% confidence "
+            f"(prediction set: {' or '.join(labels)})."
+        )
+    return f"{label} abstains — {severity.get('reason', 'outside model scope')}"
+
+
 def _fallback(query: str) -> dict[str, Any]:
     lowered = query.lower()
     material = _extract_material(query)
@@ -78,14 +96,10 @@ def _fallback(query: str) -> dict[str, Any]:
         return {"engine": "fallback", "answer": answer, "tool": "coverage_check", "result": result}
     if "severity" in lowered or "co2" in lowered or "co₂" in lowered:
         result = severity_estimate(material)
-        if result.get("enabled"):
-            answer = (
-                f"{material}: BASS-II CO₂-rise screen is {result['band']} "
-                f"({round(result['probability_delta_co2_gt_0.5'] * 100)}% probability). "
-                "This is not a flammability prediction."
-            )
-        else:
-            answer = f"{material}: severity screen unavailable — {result.get('reason', 'outside model scope')}."
+        answer = (
+            _severity_sentence(result, f"{material} BASS-II CO₂-rise screen")
+            + " This is not a flammability or ignition prediction."
+        )
         return {"engine": "fallback", "answer": answer, "tool": "severity_estimate", "result": result}
     if "evidence" in lowered or "find" in lowered or "source" in lowered:
         result = retrieve_evidence(material)
@@ -115,10 +129,9 @@ def _assess_answer(result: dict[str, Any]) -> str:
     ]
     if result.get("coverage"):
         parts.append(f"Coverage: {result['coverage']['label']}.")
-    if result.get("severity", {}).get("enabled"):
-        parts.append(
-            f"BASS-II CO₂-rise screen: {result['severity']['band']} band."
-        )
+    severity = result.get("severity") or {}
+    if severity.get("enabled") or severity.get("reason"):
+        parts.append(_severity_sentence(severity, "BASS-II CO₂-rise screen"))
     if result.get("reasons"):
         parts.append(result["reasons"][0])
     if result.get("gaps"):
@@ -143,13 +156,11 @@ def _answer_from_trace(trace: list[dict[str, Any]]) -> str:
                 f"{result['label']} (score {result['coverage_score']})."
             )
         elif name == "severity_estimate" and "enabled" in result:
-            if result["enabled"]:
-                lines.append(
-                    f"BASS-II CO₂-rise screen for {result['material_class']}: "
-                    f"{result['band']} band."
+            lines.append(
+                _severity_sentence(
+                    result, f"BASS-II CO₂-rise screen for {result['material_class']}"
                 )
-            else:
-                lines.append(f"Severity screen unavailable: {result.get('reason', 'outside model scope')}.")
+            )
         elif name == "retrieve_evidence" and "matches" in result:
             matches = result["matches"][:3]
             lines.append(

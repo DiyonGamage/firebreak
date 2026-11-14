@@ -42,6 +42,13 @@ def test_severity_tool_defaults():
     assert "enabled" in result
 
 
+def test_severity_tool_abstains_outside_support():
+    result = severity_estimate("PMMA", o2_pct=24.1)
+    assert result["enabled"] is False
+    assert result["status"] == "outside_support"
+    assert result["nearest_supported_o2"] == 22.2
+
+
 def test_tool_schemas():
     names = {schema["name"] for schema in tool_schemas()}
     assert {"assess_material", "retrieve_evidence", "coverage_check", "severity_estimate", "find_gaps"} <= names

@@ -4,17 +4,136 @@
   "negatives": 86,
   "positive_rate": 0.289,
   "target_threshold_delta_co2_pct": 0.5,
-  "auc": 0.834,
-  "o2_only_auc": 0.607,
-  "accuracy": 0.744,
-  "balanced_accuracy": 0.693,
-  "f1": 0.563,
+  "features": [
+    "o2_initial_pct",
+    "thickness_mm",
+    "material_class"
+  ],
+  "o2_median_pct": 18.0,
+  "thickness_median_mm": 6.35,
+  "auc": 0.811,
+  "o2_only_auc": 0.605,
+  "unconstrained": {
+    "auc": 0.815,
+    "monotonicity_violations": 28
+  },
+  "brier": 0.148,
+  "ece": 0.035,
+  "reliability": [
+    {
+      "range": [
+        0.0,
+        0.2
+      ],
+      "n": 50,
+      "mean_predicted": 0.079,
+      "observed": 0.08
+    },
+    {
+      "range": [
+        0.2,
+        0.4
+      ],
+      "n": 35,
+      "mean_predicted": 0.258,
+      "observed": 0.286
+    },
+    {
+      "range": [
+        0.4,
+        0.6
+      ],
+      "n": 14,
+      "mean_predicted": 0.455,
+      "observed": 0.286
+    },
+    {
+      "range": [
+        0.6,
+        0.8
+      ],
+      "n": 11,
+      "mean_predicted": 0.721,
+      "observed": 0.727
+    },
+    {
+      "range": [
+        0.8,
+        1.0
+      ],
+      "n": 11,
+      "mean_predicted": 0.888,
+      "observed": 0.818
+    }
+  ],
+  "accuracy": 0.826,
+  "balanced_accuracy": 0.751,
+  "f1": 0.656,
   "majority_baseline_accuracy": 0.711,
   "split": "GroupKFold(5) grouped by material description",
+  "monotonic": {
+    "feature": "o2_initial_pct",
+    "direction": "non-decreasing",
+    "violations": 0,
+    "reason": "Higher oxygen cannot reduce CO2 rise; the constraint is a physical prior."
+  },
+  "support": {
+    "Nomex": 2,
+    "Other": 4,
+    "PMMA": 90,
+    "SIBAL": 25
+  },
+  "positives_by_class": {
+    "Nomex": 0,
+    "Other": 0,
+    "PMMA": 35,
+    "SIBAL": 0
+  },
+  "min_class_support": 10,
+  "supported_classes": [
+    "PMMA",
+    "SIBAL"
+  ],
+  "excluded_classes": [
+    "Nomex",
+    "Other"
+  ],
+  "o2_support": [
+    13.6,
+    22.2
+  ],
+  "conformal": {
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "method": "CV+ over five material-grouped folds",
+    "evaluation": "nested GroupKFold(5 outer x 3 inner), supported classes only",
+    "coverage": 0.896,
+    "average_set_size": 1.45,
+    "abstention_rate": 0.452,
+    "evaluated_rows": 115,
+    "by_class": {
+      "PMMA": {
+        "n": 90,
+        "covered": 78,
+        "abstained": 44,
+        "coverage": 0.867,
+        "abstention_rate": 0.489
+      },
+      "SIBAL": {
+        "n": 25,
+        "covered": 25,
+        "abstained": 8,
+        "coverage": 1.0,
+        "abstention_rate": 0.32
+      }
+    }
+  },
   "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+  "model": "monotonic histogram gradient boosting",
   "gate": {
     "auc_min": 0.75,
     "auc_beats_o2_only": true,
+    "monotonic_violations_max": 0,
     "passed": true
   }
 }
