@@ -12,8 +12,9 @@ Core is built and validated: PSI/NTRS/standards ingestion, 629-row SQLite corpus
 A/B/C/D rule engine, 38 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
 assistant, extraction audit at 100%, and six generated case studies. Submission
 package is drafted in `docs/submission.md` (project page, 90 s video script, checklist,
-offline demo). Remaining blockers: no git repository or LICENSE yet, team name and
-virtual judging details unconfirmed, and the video/project page still need publishing.
+offline demo). The repo is public and MIT licensed, and the team name is confirmed as
+LFR. Remaining work: record and upload the video, publish the project page, and confirm
+the Kandy virtual judging details.
 
 ## Mission
 
