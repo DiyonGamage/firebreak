@@ -6,6 +6,7 @@ Team: LFR
 Event: NASA Space Apps Challenge 2026, Kandy (virtual)
 Challenge: Flame in Freefall — AI-Powered Fire Safety Insights from Microgravity Combustion Data
 Repo: https://github.com/DiyonGamage/firebreak · License: MIT
+Project site: https://diyongamage.github.io/firebreak/
 
 Firebreak answers four questions for a material and cabin atmosphere: what evidence
 exists, what evidence grade it supports, what uncertainty remains, and what test is
