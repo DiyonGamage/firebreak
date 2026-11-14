@@ -30,6 +30,38 @@ DATASETS = {
     "PSI-107": "SPICE",
 }
 
+# Non-flammability investigations: smoke aerosol (detection), droplet extinction
+# (suppression) and test logs. They are stored apart from `experiments` so they can
+# never enter a material grade.
+AUX = {
+    "PSI-101": ("SAME-R", "smoke aerosol"),
+    "PSI-102": ("SAME", "smoke aerosol"),
+    "PSI-106": ("SLICE", "test log"),
+    "PSI-69": ("FLEX", "droplet extinction"),
+    "PSI-68": ("FLEX-2", "test matrix"),
+    "PSI-26": ("BASS", "test log"),
+}
+
+AUX_ID = {
+    "SAME-R": ("SAME Test #",),
+    "SAME": ("Sample #",),
+    "SLICE": ("Test Date",),
+    "FLEX": ("FLEX Test #", "FLEX Identifier"),
+    "FLEX-2": ("Sample (Fuel Type)",),
+    "BASS": ("As Run Test #", "Test #"),
+}
+
+AUX_MATERIAL = {
+    "SAME-R": ("Sample Type", "Description"),
+    "SAME": ("Sample Material", "Sample Material "),
+    "SLICE": ("Fuel Type",),
+    "FLEX": ("Fuel",),
+    "FLEX-2": ("Sample (Fuel Type)",),
+    "BASS": ("Fuel Sample Material",),
+}
+
+DATASETS.update({acc: name for acc, (name, _kind) in AUX.items()})
+
 PLATFORM = {
     "BASS-II": "ISS",
     "Saffire-I": "Cygnus",
@@ -37,6 +69,12 @@ PLATFORM = {
     "Saffire-III": "Cygnus",
     "ACME-BRE": "ISS",
     "SPICE": "ISS",
+    "SAME": "ISS",
+    "SAME-R": "ISS",
+    "SLICE": "ISS",
+    "FLEX": "ISS",
+    "FLEX-2": "ISS",
+    "BASS": "ISS",
 }
 
 SCHEMA = """
@@ -81,6 +119,16 @@ CREATE TABLE IF NOT EXISTS experiments (
     notes TEXT,
     raw_json TEXT NOT NULL,
     provenance_hash TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS investigation_records (
+    dataset TEXT NOT NULL,
+    record_id TEXT NOT NULL,
+    material TEXT NOT NULL,
+    record_kind TEXT NOT NULL,
+    source_url TEXT NOT NULL,
+    raw_json TEXT NOT NULL,
+    provenance_hash TEXT NOT NULL,
+    PRIMARY KEY (dataset, record_id)
 );
 CREATE INDEX IF NOT EXISTS idx_experiments_dataset ON experiments(dataset);
 CREATE INDEX IF NOT EXISTS idx_experiments_material_class ON experiments(material_class);
@@ -310,7 +358,10 @@ def download_tables(acc: str, meta: dict[str, Any], refresh: bool = False) -> li
             path.write_bytes(payload)
             time.sleep(0.2)
         digest = hashlib.sha256(payload).hexdigest()
-        text = payload.decode("utf-8-sig")
+        try:
+            text = payload.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            text = payload.decode("cp1252")
         rows = list(csv.reader(io.StringIO(text)))
         if not rows:
             continue
@@ -550,6 +601,8 @@ def ingest_all(db_path: Path = DB_PATH, refresh: bool = False) -> dict[str, int]
     seen: set[str] = set()
 
     for acc, dataset in DATASETS.items():
+        if dataset not in NORMALIZERS:
+            continue
         meta = load_metadata(acc, refresh=refresh)
         tables = download_tables(acc, meta, refresh=refresh)
         normalizer = NORMALIZERS[dataset]
@@ -622,4 +675,60 @@ def ingest_all(db_path: Path = DB_PATH, refresh: bool = False) -> dict[str, int]
     (db_path.parent / "ingest_summary.json").write_text(
         json.dumps(summary, indent=2), encoding="utf-8"
     )
+    return counts
+
+
+def ingest_auxiliary(db_path: Path = DB_PATH, refresh: bool = False) -> dict[str, int]:
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    connection = sqlite3.connect(db_path)
+    connection.executescript(SCHEMA)
+    connection.execute("DELETE FROM investigation_records")
+    counts: dict[str, int] = {}
+
+    for acc, (dataset, kind) in AUX.items():
+        meta = load_metadata(acc, refresh=refresh)
+        tables = download_tables(acc, meta, refresh=refresh)
+        inserted = 0
+        for table in tables:
+            connection.execute(
+                "INSERT OR REPLACE INTO raw_files VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    dataset,
+                    table["file_name"],
+                    table["sha256"],
+                    table["bytes"],
+                    table["source_url"],
+                    _now(),
+                ),
+            )
+            seen: set[str] = set()
+            for index, raw in enumerate(table["rows"], start=1):
+                material = _clean(_pick(raw, *AUX_MATERIAL[dataset]))
+                record_id = _clean(_pick(raw, *AUX_ID[dataset])) or f"row-{index}"
+                if not material:
+                    continue
+                if record_id in seen:
+                    record_id = f"{record_id}#{index}"
+                seen.add(record_id)
+                connection.execute(
+                    "INSERT OR REPLACE INTO investigation_records VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        dataset,
+                        record_id,
+                        material,
+                        kind,
+                        table["source_url"],
+                        json.dumps(raw, ensure_ascii=False, sort_keys=True),
+                        hashlib.sha256(
+                            (table["sha256"] + json.dumps(raw, sort_keys=True, default=str)).encode(
+                                "utf-8"
+                            )
+                        ).hexdigest()[:16],
+                    ),
+                )
+                inserted += 1
+        counts[dataset] = inserted
+
+    connection.commit()
+    connection.close()
     return counts

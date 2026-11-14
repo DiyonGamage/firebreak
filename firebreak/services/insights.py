@@ -312,14 +312,22 @@ def build_dashboard(
         "documents": stats["documents"],
         "pages": stats["pages"],
         "datasets": len(stats["datasets"]),
+        "characterisation": _count(connection, "SELECT count(*) FROM investigation_records"),
+        "aux_datasets": _count(
+            connection, "SELECT count(DISTINCT dataset) FROM investigation_records"
+        ),
     }
     counts["microgravity_outcomes"] = counts["solid_outcomes"] - counts["one_g_outcomes"]
+    counts["all_records"] = counts["total"] + counts["characterisation"]
 
     kpis = [
         {
-            "value": counts["total"],
+            "value": f"{counts['all_records']:,}",
             "label": "curated records",
-            "note": f"{counts['datasets']} datasets",
+            "note": (
+                f"{counts['total']} experiment · {counts['characterisation']} characterisation · "
+                f"{counts['datasets'] + counts['aux_datasets']} datasets"
+            ),
         },
         {
             "value": counts["solid"],

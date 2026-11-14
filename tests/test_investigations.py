@@ -39,12 +39,20 @@ def test_catalog_covers_every_named_investigation(connection):
     assert len(rows) == 11
 
 
-def test_catalogued_investigations_have_no_invented_rows(connection):
+def test_characterisation_records_never_enter_grading(connection):
+    aux_datasets = ("BASS", "SAME", "SAME-R", "FLEX", "FLEX-2", "SLICE")
+    placeholders = ",".join("?" for _ in aux_datasets)
+    assert (
+        connection.execute(
+            f"SELECT count(*) FROM experiments WHERE dataset IN ({placeholders})", aux_datasets
+        ).fetchone()[0]
+        == 0
+    )
     for row in catalog(connection):
-        if not row["extracted"]:
-            assert row["records"] == 0
+        if row["experiments"] == 0:
             assert row["outcomes"] == 0
             assert row["o2"] is None
+            assert row["kinds"], row["name"]
 
 
 def test_extracted_counts_are_real(connection):
@@ -52,15 +60,23 @@ def test_extracted_counts_are_real(connection):
     by_name = {row["name"]: row for row in payload["investigations"]}
     assert by_name["BASS-II"]["records"] == 135
     assert by_name["SPICE"]["records"] == 469
+    assert by_name["SAME-R"]["records"] == 109
+    assert by_name["FLEX"]["records"] == 282
+    assert by_name["BASS"]["records"] == 122
+    assert payload["totals"]["aux"] == 533
+    assert payload["totals"]["all_records"] == 1170
     assert payload["totals"]["outside_catalog"] == 2
 
 
 def test_three_pillars_are_reported(connection):
     payload = build_investigations(connection, "iss_internal", load_config())
     pillars = {row["pillar"]: row for row in payload["pillars"]}
-    assert pillars["Prevention"]["status"] == "covered"
-    assert pillars["Detection"]["status"] == "catalogued only"
-    assert pillars["Suppression"]["status"] == "catalogued only"
+    assert pillars["Prevention"]["experiments"] > 0
+    assert pillars["Detection"]["experiments"] == 0
+    assert pillars["Detection"]["records"] == 117
+    assert pillars["Suppression"]["experiments"] == 0
+    assert pillars["Suppression"]["records"] == 282
+    assert all(row["extracted"] == row["investigations"] for row in pillars.values())
 
 
 def test_lunar_surface_has_no_anchored_class(connection):

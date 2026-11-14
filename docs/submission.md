@@ -37,7 +37,7 @@ change the answer. It is screening support, not certification.
 |---|---|
 | Build an SI-powered, web-based dashboard that summarizes, ranks and interprets combustion investigations | `/investigations` ranks 11 investigations per crew environment; `/` ranks material findings by decision impact; every interpretation is rule-generated |
 | Identify investigations most relevant to habitable crew environments | Relevance ranking for ISS cabin, Airlock/Gateway, lunar surface, and spacesuit, with the reasoning shown per investigation |
-| Extract data that supports predictive modeling of flammability | 637 curated rows, 8 ML inputs, one validated monotonic severity model with 80% conformal sets and abstention |
+| Extract data that supports predictive modeling of flammability | 1,170 curated records (637 experiment rows + 533 characterisation), one validated monotonic severity model with 80% conformal sets and abstention |
 | Highlight research informing next-generation fire safety controls | Findings are tagged to prevention, detection and suppression, including the two pillars where the corpus has no extracted rows |
 
 ### 20-second AI answer — place above the fold
@@ -67,7 +67,7 @@ Firebreak answers four questions for any material and atmosphere:
 3. What uncertainty remains?
 4. What test should be run next?
 
-The app ingests 637 curated PSI and page-cited NTRS experiment records and 501 pages of
+The app ingests 1,170 curated records (637 experiment rows plus 533 non-graded characterisation records) and 501 pages of
 NASA reports and standards into a local SQLite corpus. Retrieval, coverage, and severity
 models run locally. A deterministic rule engine applies documented evidence rules, caps
 grades when pressure is not reported, and never fabricates a condition or outcome. Every
@@ -187,7 +187,7 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 | 0:20–0:38 | Live screen recording. Type `PMMA`, select **ISS Internal**, click **Assess evidence**. Hold on the Grade A card. | Ask for PMMA at ISS atmosphere. Firebreak returns Grade A and high risk: a documented microgravity spread outcome at 1 atm, anchored to a page-cited test. |
 | 0:38–0:50 | Scroll the evidence ledger; highlight the NTRS/PSI links and the sensitivity panel. | Every row links to the original test or report. The sensitivity panel shows exactly what would change the grade. |
 | 0:50–1:02 | Switch atmosphere to **Lunar/Mars Surface (HLS max)**; show Grade C and the out-of-envelope flag; cut to the Gap Map. | Ask the same material for the lunar surface: oxygen is outside the tested envelope, and the grade drops to C. The Gap Map ranks missing evidence across material classes. |
-| 1:02–1:14 | Terminal: `python -m pytest -q` → `55 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 637 curated records, 501 pages of NASA documents, a 100% extraction audit, 55 passing tests, and a scoped CO2-rise screen at 0.811 AUC against a 0.605 baseline, with 80% conformal sets and explicit abstention outside support. |
+| 1:02–1:14 | Terminal: `python -m pytest -q` → `63 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 1,170 curated records, 501 pages of NASA documents, a 100% extraction audit, 63 passing tests, and a scoped CO2-rise screen at 0.811 AUC against a 0.605 baseline, with 80% conformal sets and explicit abstention outside support. |
 | 1:14–1:24 | Footer boundary text and the **OFFLINE-READY** badge; toggle Wi-Fi off if recording live. | Firebreak does not fabricate. It refuses to fill missing pressure, labels every limitation, and runs offline. |
 | 1:24–1:30 | End card: **FIREBREAK** / *Know what the evidence actually supports.* / repo URL. | Firebreak. Know what the evidence actually supports. |
 
@@ -257,7 +257,7 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 ### Final pre-submit verification
 
 ```powershell
-python -m pytest -q                 # 55 passed
+python -m pytest -q                 # 63 passed
 python scripts\smoke_e2e.py --cactus # PASS: API, UI, assistant, Cactus
 python scripts\audit_extraction.py  # 100%
 python scripts\eval_ml.py           # gates passed
@@ -289,7 +289,7 @@ python -m uvicorn app.main:app --port 8010
 ```
 
 Open `http://127.0.0.1:8010`. Confirm the header shows **EVIDENCE GRADED /
-OFFLINE-READY** and the footer shows 637 records, 148 solid-material tests, 9 documents,
+OFFLINE-READY** and the footer shows 1,170 records, 148 solid-material tests, 9 documents,
 and AUC 0.811. Disable Wi-Fi and reload once; the page must render identically.
 
 ### 3-minute demo path

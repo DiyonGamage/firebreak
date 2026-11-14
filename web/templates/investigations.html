@@ -18,18 +18,20 @@
         <h1>Eleven investigations. Three pillars. One honest answer.</h1>
         <p class="lede">
           NASA named the combustion investigations that matter for crew environments.
-          Firebreak ranks them by relevance, shows which ones are actually extracted,
-          and marks the pillars where the evidence stops.
+          Firebreak ranks them by relevance, extracts every public table it can, and keeps
+          flammability evidence separate from characterisation data.
         </p>
         <div class="hero-badges">
           <span class="badge">{{ inv.totals.investigations }} investigations</span>
-          <span class="badge">{{ inv.totals.extracted }} with extracted rows</span>
-          <span class="badge">{{ inv.totals.records }} curated records</span>
+          <span class="badge">{{ inv.totals.extracted }} with records</span>
+          <span class="badge">{{ '{:,}'.format(inv.totals.records) }} curated records</span>
+          <span class="badge">{{ inv.totals.all_experiments }} experiment rows · {{ inv.totals.aux }} characterisation</span>
           <span class="badge">Prevention · Detection · Suppression</span>
         </div>
         <div class="hero-note">
           Relevance is an analyst weighting for crew-environment fit, not a NASA score.
-          A catalogued investigation with no rows is shown as catalogued, never graded.
+          Characterisation records (smoke aerosol, droplet extinction, test logs) are counted
+          and labelled, but never enter a material grade.
           The {{ inv.totals.outside_catalog }} rows outside this list are a 1-g NASA technical
           bulletin (TB 26-05), which is a document, not an investigation.
         </div>
@@ -63,14 +65,14 @@
       </div>
       <div class="pillar-grid">
         {% for pillar in inv.pillars %}
-        <article class="pillar-card {% if pillar.status == 'covered' %}is-covered{% endif %}">
+        <article class="pillar-card {% if pillar.extracted %}is-covered{% endif %}">
           <div class="pillar-top">
             <span class="pillar-name">{{ pillar.pillar }}</span>
             <span class="pillar-status">{{ pillar.status }}</span>
           </div>
           <div class="pillar-count">{{ pillar.extracted }} / {{ pillar.investigations }}</div>
           <p class="pillar-detail">
-            investigations with extracted rows · {{ pillar.records }} records
+            investigations with records · {{ pillar.records }} records
           </p>
           <p class="pillar-names">{{ pillar.names|join(' · ') }}</p>
         </article>
@@ -109,11 +111,13 @@
               <td><span class="pillar-tag">{{ row.pillar }}</span></td>
               <td>{{ row.platform }}</td>
               <td>
-                {% if row.extracted %}
-                  {{ row.records }}
+                {{ row.records }}
+                {% if row.experiments %}
                   <span class="inv-sub">{{ row.outcomes }} outcome{{ '' if row.outcomes == 1 else 's' }}</span>
+                {% elif row.aux %}
+                  <span class="inv-sub">{{ row.kinds|join(', ') }} · not graded</span>
                 {% else %}
-                  <span class="inv-sub">not extracted</span>
+                  <span class="inv-sub">no records</span>
                 {% endif %}
               </td>
               <td>

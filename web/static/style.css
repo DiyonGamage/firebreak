@@ -2624,7 +2624,7 @@ footer strong {
   padding: 20px;
 }
 .pillar-card.is-covered { border-color: var(--ink); }
-.pillar-top { display: flex; justify-content: space-between; align-items: baseline; }
+.pillar-top { display: flex; flex-wrap: wrap; gap: 2px 12px; justify-content: space-between; align-items: baseline; }
 .pillar-name {
   font-family: var(--mono);
   font-size: 11px;

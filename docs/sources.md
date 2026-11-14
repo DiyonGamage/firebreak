@@ -13,6 +13,16 @@ Firebreak does not redistribute MAPTIS content; MAPTIS requires authenticated ac
 | Saffire-III | https://psi.nasa.gov/physci/repo/data/investigations/PSI-100 | 2 |
 | ACME-BRE | https://psi.nasa.gov/physci/repo/data/investigations/PSI-20 | 18 |
 | SPICE | https://psi.nasa.gov/physci/repo/data/investigations/PSI-107 | 469 |
+| SAME | https://psi.nasa.gov/physci/repo/data/investigations/PSI-102 | 8 |
+| SAME-R | https://psi.nasa.gov/physci/repo/data/investigations/PSI-101 | 109 |
+| FLEX | https://psi.nasa.gov/physci/repo/data/investigations/PSI-69 | 274 |
+| FLEX-2 | https://psi.nasa.gov/physci/repo/data/investigations/PSI-68 | 8 |
+| BASS | https://psi.nasa.gov/physci/repo/data/investigations/PSI-26 | 122 |
+| SLICE | https://psi.nasa.gov/physci/repo/data/investigations/PSI-106 | 12 |
+
+The final six rows are **characterisation records** (smoke aerosol, droplet extinction, test
+logs and a test matrix). They are stored in `investigation_records` and never enter a material
+grade; the FLEX table ships as cp1252 and is decoded accordingly before hashing.
 
 The experimental tables were retrieved through the public PSI API:
 

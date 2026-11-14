@@ -36,8 +36,8 @@ investigations, grades the materials, and says when the data runs out.
 
 **Three points only:**
 
-- NASA has flown BASS-II, Saffire I–III, ACME and SPICE, but the findings are scattered
-  across 637 rows, 9 reports and 501 pages.
+- NASA has flown BASS-II, Saffire I–III, ACME, SPICE, SAME and FLEX, but the findings are
+  scattered across 1,170 records, 9 reports and 501 pages.
 - A materials engineer cannot tell, in one place, which investigation matters for the
   Moon — or whether a material is even supported at 37% oxygen.
 - The most dangerous answer is a confident one built on 1-g data. In microgravity, PMMA
@@ -68,7 +68,7 @@ so none of them can invent a fact.
 
 **Kicker:** HOW IT WORKS
 
-**Headline:** From 637 rows to one defensible answer.
+**Headline:** From 1,170 records to one defensible answer.
 
 **Pipeline, five steps:**
 
@@ -88,23 +88,28 @@ environment you choose.
 
 **Kicker:** NASA DATA
 
-**Headline:** Six investigations extracted. Five catalogued honestly.
+**Headline:** All 11 investigations carry real NASA records. Only 6 can set a grade.
 
 **Table:**
 
-| Source | Rows | Role |
+| Source | Records | Role |
 |---|---:|---|
 | BASS-II + NTRS rows | 135 | Pressure-bearing microgravity solid fuels |
 | SPICE | 469 | Gas-jet smoke point — context only |
 | ACME-BRE | 18 | Gas fuel — excluded from solid grading |
 | Saffire-II | 9 | Low-pressure spread at varied O₂ |
 | Saffire-I / III | 4 | Metadata-only |
+| BASS | 122 | Precursor test log — materials only, not graded |
+| SAME + SAME-R | 117 | Smoke aerosol — detection pillar, not graded |
+| FLEX + FLEX-2 | 282 | Droplet extinction — suppression pillar, not graded |
+| SLICE | 12 | Gas-jet test log — not graded |
 | 9 NTRS documents | 501 pp | Rules, limits, page-cited outcomes |
 
-**Line:** Detection (SAME, SAME-R) and suppression (FLEX) are catalogued, linked, and
-shown as **zero extracted rows**. We did not invent data to fill the pillars.
+**Line:** Characterisation records (smoke, droplet, test logs) sit in their own table and
+never touch a grade. **1,170 records, 0 invented.**
 
-**Visual:** pillars strip — prevention covered, detection and suppression catalogued only.
+**Visual:** pillars strip — prevention, detection and suppression all carry real records,
+with flammability evidence only in prevention.
 
 ---
 

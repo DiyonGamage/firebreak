@@ -13,7 +13,7 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
 | ML-2 coverage detector | held-out cases | **5/5** expected labels |
 | ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.811**; O2-only AUC 0.605; 80% conformal coverage 0.896 |
-| Investigations | 11 named, 6 extracted | **11 catalogued; 5 catalogued-only show zero rows** |
+| Investigations | 11 named, all with records | **11/11 carry real PSI records: 6 experiment + 5 characterisation; 0 invented** |
 | Evidence court | 4 rule-driven voices | **4/4 voices on every assessment; 0 model-written facts** |
 | Mission readiness | no invented coverage | **ISS 2/8 anchored · airlock 0/8 · lunar 0/8 · suit not graded** |
 | Case studies | 6 cases documented | **6/6** documented with source-linked evidence |
@@ -32,7 +32,21 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Saffire-I | 2 | Metadata-only rows |
 | Saffire-III | 2 | Metadata-only rows |
 | TB 26-05 (1-g) | 2 | Page-cited 1-g Kevlar/PBI anchors at 8.2 psia from NTRS 20260006043 |
-| **Total** | **637** | |
+| **Experiment total** | **637** | |
+
+## Non-graded characterisation records
+
+These are real PSI experimental-table rows. They are stored in `investigation_records`,
+never in `experiments`, and no query in the grading path reads them.
+
+| Dataset | Records | Kind | Why it is not graded |
+|---|---:|---|---|
+| FLEX + FLEX-2 | 282 | Droplet extinction / test matrix | Liquid-droplet extinction, not a solid material |
+| BASS (PSI-26) | 122 | Test log | Materials and run numbers only; no O₂, pressure or outcome |
+| SAME-R | 109 | Smoke aerosol | Particle size and aging for detection research |
+| SLICE | 12 | Test log | Gas-jet run dates and fuel mixes |
+| SAME | 8 | Smoke aerosol | Smoke weight-loss measurements |
+| **Characterisation total** | **533** | | **Corpus total: 1,170 records** |
 
 - **148** solid-material rows are eligible for grading; 2 additional solid rows have
   unspecified material and are retained but excluded from matching.
@@ -64,7 +78,7 @@ note rows.
 
 ## Rule and application tests
 
-`python -m pytest -q` -> **55 passed**.
+`python -m pytest -q` -> **63 passed**.
 
 Coverage includes:
 

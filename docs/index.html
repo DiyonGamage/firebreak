@@ -9,7 +9,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Firebreak — evidence-graded flammability screening">
-<meta property="og:description" content="A technical report: 637 public NASA records, a deterministic ten-rule evidence engine, and an honest 0/8 result for lunar-surface materials.">
+<meta property="og:description" content="A technical report: 1,170 public NASA records, a deterministic ten-rule evidence engine, and an honest 0/8 result for lunar-surface materials.">
 <meta property="og:url" content="https://diyongamage.github.io/firebreak/">
 <meta property="og:image" content="https://diyongamage.github.io/firebreak/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -447,7 +447,7 @@
       </div>
       <div>
         <dt>Result</dt>
-        <dd>637 records graded A–D with cited gaps. PMMA and SIBAL reach grade A at ISS conditions; none of eight material classes reaches A or B for lunar-surface use.</dd>
+        <dd>637 experiment rows graded A–D with cited gaps. PMMA and SIBAL reach grade A at ISS conditions; none of eight material classes reaches A or B for lunar-surface use.</dd>
       </div>
       <div>
         <dt>AI use</dt>
@@ -462,7 +462,7 @@
     <div class="abstract prose">
       <h2>Abstract</h2>
       <p class="lead">Spacecraft material flammability decisions depend on evidence that is scattered across decades of drop-tower, sounding-rocket, and ISS experiments. The same material can appear acceptable under one oxygen concentration and fail under another, and the difference is rarely recorded in a form a designer can act on. Firebreak is a deterministic screening system that converts a curated corpus of NASA microgravity combustion records into source-linked evidence grades, explicit evidence gaps, and a ranked next test.</p>
-      <p>We curated <strong>637 records</strong> — including 148 solid-material test rows — and <strong>501 pages</strong> from nine public NASA documents, implemented a ten-rule evidence engine (R1–R10), and evaluated it against 13 documented outcomes (11 in microgravity, 2 at one gravity) and 6 pressure-bearing microgravity anchors. Retrieval finds all five held-out targets within its top three results with zero false matches; the severity screen reaches <strong>AUC 0.811</strong> against a 0.605 oxygen-only baseline, reports 80% conformal sets that cover 89.6% of supported cases, and abstains outside its training support rather than extrapolate. Under the engine, <strong>none of eight material classes reaches grade A or B for lunar-surface use</strong> — the honest result, given that the public record contains almost no low-pressure microgravity data. The full system runs offline on a laptop, and it is a screening aid, not a substitute for NASA-STD-6001 Test 1.</p>
+      <p>We curated <strong>1,170 records</strong> — 637 experiment rows, including 148 solid-material tests, plus 533 non-graded characterisation records — and <strong>501 pages</strong> from nine public NASA documents, implemented a ten-rule evidence engine (R1–R10), and evaluated it against 13 documented outcomes (11 in microgravity, 2 at one gravity) and 6 pressure-bearing microgravity anchors. Retrieval finds all five held-out targets within its top three results with zero false matches; the severity screen reaches <strong>AUC 0.811</strong> against a 0.605 oxygen-only baseline, reports 80% conformal sets that cover 89.6% of supported cases, and abstains outside its training support rather than extrapolate. Under the engine, <strong>none of eight material classes reaches grade A or B for lunar-surface use</strong> — the honest result, given that the public record contains almost no low-pressure microgravity data. The full system runs offline on a laptop, and it is a screening aid, not a substitute for NASA-STD-6001 Test 1.</p>
     </div>
 
     <figure class="bleed">
@@ -589,7 +589,7 @@
       <span class="secnum">§3</span>
       <h2>Investigations, pillars, and what the corpus refuses to answer</h2>
       <p>NASA's brief is stated at the level of investigations, not materials. Firebreak therefore ranks every investigation the challenge names against a chosen crew environment, and separates what the corpus can speak to from what it cannot.</p>
-      <p>Eleven investigations are catalogued. Six carry extracted rows; five are named, linked, and explicitly marked as catalogued only. The three fire-safety pillars are reported separately: prevention has extracted evidence, detection and suppression are catalogued without extracted rows. No row is invented to fill a pillar.</p>
+      <p>All eleven investigations now carry real PSI records. Six contribute experiment rows that can set a grade; the other five contribute 533 characterisation records — smoke aerosol from SAME and SAME-R, droplet extinction from FLEX, and test logs from BASS and SLICE. Those records are stored in their own table, labelled by kind, and never read by the grading path, so the detection and suppression pillars gain real coverage without a single invented flammability claim.</p>
       <p>At the lunar-surface preset, no material class reaches grade A. At the ISS cabin preset, two classes are anchored and two are provisional. The spacesuit environment — 4.3 psia, 100% oxygen — is not graded at all, because no ingested row reports that condition.</p>
     </section>
 
@@ -599,7 +599,7 @@
       </div>
       <figcaption>
         <span class="figlabel">Figure 5</span>
-        <b>The investigations view.</b> Every investigation the challenge names, ranked for the chosen crew environment. Relevance is an analyst weighting for crew-environment fit, not a NASA score, and catalogued investigations show zero records rather than invented ones.
+        <b>The investigations view.</b> Every investigation the challenge names, ranked for the chosen crew environment. Relevance is an analyst weighting for crew-environment fit, not a NASA score; characterisation records are counted and labelled "not graded" rather than promoted into evidence.
       </figcaption>
     </figure>
 
@@ -646,7 +646,7 @@
             <tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Note</th></tr>
           </thead>
           <tbody>
-            <tr><td>Curated records</td><td class="num">637</td><td>8 PSI datasets and derived test tables</td></tr>
+            <tr><td>Curated records</td><td class="num">1,170</td><td>637 experiment rows + 533 characterisation records</td></tr>
             <tr><td>Solid-material test rows</td><td class="num">148</td><td>Across 7 material classes</td></tr>
             <tr><td>Documented outcomes</td><td class="num">13</td><td>11 microgravity · 2 at 1-g</td></tr>
             <tr><td>Pressure-bearing microgravity anchors</td><td class="num">6</td><td>Usable for low-pressure reasoning</td></tr>
@@ -721,7 +721,7 @@
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --port 8010
-pytest -q                        # 55 passed</code></pre>
+pytest -q                        # 63 passed</code></pre>
       <p class="small">On the held-out set, retrieval recall@3 is 1.00 with zero false matches; coverage identifies 5/5 targets; the severity screen reaches AUC 0.811 against a 0.605 oxygen-only baseline with 80% conformal sets that cover 89.6% of supported cases; and the explanation audit checks 60/60 fields across 30 rows. The rule engine and explanation layer are deterministic and covered by unit tests.</p>
     </section>
 
