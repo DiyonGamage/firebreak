@@ -3,738 +3,583 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Firebreak — evidence-graded microgravity fire safety screening</title>
-<meta name="description" content="Firebreak turns NASA microgravity combustion data into source-linked A–D flammability evidence grades, explicit gaps, and the next test to run. NASA Space Apps Challenge 2026.">
-<meta name="theme-color" content="#07090d">
+<title>Firebreak — evidence-graded flammability screening</title>
+<meta name="description" content="Firebreak grades spacecraft-material flammability evidence A–D from public NASA data, names the gaps, and ranks the next test. NASA Space Apps 2026, team LFR.">
+<meta name="theme-color" content="#f7f4ec">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Firebreak — evidence-graded flammability screening">
+<meta property="og:description" content="A technical report: 637 public NASA records, a deterministic ten-rule evidence engine, and an honest 0/8 result for lunar-surface materials.">
+<meta property="og:url" content="https://diyongamage.github.io/firebreak/">
+<meta property="og:image" content="https://diyongamage.github.io/firebreak/screenshots/00-dashboard.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root {
-    color-scheme: dark;
-    --bg: #07090d;
-    --panel: #0d1118;
-    --panel-2: #111722;
-    --line: #222b3a;
-    --line-soft: #17202d;
-    --text: #e9eef7;
-    --muted: #8d99ab;
-    --faint: #5d697b;
-    --orange: #ff6b35;
-    --cyan: #5eead4;
-    --green: #34d399;
-    --amber: #fbbf24;
-    --red: #fb7185;
-    --mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    color-scheme: light;
+    --paper: #f7f4ec;
+    --panel: #efece3;
+    --ink: #1c1e22;
+    --ink-2: #2a2c31;
+    --muted: #5f636b;
+    --faint: #6f727a;
+    --rule: #d8d2c4;
+    --rule-soft: #e6e1d5;
+    --accent: #c2410c;
+    --grade-a: #1f6b45;
+    --grade-b: #8a5a00;
+    --grade-c: #a33a1c;
+    --grade-d: #5f636b;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --sans: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+    --mono: "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    --measure: 680px;
+    --wide: 1120px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
-    line-height: 1.55;
+    text-rendering: optimizeLegibility;
   }
-  a { color: inherit; }
+  a { color: var(--ink); text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   img { max-width: 100%; display: block; }
-  .shell { width: min(1180px, calc(100% - 44px)); margin: 0 auto; }
+  ::selection { background: #e8d5c2; }
 
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    border-bottom: 1px solid var(--line-soft);
-    background: #080b10;
+  .skip {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 10px 16px; font-family: var(--sans); font-size: 14px; z-index: 20;
   }
-  .topbar .shell {
-    display: flex;
-    align-items: center;
-    gap: 26px;
-    min-height: 54px;
+  .skip:focus { left: 16px; top: 12px; }
+
+  .masthead {
+    border-top: 3px solid var(--accent);
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-decoration: none;
+  .masthead-inner {
+    width: min(var(--wide), calc(100% - 48px));
+    margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 16px 0;
   }
+  .wordmark {
+    display: inline-flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--ink);
+    font-family: var(--sans); font-size: 15px; font-weight: 650; letter-spacing: -0.01em;
+  }
+  .wordmark:hover { color: var(--ink); }
   .mark {
-    display: grid;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background: var(--orange);
-    color: #120a06;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0;
+    width: 22px; height: 22px; border: 1px solid var(--ink);
+    display: grid; place-items: center;
+    font-family: var(--serif); font-size: 13px; font-weight: 700;
   }
-  .topbar .mission {
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .wordmark .tag {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 400;
+    color: var(--faint); letter-spacing: 0.04em;
+    padding-left: 10px; margin-left: 2px; border-left: 1px solid var(--rule);
   }
-  .topnav { margin-left: auto; display: flex; align-items: center; gap: 22px; }
-  .topnav a {
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    text-transform: uppercase;
+  .mastnav { display: flex; gap: 22px; flex-wrap: wrap; }
+  .mastnav a {
+    font-family: var(--sans); font-size: 13px; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.01em;
   }
-  .topnav a:hover { color: var(--text); }
-  .topnav a.outline {
-    padding: 7px 12px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--text);
-  }
-  .topnav a.outline:hover { border-color: var(--orange); color: var(--orange); }
+  .mastnav a:hover { color: var(--accent); }
 
-  .hero { padding: 74px 0 46px; border-bottom: 1px solid var(--line-soft); }
-  .eyebrow {
-    margin: 0 0 18px;
-    color: var(--orange);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+  .wrap { width: min(var(--wide), calc(100% - 48px)); margin: 0 auto; }
+  .prose { width: min(var(--measure), 100%); margin-left: auto; margin-right: auto; }
+
+  .titleblock { padding: 64px 0 0; }
+  .kicker {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 22px;
   }
   h1 {
-    margin: 0;
-    max-width: 24ch;
-    font-size: clamp(38px, 5.4vw, 64px);
-    font-weight: 750;
-    line-height: 1.02;
-    letter-spacing: -0.035em;
+    font-family: var(--serif); font-weight: 600; font-size: clamp(2.1rem, 4.3vw, 3.2rem);
+    line-height: 1.14; letter-spacing: -0.018em; margin: 0 0 26px; max-width: 27ch;
   }
-  h1 em { color: var(--orange); font-style: normal; }
-  .lede {
-    max-width: 62ch;
-    margin: 22px 0 0;
-    color: var(--muted);
-    font-size: 17px;
-    line-height: 1.62;
+  .byline {
+    font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px;
+    padding: 18px 0; margin: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
   }
-  .lede strong { color: var(--text); font-weight: 600; }
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    margin-top: 24px;
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9.5px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+  .byline b { color: var(--ink-2); font-weight: 600; }
+  .byline .sep { color: var(--rule); }
+  .links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 20px; }
+  .links a {
+    font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+    color: var(--ink-2); text-decoration: none;
+    border-bottom: 1px solid var(--rule); padding-bottom: 2px;
   }
-  .meta span + span::before { content: "/"; margin-right: 18px; color: var(--line); }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-  .button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 11px 18px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .button.primary { border-color: var(--orange); background: var(--orange); color: #140a05; }
-  .button.primary:hover { background: #ff8153; border-color: #ff8153; }
-  .button:hover { border-color: var(--muted); }
-  .button .arrow { font-family: var(--mono); font-size: 12px; }
-  a:focus-visible, .button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  .links a:hover { color: var(--accent); border-color: var(--accent); }
 
-  .stat-band {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 0;
-    margin: 46px 0 0;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
+  .abstract { margin: 44px 0 0; }
+  .abstract h2 {
+    font-family: var(--sans); font-size: 11.5px; font-weight: 650;
+    letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 14px;
   }
-  .stat-cell { display: flex; flex-direction: column; justify-content: center; padding: 26px 28px; }
-  .stat-cell + .stat-cell { border-left: 1px solid var(--line); }
-  .stat-value {
-    color: var(--orange);
-    font-size: 46px;
-    font-weight: 750;
-    line-height: 1;
-    letter-spacing: -0.04em;
-  }
-  .stat-value small { font-size: 20px; letter-spacing: -0.02em; }
-  .stat-label {
-    margin-top: 8px;
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .stat-copy { color: var(--muted); font-size: 14px; line-height: 1.6; }
-  .stat-copy strong { color: var(--text); font-weight: 600; }
-  .stat-copy p { margin: 0; }
-  .stat-copy p + p { margin-top: 10px; }
-  .cite {
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.04em;
-  }
-  .cite a { color: var(--faint); text-decoration: underline; text-underline-offset: 3px; }
-  .cite a:hover { color: var(--muted); }
+  .abstract p { margin: 0 0 16px; }
+  .abstract p.lead { font-size: 19.5px; line-height: 1.58; }
 
-  .shot-hero { padding: 46px 0 0; }
-  .shot-frame {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--panel);
+  figure { margin: 48px 0; }
+  figure.bleed { width: min(var(--wide), 100%); }
+  .figframe { border: 1px solid var(--rule); background: #fff; padding: 1px; }
+  .figframe img { width: 100%; height: auto; }
+  figcaption {
+    font-family: var(--sans); font-size: 12.5px; line-height: 1.55;
+    color: var(--muted); margin: 10px auto 0; max-width: var(--measure);
   }
-  .shot-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--line-soft);
-    background: #0a0e14;
+  figcaption b { color: var(--ink-2); font-weight: 600; }
+  .figlabel {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-2); margin-right: 6px;
   }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: #2a3444; }
-  .shot-url {
-    margin-left: 8px;
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.04em;
-  }
-  .shot-frame img { width: 100%; height: auto; }
-  .shot-frame a { display: block; }
-  .shot-hero .shot-frame img { aspect-ratio: 16 / 8.4; object-fit: cover; object-position: top; }
-  .caption {
-    display: flex;
-    justify-content: space-between;
-    gap: 18px;
-    margin-top: 12px;
-    color: var(--faint);
-    font-size: 12px;
-  }
-  .caption a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
-  .caption a:hover { color: var(--text); border-color: var(--muted); }
 
-  section { padding: 68px 0 0; }
-  .section-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line-soft);
+  section { padding: 40px 0 8px; }
+  section + section { border-top: 1px solid var(--rule-soft); }
+  .secnum {
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    letter-spacing: 0.06em; display: block; margin-bottom: 8px;
   }
   h2 {
-    margin: 0;
-    font-size: clamp(24px, 3vw, 33px);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.025em;
+    font-family: var(--serif); font-weight: 600; font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+    line-height: 1.2; letter-spacing: -0.012em; margin: 0 0 18px;
   }
-  .section-note {
-    max-width: 46ch;
-    color: var(--faint);
-    font-size: 12.5px;
-    line-height: 1.55;
-    text-align: right;
+  p { margin: 0 0 18px; }
+  .small { font-size: 15.5px; color: var(--muted); }
+  code {
+    font-family: var(--mono); font-size: 0.86em;
+    background: var(--panel); padding: 1px 5px; border: 1px solid var(--rule-soft);
+  }
+  strong { font-weight: 600; }
+
+  blockquote {
+    margin: 28px 0; padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--accent);
+    font-size: 19px; line-height: 1.55; color: var(--ink-2);
+  }
+  blockquote p { margin: 0 0 10px; }
+  blockquote cite {
+    font-family: var(--sans); font-size: 12.5px; font-style: normal;
+    color: var(--muted); display: block;
   }
 
-  .answers { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 0; border-bottom: 1px solid var(--line-soft); }
-  .answer { padding: 24px 22px 26px; border-left: 1px solid var(--line-soft); }
-  .answer:first-child { border-left: 0; padding-left: 0; }
-  .answer .num {
-    color: var(--orange);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
+  .tablewrap { margin: 26px auto 10px; overflow-x: auto; border-top: 1px solid var(--ink-2); }
+  .tablewrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .scrollhint { display: none; }
+  .tablewrap.wide { max-width: 880px; }
+  .tablewrap.narrow { max-width: 720px; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; }
+  caption {
+    caption-side: top; text-align: left;
+    font-family: var(--sans); font-size: 12.5px; color: var(--muted);
+    padding: 10px 0 8px; line-height: 1.5;
   }
-  .answer h3 { margin: 10px 0 6px; font-size: 15px; font-weight: 650; letter-spacing: -0.01em; }
-  .answer p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+  caption b {
+    color: var(--ink-2); font-weight: 600; font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-right: 6px;
+  }
+  th {
+    font-family: var(--sans); font-size: 11.5px; font-weight: 650;
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted);
+    text-align: left; padding: 10px 14px 9px 0; border-bottom: 1px solid var(--rule);
+    vertical-align: bottom; white-space: nowrap;
+  }
+  td {
+    font-size: 15px; line-height: 1.5; padding: 11px 14px 11px 0;
+    border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+  }
+  th:last-child, td:last-child { padding-right: 0; }
+  td.num { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+  td.env { white-space: nowrap; }
+  .grade { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+  .gA { color: var(--grade-a); } .gB { color: var(--grade-b); }
+  .gC { color: var(--grade-c); } .gD { color: var(--grade-d); }
+  .verdict { font-family: var(--sans); font-size: 13px; color: var(--ink-2); white-space: nowrap; }
 
-  .grades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
-  .grade {
-    padding: 20px 20px 22px;
-    border: 1px solid var(--line);
-    border-top: 2px solid var(--grade);
-    border-radius: 6px;
-    background: var(--panel);
+  table.matrix th:not(:first-child), table.matrix td:not(:first-child) { text-align: center; padding-right: 0; padding-left: 14px; }
+  table.matrix th span {
+    display: block; font-family: var(--mono); font-size: 10.5px; font-weight: 400;
+    letter-spacing: 0; text-transform: none; color: var(--faint); margin-top: 3px;
   }
-  .grade .letter { color: var(--grade); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -0.05em; }
-  .grade h3 { margin: 10px 0 6px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); }
-  .grade p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
-  .grade.a { --grade: var(--green); }
-  .grade.b { --grade: var(--amber); }
-  .grade.c { --grade: var(--red); }
-  .grade.d { --grade: #93a4bd; }
+  table.matrix td:first-child { width: 40%; }
+  table.matrix td.gradecell { font-family: var(--mono); font-size: 13px; font-weight: 600; }
 
-  .pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 22px; }
-  .step {
-    padding: 16px 16px 18px;
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    background: var(--panel);
+  ol.limits { margin: 0; padding: 0; list-style: none; counter-reset: lim; }
+  ol.limits li {
+    counter-increment: lim; position: relative;
+    padding: 16px 0 16px 44px; border-bottom: 1px solid var(--rule-soft);
   }
-  .step .idx {
-    display: inline-block;
-    padding: 2px 5px;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 8px;
-    letter-spacing: 0.08em;
+  ol.limits li:first-child { border-top: 1px solid var(--rule-soft); }
+  ol.limits li::before {
+    content: "L" counter(lim); position: absolute; left: 0; top: 18px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: 0.04em;
   }
-  .step h3 { margin: 10px 0 6px; font-size: 13.5px; font-weight: 650; }
-  .step p { margin: 0; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+  ol.limits b { font-weight: 600; }
+  ol.limits p { margin: 4px 0 0; font-size: 16px; color: var(--muted); line-height: 1.55; }
 
-  .shots { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 22px; }
-  .shots figure { margin: 0; }
-  .shots .shot-frame img { border-top: 0; }
-  .shots figcaption {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 8px;
-    color: var(--faint);
-    font-size: 11.5px;
+  pre {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.7;
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 18px 20px; margin: 20px 0 16px; overflow-x: auto;
+    color: var(--ink-2);
   }
-  .shots figcaption span:last-child { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; }
+  pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+  .pre-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    margin-top: 22px;
+  }
+  .pre-head .label {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  button.copy {
+    font-family: var(--sans); font-size: 12px; font-weight: 550;
+    color: var(--ink-2); background: transparent;
+    border: 1px solid var(--rule); padding: 5px 11px; cursor: pointer;
+  }
+  button.copy:hover { border-color: var(--ink-2); }
+  button.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.copy.done { color: var(--grade-a); border-color: var(--grade-a); }
 
-  .source-split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 34px; align-items: start; margin-top: 24px; }
-  .source-copy p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.65; }
-  .source-copy p strong { color: var(--text); font-weight: 600; }
-  .source-copy ul { margin: 0; padding: 0; list-style: none; }
-  .source-copy li {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 10px 0;
-    border-top: 1px solid var(--line-soft);
-    font-size: 12.5px;
+  footer {
+    margin-top: 56px; border-top: 1px solid var(--rule);
+    padding: 28px 0 56px;
   }
-  .source-copy li:last-child { border-bottom: 1px solid var(--line-soft); }
-  .source-copy li span:last-child { color: var(--faint); font-family: var(--mono); font-size: 9px; letter-spacing: 0.05em; text-align: right; }
-  .source-shot .shot-frame img { max-height: 620px; object-fit: cover; object-position: top; }
-
-  .honesty { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-top: 22px; }
-  .honesty-row {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 22px;
-    padding: 20px 24px;
+  .footgrid {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 28px;
+    font-family: var(--sans); font-size: 13px; color: var(--muted);
   }
-  .honesty-row + .honesty-row { border-top: 1px solid var(--line-soft); }
-  .honesty-row .val { color: var(--orange); font-family: var(--mono); font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
-  .honesty-row h3 { margin: 0 0 4px; font-size: 14px; font-weight: 650; }
-  .honesty-row p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
-  .honesty-row p strong { color: var(--text); font-weight: 600; }
-
-  .run { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
-  .code {
-    margin: 0;
-    padding: 18px 20px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: #0a0e14;
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 11.5px;
-    line-height: 1.9;
-    overflow-x: auto;
-  }
-  .code .prompt { color: var(--faint); }
-  .code .ok { color: var(--green); }
-  .run-copy p { margin: 0 0 12px; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
-  .run-copy p strong { color: var(--text); font-weight: 600; }
-  .run-copy .fine { color: var(--faint); font-size: 11.5px; }
-
-  footer { margin-top: 76px; border-top: 1px solid var(--line); padding: 30px 0 54px; }
-  .foot-top { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-  .foot-brand { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; }
-  .foot-links { display: flex; flex-wrap: wrap; gap: 20px; }
-  .foot-links a {
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 9.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-  .foot-links a:hover { color: var(--text); }
+  .footgrid p { margin: 0 0 6px; max-width: 52ch; line-height: 1.6; }
+  .footlinks { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .footlinks a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .footlinks a:hover { color: var(--accent); border-color: var(--accent); }
   .boundary {
-    margin-top: 24px;
-    padding: 12px 14px;
-    border: 1px solid var(--line-soft);
-    border-radius: 4px;
-    color: var(--faint);
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    line-height: 1.7;
-    text-transform: uppercase;
+    font-family: var(--sans); font-size: 12.5px; line-height: 1.6; color: var(--faint);
+    max-width: 72ch; margin: 22px 0 0; padding-top: 20px; border-top: 1px solid var(--rule-soft);
   }
-  .colophon { margin-top: 14px; color: var(--faint); font-size: 11px; }
+  .boundary b { color: var(--ink-2); font-weight: 600; }
 
-  @media (max-width: 980px) {
-    .answers { grid-template-columns: 1fr 1fr; }
-    .answer:nth-child(3) { border-left: 0; padding-left: 0; }
-    .answer:nth-child(n+3) { border-top: 1px solid var(--line-soft); }
-    .grades { grid-template-columns: 1fr 1fr; }
-    .pipeline { grid-template-columns: 1fr 1fr; }
-    .stat-band { grid-template-columns: 1fr; }
-    .stat-cell + .stat-cell { border-left: 0; border-top: 1px solid var(--line); }
-    .source-split, .run { grid-template-columns: 1fr; }
-  }
   @media (max-width: 760px) {
-    .topbar .mission { display: none; }
-    .topnav { gap: 14px; }
-    .topnav a.hide-sm { display: none; }
-    .hero { padding: 50px 0 34px; }
-    .section-head { flex-direction: column; align-items: flex-start; }
-    .section-note { text-align: left; }
-    .honesty-row { grid-template-columns: 1fr; gap: 6px; }
-    .meta span + span::before { content: none; margin: 0; }
-    .meta { gap: 6px 14px; }
+    body { font-size: 17px; }
+    .wrap, .masthead-inner { width: calc(100% - 36px); }
+    .titleblock { padding-top: 40px; }
+    .masthead-inner { flex-wrap: wrap; gap: 10px; padding: 13px 0; }
+    .mastnav { gap: 16px; }
+    .abstract p.lead { font-size: 18px; }
+    section { padding-top: 34px; }
+    table { min-width: 500px; }
+    caption { max-width: calc(100vw - 36px); }
+    .scrollhint {
+      display: block; margin: 22px 0 0;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .scrollhint + .tablewrap { margin-top: 6px; }
+    td { font-size: 14px; }
+    .byline { font-size: 12.5px; }
   }
-  @media (max-width: 560px) {
-    .shell { width: calc(100% - 32px); }
-    .topbar .shell { gap: 12px; min-height: 50px; }
-    .brand { font-size: 10.5px; gap: 8px; }
-    .topnav { gap: 12px; }
-    .topnav a { font-size: 8.5px; }
-    .topnav a.outline { padding: 6px 9px; }
-    .answers { grid-template-columns: 1fr; }
-    .answer { border-left: 0; padding-left: 0; }
-    .answer + .answer { border-top: 1px solid var(--line-soft); }
-    .grades { grid-template-columns: 1fr; }
-    .pipeline { grid-template-columns: 1fr; }
-    .stat-value { font-size: 40px; }
-    .caption { flex-direction: column; gap: 4px; }
-    .foot-top { flex-direction: column; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .masthead, .links, button.copy, .skip { display: none; }
+    section + section { border-top: 1px solid #ccc; }
+    figure, table { break-inside: avoid; }
+    a { text-decoration: none; }
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<header class="topbar">
-  <div class="shell">
-    <a class="brand" href="#top" aria-label="Firebreak home"><span class="mark" aria-hidden="true">F</span> FIREBREAK</a>
-    <span class="mission">NASA Space Apps 2026 / Flame in Freefall</span>
-    <nav class="topnav" aria-label="Sections">
-      <a href="#evidence" class="hide-sm">Evidence</a>
-      <a href="#method" class="hide-sm">Method</a>
-      <a href="#limits" class="hide-sm">Limits</a>
-      <a href="https://github.com/DiyonGamage/firebreak" class="outline">Repository</a>
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="wordmark" href="#main">
+      <span class="mark" aria-hidden="true">F</span>
+      Firebreak
+      <span class="tag">Technical report · v1.0</span>
+    </a>
+    <nav class="mastnav" aria-label="Sections">
+      <a href="#problem">Problem</a>
+      <a href="#system">System</a>
+      <a href="#results">Results</a>
+      <a href="#limits">Limitations</a>
+      <a href="#code">Code</a>
     </nav>
   </div>
 </header>
 
-<main id="top">
-  <div class="shell">
-
-    <section class="hero" style="padding-top:74px">
-      <p class="eyebrow">Microgravity flammability · Evidence screening</p>
-      <h1>Know what the evidence <em>actually</em> supports.</h1>
-      <p class="lede">
-        Firebreak turns <strong>637 NASA combustion records</strong> and <strong>501 pages of
-        reports and standards</strong> into source-linked A–D evidence grades for spacecraft
-        materials. Pick a material and an atmosphere. Get the grade, its sources, and the exact
-        gap that would change it.
+<main id="main">
+  <div class="wrap">
+    <div class="titleblock prose">
+      <p class="kicker">NASA Space Apps 2026 · Flame in Freefall</p>
+      <h1>Firebreak: evidence-graded flammability screening for spacecraft materials</h1>
+      <p class="byline">
+        <b>Team LFR</b> <span class="sep">·</span> Kandy, Sri Lanka
+        <span class="sep">·</span> 14 November 2026
+        <span class="sep">·</span> Screening support, not certification
       </p>
-      <div class="meta">
-        <span>6 pressure-bearing anchors</span>
-        <span>148 solid-material tests</span>
-        <span>9 source documents</span>
-        <span>Offline-ready</span>
-      </div>
-      <div class="actions">
-        <a class="button primary" href="https://github.com/DiyonGamage/firebreak">Get the code <span class="arrow">→</span></a>
-        <a class="button" href="#method">Read the method</a>
-        <a class="button" href="#limits">See the limits</a>
-      </div>
-
-      <div class="stat-band">
-        <div class="stat-cell">
-          <div class="stat-value">−2.4<small> pts</small></div>
-          <div class="stat-label">O₂ margin, 1-g versus microgravity</div>
-        </div>
-        <div class="stat-cell stat-copy">
-          <p><strong>PMMA blows off at 16% O₂ in 1-g.</strong> In microgravity it keeps spreading at
-          13.6% O₂ — below the Earth test that was supposed to bound it.</p>
-          <p>That negative margin is why a passed test is not the same as a safe material. Firebreak
-          exists to show where the evidence stops.</p>
-          <p class="cite">BASS-II summary, NASA/TM-20210011385 · <a href="https://ntrs.nasa.gov/citations/20210011385">NTRS</a></p>
-        </div>
-      </div>
-    </section>
-
-    <div class="shot-hero">
-      <div class="shot-frame">
-        <div class="shot-bar" aria-hidden="true">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="shot-url">firebreak — evidence dashboard</span>
-        </div>
-        <img src="screenshots/01-overview.png" width="1440" height="3041" alt="Firebreak evidence dashboard with KPI strip, corpus findings, six ranked material cards, and the full material-atmosphere grade matrix.">
-      </div>
-      <div class="caption">
-        <span>The dashboard answers three questions before you ask: what is anchored, what is capped, and where the evidence wall is.</span>
-        <a href="screenshots/01-overview.png">Open full screenshot</a>
+      <div class="links">
+        <a href="https://github.com/DiyonGamage/firebreak">Source code ↗</a>
+        <a href="#results">Validation</a>
+        <a href="#data">Sources</a>
+        <a href="#cite">Cite this work</a>
       </div>
     </div>
 
-    <section id="evidence">
-      <div class="section-head">
-        <h2>Four questions. One deterministic answer.</h2>
-        <p class="section-note">Every result is produced by a versioned rule engine. No model writes the final grade.</p>
+    <div class="abstract prose">
+      <h2>Abstract</h2>
+      <p class="lead">Spacecraft material flammability decisions depend on evidence that is scattered across decades of drop-tower, sounding-rocket, and ISS experiments. The same material can appear acceptable under one oxygen concentration and fail under another, and the difference is rarely recorded in a form a designer can act on. Firebreak is a deterministic screening system that converts a curated corpus of NASA microgravity combustion records into source-linked evidence grades, explicit evidence gaps, and a ranked next test.</p>
+      <p>We curated <strong>637 records</strong> — including 148 solid-material test rows — and <strong>501 pages</strong> from nine public NASA documents, implemented a ten-rule evidence engine (R1–R10), and evaluated it against 13 documented outcomes (11 in microgravity, 2 at one gravity) and 6 pressure-bearing microgravity anchors. Retrieval finds all five held-out targets within its top three results with zero false matches; the severity model reaches <strong>AUC 0.834</strong> against a 0.607 oxygen-only baseline. Under the engine, <strong>none of eight material classes reaches grade A or B for lunar-surface use</strong> — the honest result, given that the public record contains almost no low-pressure microgravity data. The full system runs offline on a laptop, and it is a screening aid, not a substitute for NASA-STD-6001 Test 1.</p>
+    </div>
+
+    <figure class="bleed">
+      <div class="figframe">
+        <img src="screenshots/00-dashboard.png" width="1440" height="1000" alt="Firebreak dashboard: header with corpus statistics, six material-class cards with evidence grades, and an oxygen-concentration versus total-pressure chart with microgravity anchors and one-gravity data.">
       </div>
-      <div class="answers">
-        <div class="answer">
-          <span class="num">01</span>
-          <h3>What evidence exists?</h3>
-          <p>The closest solid-material tests, each linked to a PSI row, an NTRS page, or a NASA standard clause.</p>
-        </div>
-        <div class="answer">
-          <span class="num">02</span>
-          <h3>What does it support?</h3>
-          <p>An A–D evidence grade and a verdict: acceptable, test needed, high risk, or insufficient evidence.</p>
-        </div>
-        <div class="answer">
-          <span class="num">03</span>
-          <h3>What is uncertain?</h3>
-          <p>Named gaps, out-of-envelope flags, 1-g-only data, and conflict detection between sources.</p>
-        </div>
-        <div class="answer">
-          <span class="num">04</span>
-          <h3>What would change it?</h3>
-          <p>The specific test, pressure, or outcome that would move the grade — before the decision, not after.</p>
-        </div>
+      <figcaption>
+        <span class="figlabel">Figure 1</span>
+        <b>The screening dashboard.</b> Six material classes at a glance, each with its strongest available evidence grade and supporting test count. The chart plots oxygen concentration against total pressure; microgravity anchors sit in the upper band, while one-gravity data (which caps at grade C) clusters near ambient pressure. <a href="screenshots/01-overview.png">Full-page view</a>.
+      </figcaption>
+    </figure>
+
+    <section id="problem" class="prose">
+      <span class="secnum">§1</span>
+      <h2>Why an evidence grade, and not a pass/fail answer</h2>
+      <p>NASA-STD-6001 Test 1 asks whether a material sustains upward flame spread in a specified oxygen–nitrogen atmosphere. The answer is a single number — the limiting oxygen concentration — but the number is only as good as the test behind it, and the test environment matters. Microgravity removes buoyant flow; a material that self-extinguishes in a 1-g chamber can keep burning in a spacecraft cabin at the same oxygen fraction. Public data reflects this unevenly: some materials have been flown repeatedly, others appear only in ambient-pressure screening, and most have never been tested at the low total pressures relevant to lunar-surface habitats.</p>
+      <p>The BASS-II results make the gap concrete. A polymethyl methacrylate (PMMA) sample extinguished at 16 percent oxygen in 1-g testing, yet steady microgravity flame spread was observed at 13.6 percent oxygen on orbit. Treating the 1-g result as a design limit would have overestimated the margin by a wide factor.</p>
+      <blockquote>
+        <p>“PMMA 1-g blowoff at 16 percent O<sub>2</sub> versus steady microgravity spread at 13.6 percent O<sub>2</sub>: negative oxygen margin of safety 2.4 percent.”</p>
+        <cite>BASS-II summary report · NASA/TM-20210011385</cite>
+      </blockquote>
+      <p>A screening system therefore has to answer three questions at once: what evidence exists for this material, how strong is that evidence for the intended environment, and what test would most improve the answer. Firebreak is built around that triple. It does not return a pass or fail; it returns a grade, a verdict, and the specific gap that keeps the grade where it is.</p>
+    </section>
+
+    <section id="system" class="prose">
+      <span class="secnum">§2</span>
+      <h2>System</h2>
+      <p>Firebreak has five components. Retrieval finds relevant records for a material and environment; coverage separates what the corpus can support from what it cannot; the severity model predicts whether a record documents meaningful CO<sub>2</sub> rise in BASS-II data; the rule engine assigns the grade; and an explanation layer renders the reasoning in plain language. Every grade is traceable to the records that produced it.</p>
+
+      <p class="scrollhint" aria-hidden="true">Scroll table →</p>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Table 1">
+        <table>
+          <caption><b>Table 1</b> Components, implementations, and measured outputs.</caption>
+          <thead>
+            <tr><th scope="col">Component</th><th scope="col">Implementation</th><th scope="col">Measured output</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Retrieve</td><td>TF-IDF over normalized material, environment, and outcome fields</td><td class="num">recall@3 1.00 · false-match 0.00</td></tr>
+            <tr><td>Coverage</td><td>Environment-aware matching across gravity, pressure, and oxygen</td><td class="num">5 / 5 held-out targets found</td></tr>
+            <tr><td>Severity</td><td>Gradient-boosted classifier on BASS-II sample features</td><td class="num">AUC 0.834 vs 0.607 O<sub>2</sub>-only</td></tr>
+            <tr><td>Grade</td><td>Ten deterministic rules R1–R10 over evidence strength</td><td class="num">A–D, verdict, blocking gap</td></tr>
+            <tr><td>Explain</td><td>Templates over the rule trace and cited records</td><td class="num">30-row audit, 60/60 fields correct</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">The engine is deterministic: identical inputs produce identical grades, and no grade is generated by a language model. The severity classifier is the only learned component, and it is scoped to a single outcome variable — whether a BASS-II record shows a CO<sub>2</sub> rise above 0.5 percentage points. It does not predict ignition, flame spread, or limiting oxygen concentration.</p>
+    </section>
+
+    <section id="results">
+      <div class="prose">
+        <span class="secnum">§3</span>
+        <h2>Results</h2>
+        <p>Table 2 applies the engine to seven representative material–environment pairs. The pattern is consistent: microgravity evidence supports actionable grades for materials that have flown, and it is absent for the environments that matter most for lunar-surface operations.</p>
+      </div>
+
+      <p class="scrollhint" aria-hidden="true">Scroll table →</p>
+      <div class="tablewrap wide" tabindex="0" role="region" aria-label="Table 2">
+        <table>
+          <caption><b>Table 2</b> Representative assessments across materials and environments. Grades reflect the strongest evidence the corpus can support, not the material's true flammability.</caption>
+          <thead>
+            <tr><th scope="col">Material</th><th scope="col">Environment</th><th scope="col">Grade</th><th scope="col">Verdict</th><th scope="col">Basis</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PMMA</td><td class="env">ISS cabin · 24.1% O<sub>2</sub></td><td><span class="grade gA">A</span></td><td class="verdict">High risk</td><td>BASS-II; spread at 20.7% O<sub>2</sub></td></tr>
+            <tr><td>SIBAL</td><td class="env">ISS cabin · 24.1% O<sub>2</sub></td><td><span class="grade gA">A</span></td><td class="verdict">High risk</td><td>Microgravity spread observed</td></tr>
+            <tr><td>Nomex</td><td class="env">ISS cabin · 24.1% O<sub>2</sub></td><td><span class="grade gB">B</span></td><td class="verdict">Test needed</td><td>Microgravity data; coverage partial</td></tr>
+            <tr><td>Silicone</td><td class="env">ISS cabin · 24.1% O<sub>2</sub></td><td><span class="grade gB">B</span></td><td class="verdict">Test needed</td><td>Microgravity data; coverage partial</td></tr>
+            <tr><td>PMMA</td><td class="env">Lunar · 37% O<sub>2</sub> / 8.2 psia</td><td><span class="grade gC">C</span></td><td class="verdict">Insufficient evidence</td><td>No low-pressure microgravity record</td></tr>
+            <tr><td>Kevlar / PBI</td><td class="env">Lunar · 37% O<sub>2</sub> / 8.2 psia</td><td><span class="grade gC">C</span></td><td class="verdict">Insufficient evidence</td><td>1-g data only (TB 26-05); capped at C</td></tr>
+            <tr><td>Nylon webbing</td><td class="env">ISS cabin · 24.1% O<sub>2</sub></td><td><span class="grade gD">D</span></td><td class="verdict">Insufficient evidence</td><td>No retrievable record</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="scrollhint" aria-hidden="true">Scroll table →</p>
+      <div class="tablewrap narrow" tabindex="0" role="region" aria-label="Table 3">
+        <table>
+          <caption><b>Table 3</b> Corpus and evaluation coverage. A large public record, but only six anchors strong enough to support low-pressure reasoning.</caption>
+          <thead>
+            <tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Curated records</td><td class="num">637</td><td>8 PSI datasets and derived test tables</td></tr>
+            <tr><td>Solid-material test rows</td><td class="num">148</td><td>Across 7 material classes</td></tr>
+            <tr><td>Documented outcomes</td><td class="num">13</td><td>11 microgravity · 2 at 1-g</td></tr>
+            <tr><td>Pressure-bearing microgravity anchors</td><td class="num">6</td><td>Usable for low-pressure reasoning</td></tr>
+            <tr><td>Source documents</td><td class="num">9</td><td>501 pages, all public</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <p>Table 4 extends the assessment to all eight material classes at the three application presets. The lunar-surface column is uniformly C or D: no class has the pressure-bearing microgravity evidence that a higher grade would require. That column is the gap the system exists to make visible, and the reason the ranked next test matters more than the grade itself.</p>
+      </div>
+
+      <p class="scrollhint" aria-hidden="true">Scroll table →</p>
+      <div class="tablewrap narrow" tabindex="0" role="region" aria-label="Table 4">
+        <table class="matrix">
+          <caption><b>Table 4</b> Evidence grades for all eight material classes at the three application presets. C and D are evidence gaps, not safety findings.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Material class</th>
+              <th scope="col">ISS cabin<span>24.1% O<sub>2</sub> · 14.7 psia</span></th>
+              <th scope="col">Airlock / Gateway<span>30% O<sub>2</sub> · 10.2 psia</span></th>
+              <th scope="col">Lunar surface<span>37% O<sub>2</sub> · 8.2 psia</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>PMMA</td><td class="gradecell gA">A</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>SIBAL</td><td class="gradecell gA">A</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>Nomex</td><td class="gradecell gB">B</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>Silicone</td><td class="gradecell gB">B</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>Kevlar / PBI</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>PMMA / Nomex layup</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>Unidentified</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td><td class="gradecell gC">C</td></tr>
+            <tr><td>Nylon webbing</td><td class="gradecell gD">D</td><td class="gradecell gD">D</td><td class="gradecell gD">D</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section>
-      <div class="section-head">
-        <h2>Grades measure evidence, not safety.</h2>
-        <p class="section-note">A grade is a statement about documentation. It is never a certification.</p>
-      </div>
-      <div class="grades">
-        <div class="grade a">
-          <div class="letter">A</div>
-          <h3>Anchored</h3>
-          <p>A documented microgravity outcome at or beyond the target condition, with pressure reported.</p>
-        </div>
-        <div class="grade b">
-          <div class="letter">B</div>
-          <h3>Bracketed</h3>
-          <p>Microgravity evidence brackets the condition, but an outcome or pressure is missing.</p>
-        </div>
-        <div class="grade c">
-          <div class="letter">C</div>
-          <h3>Outside / 1-g</h3>
-          <p>Only 1-g data, or the atmosphere is outside the tested envelope. C is a gap, not a pass.</p>
-        </div>
-        <div class="grade d">
-          <div class="letter">D</div>
-          <h3>Unknown</h3>
-          <p>No usable solid-material evidence is ingested. Unknown is not safe.</p>
-        </div>
-      </div>
+    <section id="limits" class="prose">
+      <span class="secnum">§4</span>
+      <h2>Limitations</h2>
+      <p>The system is deliberately conservative, and several of its limits are structural rather than temporary.</p>
+      <ol class="limits">
+        <li>
+          <b>Microgravity anchors are scarce.</b>
+          <p>Six pressure-bearing anchors support the entire low-pressure reasoning layer. More anchors would change grades; no amount of modeling substitutes for them.</p>
+        </li>
+        <li>
+          <b>One-gravity evidence caps at grade C.</b>
+          <p>Rule R6 prohibits a 1-g result from supporting a grade above C, because buoyancy changes the flame-spread threshold. This affects the Kevlar/PBI layup data from TB 26-05 and any ambient-pressure screening in the corpus.</p>
+        </li>
+        <li>
+          <b>The severity model is narrow by design.</b>
+          <p>It predicts only whether a BASS-II record shows a CO<sub>2</sub> rise above 0.5 percentage points, for material classes seen in training. It is not an ignition model, a flame-spread model, or a limiting-oxygen-concentration predictor.</p>
+        </li>
+        <li>
+          <b>Composite layups cannot exceed grade C.</b>
+          <p>Rule R8 caps layups at C because the corpus records them as assemblies, not as characterized constituents. A layup's grade reflects the assembly evidence, not its best constituent.</p>
+        </li>
+        <li>
+          <b>This is not certification.</b>
+          <p>Firebreak is screening support. It does not certify a material, approve a flight configuration, or substitute for NASA-STD-6001 Test 1. MAPTIS and all authentication-gated sources are excluded; every record in the corpus is public and cited.</p>
+        </li>
+      </ol>
     </section>
 
-    <section id="method">
-      <div class="section-head">
-        <h2>How a grade is built.</h2>
-        <p class="section-note">Retrieval, coverage, and severity are models. The grade is rules. The two never swap roles.</p>
-      </div>
-      <div class="pipeline">
-        <div class="step">
-          <span class="idx">01</span>
-          <h3>Retrieve</h3>
-          <p>Material aliasing and O₂ proximity score 148 solid tests. Gas-fuel rows stay in the library but out of grading.</p>
-        </div>
-        <div class="step">
-          <span class="idx">02</span>
-          <h3>Check coverage</h3>
-          <p>ML-2 tests whether the query condition sits inside the documented microgravity envelope.</p>
-        </div>
-        <div class="step">
-          <span class="idx">03</span>
-          <h3>Estimate severity</h3>
-          <p>ML-3 flags BASS-II ΔCO₂ severity for seen classes. It does not predict ignition.</p>
-        </div>
-        <div class="step">
-          <span class="idx">04</span>
-          <h3>Apply rules</h3>
-          <p>Ten versioned rules cap grades for missing pressure, 1-g-only data, conflicts, and layup configuration.</p>
-        </div>
-        <div class="step">
-          <span class="idx">05</span>
-          <h3>Cite</h3>
-          <p>A deterministic grade, source-linked rows, and named gaps. Every rule carries its citation.</p>
-        </div>
-      </div>
+    <section id="code" class="prose">
+      <span class="secnum">§5</span>
+      <h2>Reproducibility</h2>
+      <p>The full system runs offline. It requires Python 3.11 and no external services; the corpus, models, and web application are all local. The evaluation suite covers retrieval, coverage, severity, rules, and the explanation audit.</p>
+      <pre><code>python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --port 8010
+pytest -q                        # 48 passed</code></pre>
+      <p class="small">On the held-out set, retrieval recall@3 is 1.00 with zero false matches; coverage identifies 5/5 targets; the severity model reaches AUC 0.834 against a 0.607 oxygen-only baseline; and the explanation audit checks 60/60 fields across 30 rows. The rule engine and explanation layer are deterministic and covered by unit tests.</p>
     </section>
 
-    <section>
-      <div class="section-head">
-        <h2>Inside the app.</h2>
-        <p class="section-note">A dossier per material, a ranked Gap Map, and a searchable source library.</p>
-      </div>
-      <div class="shots">
-        <figure>
-          <div class="shot-frame">
-            <a href="screenshots/03-gap-map.png" target="_blank" rel="noopener"><img src="screenshots/03-gap-map.png" width="1240" height="433" alt="Gap Map ranking material classes by missing evidence, with Kevlar/PBI capped at Grade C."></a>
-          </div>
-          <figcaption><span>Kevlar/PBI: two 1-g anchors, no microgravity — capped at C</span><span>GAP MAP</span></figcaption>
-        </figure>
-        <figure>
-          <div class="shot-frame">
-            <a href="screenshots/06-matrix.png" target="_blank" rel="noopener"><img src="screenshots/06-matrix.png" width="1240" height="528" alt="Grade matrix showing every material class at ISS cabin, airlock, and lunar surface conditions."></a>
-          </div>
-          <figcaption><span>Every class, three atmospheres, one screen</span><span>MATRIX</span></figcaption>
-        </figure>
-        <figure>
-          <div class="shot-frame">
-            <a href="screenshots/05-ranked-findings.png" target="_blank" rel="noopener"><img src="screenshots/05-ranked-findings.png" width="1240" height="714" alt="Six ranked finding cards ordered by decision impact, with the exact test that would change each grade."></a>
-          </div>
-          <figcaption><span>Six answers, ordered by decision impact</span><span>FINDINGS</span></figcaption>
-        </figure>
+    <section id="data" class="prose">
+      <span class="secnum">§6</span>
+      <h2>Data, code, and citation</h2>
+      <p>The corpus is assembled from public NASA sources: the Physical Sciences Informatics system, NASA Technical Reports Server documents including the BASS-II summary report and TB 26-05, and NASA standards JSC 29353D and NASA-STD-6001B. Each record retains its source identifier and page reference, and the repository includes the ingestion scripts that rebuild the SQLite corpus from the raw documents. Full citations are in <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/sources.md">docs/sources.md</a>.</p>
+      <p>Code is released under the MIT license at <a href="https://github.com/DiyonGamage/firebreak">github.com/DiyonGamage/firebreak</a>. This page is served from the same repository.</p>
+
+      <div id="cite">
+        <div class="pre-head">
+          <span class="label">BibTeX</span>
+          <button class="copy" type="button" id="copy-bib">Copy BibTeX</button>
+        </div>
+        <pre><code id="bib">@misc{firebreak2026,
+  title  = {Firebreak: evidence-graded flammability screening for spacecraft materials},
+  author = {{Team LFR}},
+  year   = {2026},
+  note   = {NASA Space Apps Challenge 2026, Kandy, Sri Lanka},
+  url    = {https://github.com/DiyonGamage/firebreak}
+}</code></pre>
       </div>
     </section>
-
-    <section>
-      <div class="section-head">
-        <h2>Every grade has a source.</h2>
-        <p class="section-note">501 pages are indexed locally. Links resolve to the test row, report page, or standard clause.</p>
-      </div>
-      <div class="source-split">
-        <div class="source-copy">
-          <p>Firebreak ingests NASA PSI experiment tables, NTRS reports, and NASA standards into one
-          local SQLite corpus. <strong>Missing values stay missing.</strong> Nothing is imputed into a
-          condition, an outcome, or a pressure.</p>
-          <p>The library page searches the source text directly, so a claim can be checked against the
-          document that made it — not against a generated summary.</p>
-          <ul>
-            <li><span>NASA PSI — BASS-II, Saffire I–III, ACME-BRE, SPICE</span><span>637 records</span></li>
-            <li><span>NTRS reports, including the BASS-II summary and TB 26-05</span><span>7 reports</span></li>
-            <li><span>NASA standards — JSC 29353D, NASA-STD-6001B</span><span>2 documents</span></li>
-            <li><span>MAPTIS and all authenticated sources</span><span>excluded</span></li>
-          </ul>
-          <p class="fine" style="color:var(--faint);font-size:11.5px;margin-top:16px">
-            Full citations: <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/sources.md" style="color:var(--muted)">docs/sources.md</a>
-          </p>
-        </div>
-        <div class="source-shot">
-          <div class="shot-frame">
-            <a href="screenshots/04-library.png" target="_blank" rel="noopener"><img src="screenshots/04-library.png" width="1240" height="1332" alt="Evidence library page searching NASA source documents for PMMA margin passages."></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="limits">
-      <div class="section-head">
-        <h2>What the data refuses to support.</h2>
-        <p class="section-note">The most useful output is often not a grade, but a defensible statement of what is missing.</p>
-      </div>
-      <div class="honesty">
-        <div class="honesty-row">
-          <div class="val">6 / 148</div>
-          <div>
-            <h3>Six pressure-bearing microgravity anchors</h3>
-            <p>Only 6 of 148 solid-material tests report both a microgravity outcome and a pressure. The
-            rest add context; they cannot support acceptance. <strong>Grade A is built on those six.</strong></p>
-          </div>
-        </div>
-        <div class="honesty-row">
-          <div class="val">2 / 13</div>
-          <div>
-            <h3>Two documented outcomes are 1-g only</h3>
-            <p>Kevlar/PBI is the only class anchored by 1-g data. R6 caps it at C at every atmosphere,
-            no matter how good the Earth result looks.</p>
-          </div>
-        </div>
-        <div class="honesty-row">
-          <div class="val">0 / 8</div>
-          <div>
-            <h3>No class reaches A or B at the lunar-surface preset</h3>
-            <p>At 37% O₂ / 8.2 psia every class returns C or D. That is missing evidence, not lower hazard.</p>
-          </div>
-        </div>
-        <div class="honesty-row">
-          <div class="val">0</div>
-          <div>
-            <h3>Zero invented pressures</h3>
-            <p>PSI solid-material tables do not report pressure. Rather than fill in a plausible value,
-            Firebreak caps those grades at B. Grades rise only where a cited passage states the condition.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>Run it offline.</h2>
-        <p class="section-note">Data is built once, hashed, and served locally. The demo makes no network calls.</p>
-      </div>
-      <div class="run">
-        <pre class="code"><span class="prompt">$</span> python -m venv .venv
-<span class="prompt">$</span> pip install -r requirements.txt
-<span class="prompt">$</span> python -m uvicorn app.main:app --port 8010
-<span class="prompt">$</span> curl -s http://127.0.0.1:8010/healthz
-{"status":"ok","experiments":637,"documents":9}
-<span class="prompt">$</span> python -m pytest -q
-<span class="ok">48 passed</span></pre>
-        <div class="run-copy">
-          <p><strong>48 tests</strong> cover the rule engine, dashboard insights, ML gates, and assistant
-          routing. The extraction audit checks 30 stratified rows, 60 of 60 fields.</p>
-          <p>The severity screen reaches a grouped-CV <strong>AUC of 0.834</strong> against 0.607 for an
-          O₂-only baseline. It is scoped to BASS-II material classes and CO₂ rise — not ignition, not
-          flame spread.</p>
-          <p class="fine">Python 3.11 · FastAPI · SQLite · scikit-learn · no API key required at runtime.</p>
-        </div>
-      </div>
-    </section>
-
   </div>
 </main>
 
 <footer>
-  <div class="shell">
-    <div class="foot-top">
-      <div class="foot-brand"><span class="mark" aria-hidden="true">F</span> FIREBREAK · NASA SPACE APPS CHALLENGE 2026</div>
-      <div class="foot-links">
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <p><b style="color:var(--ink-2)">Firebreak</b> · Team LFR · NASA Space Apps Challenge 2026</p>
+        <p>Last updated 14 November 2026 · Built from the local SQLite corpus · 48 tests passing</p>
+      </div>
+      <div class="footlinks" aria-label="Project links">
         <a href="https://github.com/DiyonGamage/firebreak">Repository</a>
-        <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/validation.md">Validation</a>
+        <a href="https://github.com/DiyonGamage/firebreak/blob/main/LICENSE">MIT license</a>
         <a href="https://psi.nasa.gov/">NASA PSI</a>
-        <a href="https://ntrs.nasa.gov/">NTRS</a>
-        <a href="https://standards.nasa.gov/">NASA Standards</a>
+        <a href="https://ntrs.nasa.gov/">NASA NTRS</a>
+        <a href="https://standards.nasa.gov/standard/NASA/NASA-STD-6001">NASA-STD-6001</a>
       </div>
     </div>
-    <div class="boundary">
-      Screening support only. Not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.
-      Grades measure the strength of the evidence, not the safety of the material. MAPTIS and all
-      authenticated sources are excluded.
-    </div>
-    <p class="colophon">Challenge: Flame in Freefall — AI-powered fire safety insights from microgravity combustion data. Team LFR, Kandy, Sri Lanka.</p>
+    <p class="boundary"><b>Boundary of use.</b> Firebreak is screening support only. It does not certify a material, approve a flight configuration, or substitute for NASA-STD-6001 Test 1. Grades describe the strength of public evidence for an environment, not a material's true flammability. All inputs are public; MAPTIS and authentication-gated sources are excluded.</p>
   </div>
 </footer>
 
+<script>
+(function () {
+  var btn = document.getElementById('copy-bib');
+  var bib = document.getElementById('bib');
+  if (!btn || !bib) return;
+  var timer = null;
+  function flash(label, ok) {
+    btn.textContent = label;
+    btn.classList.toggle('done', ok);
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      btn.textContent = 'Copy BibTeX';
+      btn.classList.remove('done');
+    }, 2200);
+  }
+  btn.addEventListener('click', function () {
+    var text = bib.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { flash('Copied', true); },
+        function () { flash('Copy failed', false); }
+      );
+      return;
+    }
+    var area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'absolute';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(area);
+    flash(ok ? 'Copied' : 'Copy failed', ok);
+  });
+})();
+</script>
 </body>
 </html>
