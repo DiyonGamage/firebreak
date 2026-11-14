@@ -125,7 +125,7 @@ credible, not less.
 
 ### Try it out
 
-- Project site: `{{SITE_URL}}` (built from `docs/index.html`)
+- Project site: `https://diyongamage.github.io/firebreak/` (replace with the custom domain once claimed)
 - Repo: `https://github.com/DiyonGamage/firebreak`
 - Video: `{{VIDEO_URL}}`
 - Run locally: `python -m uvicorn app.main:app --port 8010` then open
@@ -202,7 +202,7 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
   2026-11-14; proceed with the offline screen-share plan.
 - [ ] **Record and upload the 90 s video**; add the public URL.
 - [ ] **Publish the project page** with the copy in section 1.
-- [ ] **Publish the showcase site** (`docs/index.html` → GitHub Pages) and set `{{SITE_URL}}`.
+- [x] **Publish the showcase site** — `https://diyongamage.github.io/firebreak/`.
 - [ ] **Claim the free domain** (`spaceapps.earth`) and attach it to Pages — section 5.
 
 ### Project page fields
@@ -326,8 +326,8 @@ gh api -X POST repos/DiyonGamage/firebreak/pages `
   -f "source[branch]=main" -f "source[path]=/docs"
 ```
 
-The site is live at `https://diyongamage.github.io/firebreak/` after the first build
-(about a minute). Set `{{SITE_URL}}` to that URL if the custom domain is not ready.
+The site is live at `https://diyongamage.github.io/firebreak/` (Pages is enabled,
+source `main` / `docs`). The custom domain replaces that URL once DNS resolves.
 
 ### 5.3 Point the domain at Pages
 
@@ -350,6 +350,12 @@ gh api -X PUT repos/DiyonGamage/firebreak/pages -F https_enforced=true
 
 DNS and the certificate can take up to an hour. If the deadline is close, submit the
 `github.io` URL and add the domain when it resolves.
+
+Once the domain is live, add one honest credit line to the footer of `docs/index.html`:
+
+```html
+<p class="colophon">Domain provided by GoDaddy Registry through the NASA Space Apps 2026 Global Offers.</p>
+```
 
 ### 5.4 Offers to skip
 
@@ -375,5 +381,7 @@ docker run -p 8080:8080 firebreak
 - Google Cloud Run: push the image to Artifact Registry and deploy with
   `--allow-unauthenticated --port 8080`. Requires the free-trial billing account.
 
-If neither is tested by 15 Nov, do not list a live URL. The offline screen-share demo is
-the reliable path.
+If either deploy is tested, add the matching credit line to the site footer
+(`Hosted on Microsoft Azure` or `Hosted on Google Cloud`, plus `through the NASA Space
+Apps 2026 Global Offers`). If neither is tested by 15 Nov, do not list a live URL. The
+offline screen-share demo is the reliable path.
