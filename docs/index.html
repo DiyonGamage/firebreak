@@ -141,6 +141,21 @@
   }
   .links a:hover { color: var(--accent); border-color: var(--accent); }
 
+  .brief {
+    margin: 38px 0 0;
+    padding: 22px 0 4px;
+    border-top: 1px solid var(--ink);
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 48px;
+  }
+  .brief dt {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 5px;
+  }
+  .brief dd {
+    margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-2);
+  }
+  .brief + .abstract { margin-top: 30px; }
   .abstract { margin: 44px 0 0; }
   .abstract h2 {
     font-family: var(--sans); font-size: 11.5px; font-weight: 650;
@@ -333,6 +348,8 @@
   }
   @media (max-width: 760px) {
     body { font-size: 17px; }
+    .brief { grid-template-columns: 1fr; gap: 16px; padding-top: 18px; }
+    .brief dd { font-size: 14.5px; }
     .prose figure.bleed {
       width: calc(100vw - 36px);
       margin-left: calc(50% - (100vw - 36px) / 2);
@@ -422,6 +439,25 @@
         </figure>
       </div>
     </div>
+
+    <dl class="brief" aria-label="In brief">
+      <div>
+        <dt>Problem</dt>
+        <dd>A materials engineer preparing a NASA-STD-6001 Test 1 campaign has to trace evidence through 501 pages of scattered NASA records, where a 1-g pass can hide a microgravity failure.</dd>
+      </div>
+      <div>
+        <dt>Result</dt>
+        <dd>637 records graded A–D with cited gaps. PMMA and SIBAL reach grade A at ISS conditions; none of eight material classes reaches A or B for lunar-surface use.</dd>
+      </div>
+      <div>
+        <dt>AI use</dt>
+        <dd>One monotonic model screens BASS-II CO<sub>2</sub> rise from oxygen, thickness, and material class, with 80% conformal sets and abstention outside PMMA/SIBAL or 13.6–22.2% O<sub>2</sub>. Rules assign the grade.</dd>
+      </div>
+      <div>
+        <dt>Limits</dt>
+        <dd>Screening support only — not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.</dd>
+      </div>
+    </dl>
 
     <div class="abstract prose">
       <h2>Abstract</h2>

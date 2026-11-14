@@ -28,6 +28,14 @@ source-linked evidence grades. Given a material and cabin atmosphere, it shows t
 closest tests, why the grade was assigned, what is missing, and what evidence would
 change the answer. It is screening support, not certification.
 
+### 20-second AI answer — place above the fold
+
+> Firebreak uses AI where it can be checked. One model screens whether CO₂ rises more than
+> 0.5 points in BASS-II, from oxygen, thickness, and material class. It is monotonic in
+> oxygen, validated by material, and wrapped in 80% conformal sets that return “unresolved”
+> when the data cannot decide — abstaining outside PMMA/SIBAL or 13.6–22.2% O₂, including
+> the 24.1% ISS preset. Rules assign the grade, never the model.
+
 ### Long description
 
 Spacecraft material flammability decisions are made under uncertainty. A material that
@@ -35,6 +43,10 @@ passes a 1-g test can behave differently in microgravity: NASA's BASS-II results
 PMMA blowing off at 16% O2 in 1-g while continuing to spread at 13.6% O2 in microgravity
 — a negative oxygen margin of 2.4 percentage points. Engineers need to know what the
 evidence covers, where it stops, and what test closes the gap.
+
+For a materials engineer preparing a NASA-STD-6001 Test 1 campaign, Firebreak turns 501
+pages across nine documents into one cited dossier: the grade, the nearest tests, and the
+gap that would change it.
 
 Firebreak answers four questions for any material and atmosphere:
 
@@ -87,8 +99,9 @@ submission screenshots. All data is built once, cached, hashed, and then served 
 - ACME-BRE rows are daily aggregates with inconsistent O2 text; they are retained but
   excluded from solid-material grading.
 - Saffire-II has only nine samples and some outcomes are qualitative.
-- Cactus routing on CPU is slow (12–36 s). We kept it optional and made the fallback the
-  default rather than hiding the latency.
+- Cactus routing on CPU is slow (12–36 s). We kept it optional, made the deterministic
+  router the default, and ship a cached Cactus run in the UI for the demo rather than
+  hiding the latency.
 
 ### Accomplishments we are proud of
 
@@ -185,8 +198,8 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 - Record at 1920×1080, browser zoom 100%, clean profile, bookmarks bar hidden.
 - Pre-load the server and the PMMA result before recording; type only the material name.
 - Keep the cursor movements deliberate and slow; pause 0.5 s on each grade.
-- Do **not** demo the Cactus checkbox in the timed video; it is slow on CPU. The fallback
-  router is the default.
+- Do **not** run live Cactus in the timed video; the assistant panel's cached Cactus run is
+  instant, and the deterministic router is the default.
 - Record with Wi-Fi disabled so the offline badge claim is visibly true.
 - Export H.264 MP4, ≤ 90 s, audio normalized to about −16 LUFS.
 - Upload as **public** or **unlisted** (not private) and paste the URL above.
@@ -279,8 +292,9 @@ and AUC 0.811. Disable Wi-Fi and reload once; the page must render identically.
    and SIBAL A; explain ranked gaps.
 5. **Evidence ledger (1:50)** — click the NTRS source link; show the page-cited row.
 6. **Library search (2:10)** — search `PMMA margin` or `Test 1`; show NTRS/standard hits.
-7. **Offline assistant (2:30)** — ask `Assess SIBAL at ISS internal` with the fallback
-   engine; show the tool trace. Do not enable Cactus unless asked.
+7. **Offline assistant (2:30)** — ask `Assess SIBAL at ISS internal` with the deterministic
+   router; show the tool trace. Optionally click **See a cached Cactus Needle run** to show
+   the local-model route without waiting.
 8. **Close (2:50)** — screening support, not certification; repo and video links.
 
 ### 60-second version
@@ -294,8 +308,8 @@ PMMA ISS → Grade A → lunar surface → Grade C → Gap Map → one source li
 - **Totally offline machine:** run from the built `data/processed/firebreak.sqlite` and
   cached document text; no network calls are made at runtime.
 - **Projection too small:** increase browser zoom to 125%; the layout is responsive.
-- **Judges ask for Cactus:** explain it is an optional local router, 12–36 s on CPU,
-  with a deterministic fallback; offer the recorded trace instead of waiting.
+- **Judges ask for Cactus:** open the cached Cactus Needle run in the assistant panel. Live
+  Cactus is available through `/api/assistant?engine=cactus`; explain the 12–36 s CPU cost.
 - **No microphone:** use the video; the demo path above is the live backup.
 - **Backup assets:** screenshots 01–04, `artifacts/*.json`, the recorded video, and a
   printed dossier PDF.

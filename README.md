@@ -28,6 +28,10 @@ what grade that evidence supports, what uncertainty remains, and what test to ru
 result links to a PSI test row, an NTRS page, or a NASA standard clause. The demo runs offline
 from a curated 637-row corpus.
 
+For a materials engineer preparing a NASA-STD-6001 Test 1 campaign, it turns 501 pages across
+nine documents into one cited dossier: the grade, the nearest tests, and the gap that would
+change it.
+
 ## What it does
 
 - Grades evidence **A/B/C/D** with a verdict and confidence — strength of evidence, not safety.
@@ -122,7 +126,7 @@ python scripts\build_docs.py
 | `GET /healthz` | Health check |
 
 The deterministic assistant fallback is the default. Cactus routing is local and slow on CPU
-(~12–36 s in testing), so the UI exposes it as an optional checkbox.
+(~12–36 s in testing), so the UI serves a cached Cactus run and keeps live Cactus on the API.
 
 ## What Firebreak does not claim
 

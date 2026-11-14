@@ -42,7 +42,7 @@ assistantForm?.addEventListener("submit", async (event) => {
   assistantTrace.hidden = true;
   try {
     const response = await fetch(
-      `/api/assistant?q=${encodeURIComponent(query)}&engine=${document.querySelector("#assistant-cactus")?.checked ? "cactus" : "fallback"}`
+      `/api/assistant?q=${encodeURIComponent(query)}&engine=fallback`
     );
     const payload = await response.json();
     assistantAnswer.textContent = payload.answer || "No answer returned.";
@@ -59,5 +59,15 @@ assistantForm?.addEventListener("submit", async (event) => {
   } catch {
     assistantAnswer.textContent = "The local router is unavailable. Use the evidence ledger or JSON endpoint.";
   }
+});
+
+const sampleToggle = document.querySelector("#sample-toggle");
+const samplePanel = document.querySelector("#assistant-sample");
+
+sampleToggle?.addEventListener("click", () => {
+  const open = samplePanel.hidden;
+  samplePanel.hidden = !open;
+  sampleToggle.setAttribute("aria-expanded", String(open));
+  sampleToggle.textContent = open ? "Hide cached Cactus Needle run" : "See a cached Cactus Needle run →";
 });
 

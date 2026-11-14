@@ -329,13 +329,21 @@
           <div class="panel-kicker">OFFLINE EVIDENCE ROUTER</div>
           <h2>Ask Firebreak</h2>
         </div>
-        <span class="micro">Cactus Needle · local · no API key</span>
+        <span class="micro">Deterministic router · Cactus sample · offline</span>
       </div>
       <form class="search assistant-form" id="assistant-form">
         <input id="assistant-query" type="text" placeholder="Assess SIBAL at ISS internal, find gaps, check PMMA coverage…" autocomplete="off">
-        <label class="cactus-toggle"><input id="assistant-cactus" type="checkbox"> Cactus router (slow, local)</label>
         <button type="submit">Route</button>
       </form>
+      <p class="sample-note">Live queries use the deterministic router.
+        <button type="button" class="sample-toggle" id="sample-toggle" aria-expanded="false" aria-controls="assistant-sample">See a cached Cactus Needle run →</button>
+      </p>
+      <div id="assistant-sample" hidden>
+        <p class="sample-meta">Cached Cactus Needle run · “Assess SIBAL at ISS internal” · 12 s on CPU</p>
+        <div class="assistant-answer">SIBAL at ISS Internal (24.1% O₂, 14.5 psia): grade A — evidence indicates spread. Coverage: in_distribution. BASS-II CO₂-rise screen abstains — 24.1% O₂ is outside the BASS-II training range (13.6–22.2%). Retrieved 12 solid-material tests; 5 microgravity and 0 1-g rows carry a documented outcome. Top gap: No evidence gap at this condition; validate the as-built article. Screening support, not certification or flight approval.</div>
+        <pre class="assistant-trace">engine: cactus-needle
+assess_material({"material": "SIBAL", "atmosphere": "ISS internal"})</pre>
+      </div>
       <div class="assistant-answer" id="assistant-answer" hidden></div>
       <div class="assistant-trace" id="assistant-trace" hidden></div>
     </section>
