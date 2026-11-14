@@ -100,7 +100,7 @@
       "Grade A anchor: NTRS-BASS2:PMMA-100um-20.7 at 20.7% O2 and 14.409 psia, outcome=spread."
     ],
     "gaps": [
-      "Configuration-level layup or combined-material test."
+      "No evidence gap at this condition; validate the as-built article."
     ],
     "evidence": [
       {
@@ -773,7 +773,7 @@
       "Grade A anchor: NTRS-BASS2:SIBAL-GMT96-T7 at 21.0% O2 and 14.696 psia, outcome=spread."
     ],
     "gaps": [
-      "Configuration-level layup or combined-material test."
+      "No evidence gap at this condition; validate the as-built article."
     ],
     "evidence": [
       {
@@ -913,7 +913,7 @@
     "note": "Three BASS-II Nomex conditions; no documented spread outcome and no brand/weight metadata.",
     "grade": "B",
     "verdict": "test_needed",
-    "confidence": 0.59,
+    "confidence": 0.51,
     "outside_envelope": false,
     "coverage": {
       "material": "Nomex",
@@ -999,13 +999,14 @@
       "caveat": "Within-BASS-II CO2-rise screen; not a flammability, ignition, or flight-approval prediction."
     },
     "reasons": [
-      "Retrieved 4 solid-material tests; 0 microgravity and 0 1-g rows carry a documented outcome.",
+      "Retrieved 3 solid-material tests; 0 microgravity and 0 1-g rows carry a documented outcome.",
       "Closest evidence: PSI-25:F1 (Nomex natural (nomex III), 22.2% O2, outcome=None).",
       "No documented spread or extinction outcome; conditions support a test plan, not acceptance."
     ],
     "gaps": [
       "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
-      "Pressure-resolved microgravity test data."
+      "Pressure-resolved microgravity test data.",
+      "Flow direction (concurrent versus opposed)."
     ],
     "evidence": [
       {
@@ -1070,27 +1071,6 @@
         "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
         "provenance_hash": "74edb9575be056a0",
         "score": 0.789
-      },
-      {
-        "experiment_id": "PSI-99:2-7",
-        "dataset": "Saffire-II",
-        "platform": "Cygnus",
-        "material": "PMMA & Nomex",
-        "material_class": "PMMA/Nomex",
-        "o2_initial_pct": 22.1,
-        "pressure_psia": null,
-        "flow_velocity_cm_s": 20.0,
-        "flow_direction": "Concurrent",
-        "gravity": "microgravity",
-        "thickness_mm": 0.37,
-        "spread_rate_mm_s": null,
-        "spread_rate_1g_mm_s": null,
-        "outcome": null,
-        "derived": false,
-        "notes": "",
-        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
-        "provenance_hash": "1bfec99eaa18a3f3",
-        "score": 0.718
       }
     ],
     "citations": [

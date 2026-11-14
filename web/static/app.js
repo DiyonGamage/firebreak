@@ -40,7 +40,7 @@ const observer = new IntersectionObserver(
   { threshold: 0.06 }
 );
 
-document.querySelectorAll(".panel, .grade-card, .stat").forEach((element) => {
+document.querySelectorAll(".panel, .grade-card, .stat, .kpi, .finding, .insight-card, .read-card").forEach((element) => {
   element.classList.add("reveal");
   observer.observe(element);
 });

@@ -8,7 +8,7 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Check | Gate | Result |
 |---|---|---|
 | Extraction audit | >= 95% field accuracy | **100%** (60/60 fields; 30/30 raw rows preserved) |
-| Rule and application tests | 41/41 | **41/41 pytest tests pass** |
+| Rule and application tests | 48/48 | **48/48 pytest tests pass** |
 | End-to-end smoke test | PASS | **7/7 API assessments, UI form, assistant, Cactus route** |
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
 | ML-2 coverage detector | held-out cases | **5/5** expected labels |
@@ -61,7 +61,7 @@ note rows.
 
 ## Rule and application tests
 
-`python -m pytest -q` -> **41 passed**.
+`python -m pytest -q` -> **48 passed**.
 
 Coverage includes:
 
@@ -72,6 +72,8 @@ Coverage includes:
 - 1-g-only Kevlar/PBI evidence capped at C;
 - conflicting outcomes lower the grade;
 - unknown material returns D, never a positive acceptance;
+- combined-material layup queries capped at C, with pure-material retrieval excluding layup rows;
+- dashboard insight counts, card ordering, matrix cells, and grade legend;
 - sensitivity variants and deterministic repeatability;
 - source-linked citations;
 - ML gates and assistant fallback.
@@ -81,6 +83,8 @@ remains true for the PSI solid-material tables, whose rows carry `pressure n/r`.
 Grade A is reachable only through the page-cited external rows where the source
 reports pressure: BASS-II NTRS §2.2/§7.1.3 (PMMA at 20.7% O2; SIBAL at 1 atm) and
 TB 26-05 (Kevlar/PBI at 8.2 psia). TB 26-05 is 1-g, so R6 caps Kevlar/PBI at C.
+Queries that name a combined-material layup are capped at C by R8: pure-material
+evidence cannot support a configuration-level A or B.
 
 ## End-to-end smoke test
 

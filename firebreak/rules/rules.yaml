@@ -104,3 +104,4 @@ facts:
 gap_targets:
   - material: Nylon webbing
     note: TB 26-05 reports standard meta-aramid or nylon webbings do not meet elevated-oxygen requirements; no microgravity row is ingested.
+    source_url: https://ntrs.nasa.gov/citations/20260006043

@@ -94,7 +94,7 @@ submission screenshots. All data is built once, cached, hashed, and then served 
 
 - **100% extraction audit** — 30 stratified rows, 60/60 field checks, 30/30 raw rows
   preserved.
-- **41/41 tests pass** across rules, ML, and assistant behavior.
+- **48/48 tests pass** across rules, dashboard insights, ML, and assistant behavior.
 - **ML gates passed** — evidence matcher recall@3 1.0 with 0.0 false-match rate;
   coverage detector 5/5; severity AUC 0.834 versus 0.607 for an O2-only baseline,
   grouped by material description.
@@ -115,7 +115,8 @@ credible, not less.
 
 - Extend the pressure-resolved external layer to Saffire and Nomex evidence.
 - Run a formal 25-query Cactus routing benchmark.
-- Add material layup/configuration handling and dossier PDF polish.
+- Expand configuration-level evidence beyond the current R8 layup cap.
+- Polish the printable dossier PDF for engineering handoff.
 
 ### Built with
 
@@ -160,13 +161,13 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 | 0:20–0:38 | Live screen recording. Type `PMMA`, select **ISS Internal**, click **Assess evidence**. Hold on the Grade A card. | Ask for PMMA at ISS atmosphere. Firebreak returns Grade A and high risk: a documented microgravity spread outcome at 1 atm, anchored to a page-cited test. |
 | 0:38–0:50 | Scroll the evidence ledger; highlight the NTRS/PSI links and the sensitivity panel. | Every row links to the original test or report. The sensitivity panel shows exactly what would change the grade. |
 | 0:50–1:02 | Switch atmosphere to **Lunar/Mars Surface (HLS max)**; show Grade C and the out-of-envelope flag; cut to the Gap Map. | Ask the same material for the lunar surface: oxygen is outside the tested envelope, and the grade drops to C. The Gap Map ranks missing evidence across material classes. |
-| 1:02–1:14 | Terminal: `python -m pytest -q` → `41 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 637 curated records, 501 pages of NASA documents, a 100% extraction audit, 41 passing tests, and a scoped CO2-rise screen at 0.834 AUC against a 0.607 baseline. |
+| 1:02–1:14 | Terminal: `python -m pytest -q` → `48 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 637 curated records, 501 pages of NASA documents, a 100% extraction audit, 48 passing tests, and a scoped CO2-rise screen at 0.834 AUC against a 0.607 baseline. |
 | 1:14–1:24 | Footer boundary text and the **OFFLINE-READY** badge; toggle Wi-Fi off if recording live. | Firebreak does not fabricate. It refuses to fill missing pressure, labels every limitation, and runs offline. |
 | 1:24–1:30 | End card: **FIREBREAK** / *Know what the evidence actually supports.* / repo URL. | Firebreak. Know what the evidence actually supports. |
 
 ### Assets
 
-- `docs/screenshots/01-overview.png` — hero + full app (1440 px full page)
+- `docs/screenshots/01-overview.png` — evidence dashboard, full page (1440 px)
 - `docs/screenshots/02-assessment.png` — Grade A card, reasons, gaps, sensitivity
 - `docs/screenshots/03-gap-map.png` — Gap Map and verified anchors
 - `docs/screenshots/04-library.png` — source-document search
@@ -218,14 +219,14 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 - [x] Open license present (MIT)
 - [ ] No MAPTIS or authenticated data redistributed
 - [ ] No fabricated measurements, outcomes, or pressure values
-- [ ] Claims match `docs/validation.md` (100% audit, 41 tests, ML metrics)
+- [ ] Claims match `docs/validation.md` (100% audit, 48 tests, ML metrics)
 - [ ] Video ≤ 90 s and publicly viewable
 - [ ] Submission completed before **15 Nov 2026 23:59 SLST**
 
 ### Final pre-submit verification
 
 ```powershell
-python -m pytest -q                 # 41 passed
+python -m pytest -q                 # 48 passed
 python scripts\smoke_e2e.py --cactus # PASS: API, UI, assistant, Cactus
 python scripts\audit_extraction.py  # 100%
 python scripts\eval_ml.py           # gates passed

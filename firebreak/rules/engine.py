@@ -49,6 +49,8 @@ def _tokens(value: str) -> set[str]:
 
 
 def _material_similarity(query: str, candidate: str) -> float:
+    if _is_layup(candidate) and not _is_layup(query):
+        return 0.0
     query_class = material_class(query)
     candidate_class = material_class(candidate)
     if query_class == "Other" and candidate_class != "Other":
@@ -150,7 +152,13 @@ def _pressure_known(evidence: list[dict[str, Any]]) -> bool:
     return any(item["pressure_psia"] is not None for item in evidence)
 
 
+def _is_layup(material: str) -> bool:
+    lowered = material.lower()
+    return any(marker in lowered for marker in ("&", " + ", "layup", "combined"))
+
+
 def _grade(
+    material: str,
     o2_pct: float,
     pressure_psia: float,
     evidence: list[dict[str, Any]],
@@ -231,6 +239,9 @@ def _grade(
         grade = "C"
     if conflict and grade in {"A", "B"}:
         grade = "C"
+    layup = _is_layup(material)
+    if layup and grade in {"A", "B"}:
+        grade = "C"
 
     pressure_known = _pressure_known(documented)
     if grade == "A" and not pressure_known:
@@ -276,6 +287,11 @@ def _grade(
         reasons.append("Matched documentation does not report pressure; A grade is capped at B.")
     if conflict:
         reasons.append("Documented microgravity outcomes conflict near the query O2; grade lowered.")
+    if layup:
+        reasons.append(
+            "Query names a combined-material layup; pure-material evidence cannot support A or B. "
+            "R8 caps the grade at C."
+        )
     if not documented:
         if one_g_documented:
             reasons.append(
@@ -305,8 +321,10 @@ def _grade(
         gaps.append("Flow direction (concurrent versus opposed).")
     if material_class(best["material"]) == "Other":
         gaps.append("Material identification or alias mapping.")
+    if layup:
+        gaps.append("Configuration-level microgravity test of the as-built layup.")
     if not gaps:
-        gaps.append("Configuration-level layup or combined-material test.")
+        gaps.append("No evidence gap at this condition; validate the as-built article.")
 
     confidence = min(0.95, 0.2 + 0.08 * len(evidence) + 0.2 * best["score"])
     if not pressure_known:
@@ -345,7 +363,7 @@ def _core_assessment(
         limit=config["evidence"]["max_evidence"],
         min_similarity=config["evidence"]["min_similarity"],
     )
-    graded = _grade(o2_pct, pressure_psia, evidence, config)
+    graded = _grade(material, o2_pct, pressure_psia, evidence, config)
     citations = []
     for item in evidence[:6]:
         citations.append(
@@ -507,6 +525,7 @@ def gap_map(
                 "priority": 4,
                 "top_gap": target.get("note") or assessment["gaps"][0],
                 "source": "requested_target",
+                "source_url": target.get("source_url", ""),
             }
         )
     results.sort(key=lambda item: (-item["priority"], item["outcomes"], -item["tests"]))

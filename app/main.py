@@ -17,6 +17,7 @@ from firebreak.services.dossier import (
     get_stats,
     search_documents,
 )
+from firebreak.services.insights import build_dashboard
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "web"
@@ -58,6 +59,7 @@ def _render(
     query: dict[str, Any],
     library_query: str = "",
     library_hits: list[dict[str, Any]] | None = None,
+    template: str = "index.html",
 ) -> HTMLResponse:
     config = load_config()
     connection = open_connection()
@@ -86,20 +88,31 @@ def _render(
         }
     finally:
         connection.close()
-    return templates.TemplateResponse(request=request, name="index.html", context=context)
+    return templates.TemplateResponse(request=request, name=template, context=context)
 
 
 @app.get("/", response_class=HTMLResponse)
-def home(
-    request: Request,
-    material: str = "PMMA",
-    atmosphere: str = "iss_internal",
-    o2: str | None = None,
-    pressure: str | None = None,
-    flow: str | None = None,
-):
+def home(request: Request):
     config = load_config()
-    return _render(request, _query(config, atmosphere, material, o2, pressure, flow))
+    connection = open_connection()
+    try:
+        dashboard = build_dashboard(connection, config)
+        material_options = inventory(connection)
+    finally:
+        connection.close()
+    return templates.TemplateResponse(
+        request=request,
+        name="dashboard.html",
+        context={
+            "request": request,
+            "dashboard": dashboard,
+            "form": {"material": "PMMA", "atmosphere": "iss_internal"},
+            "presets": [
+                {"key": key, **value} for key, value in atmosphere_presets(config).items()
+            ],
+            "inventory": material_options,
+        },
+    )
 
 
 @app.get("/assess", response_class=HTMLResponse)
@@ -132,7 +145,7 @@ def library_page(
         hits = search_documents(connection, q) if q.strip() else []
     finally:
         connection.close()
-    return _render(request, query, library_query=q, library_hits=hits)
+    return _render(request, query, library_query=q, library_hits=hits, template="library.html")
 
 
 @app.get("/api/assess")
@@ -166,6 +179,17 @@ def api_gap_map(atmosphere: str = "iss_internal"):
     connection = open_connection()
     try:
         payload = gap_map(connection, atmosphere, config=config)
+    finally:
+        connection.close()
+    return JSONResponse(content=jsonable_encoder(payload))
+
+
+@app.get("/api/insights")
+def api_insights():
+    config = load_config()
+    connection = open_connection()
+    try:
+        payload = build_dashboard(connection, config)
     finally:
         connection.close()
     return JSONResponse(content=jsonable_encoder(payload))

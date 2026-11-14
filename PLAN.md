@@ -9,7 +9,7 @@
 ## Current status (2026-11-14)
 
 Core is built and validated: PSI/NTRS/standards ingestion, 637-row SQLite corpus,
-A/B/C/D rule engine, 41 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
+A/B/C/D rule engine, 48 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
 assistant, extraction audit at 100%, and six generated case studies. Page-cited external
 rows from the BASS-II summary and TB 26-05 add pressure-resolved evidence, so PMMA and
 SIBAL now reach Grade A while materials without pressure-bearing evidence stay capped.
@@ -128,7 +128,7 @@ Versioned YAML + Python evaluator. Every rule has a citation, unit test, and fai
 9. Outside tested envelope downgrades the grade.
 10. Cross-material transfer only with explicit similarity; otherwise D.
 
-Gate: 41/41 tests pass (rules, ML, assistant). A is awarded only when a documented
+Gate: 48/48 tests pass (rules, insights, ML, assistant). A is awarded only when a documented
 microgravity outcome has reported pressure; PSI solid rows lack pressure and cap at B,
 while page-cited BASS-II rows at 1 atm enable A for PMMA and SIBAL. TB 26-05 is 1-g, so
 Kevlar/PBI caps at C.
@@ -158,7 +158,7 @@ Demo must work with Wi-Fi disabled.
 ## Validation
 
 1. Extraction audit: 30 stratified rows; 60/60 fields, 30/30 rows; 100%.
-2. Rule/application tests: 41/41 pass.
+2. Rule/application tests: 48/48 pass.
 3. Case studies:
    - PMMA: negative 2.4% O2 margin; pressure-bearing BASS-II NTRS row at 20.7% O2.
    - Saffire-II: silicone/SIBAL micro-g vs 1-g behavior.

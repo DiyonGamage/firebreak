@@ -9,70 +9,59 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="grid-overlay" aria-hidden="true"></div>
-  <header class="topbar">
-    <a class="brand" href="/">
-      <span class="brand-mark">F</span>
-      <span>FIREBREAK</span>
-      <span class="version">v1.0</span>
-    </a>
-    <div class="mission">NASA Space Apps 2026 <span>/</span> Flame in Freefall</div>
-    <div class="status"><span class="status-dot"></span> EVIDENCE GRADED <span class="status-sep">/</span> OFFLINE-READY</div>
-  </header>
+  {% include "partials/topbar.html" %}
 
   <main class="shell">
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">SPACECRAFT MATERIAL FLAMMABILITY SCREENING</p>
-        <h1>Know what the evidence <em>actually</em> supports.</h1>
-        <p class="lede">
-          Firebreak reconciles NASA microgravity tests, standards, and literature into
-          <strong>A–D evidence grades</strong>, explicit gaps, and source-linked dossiers.
-          It does not guess.
+    <section class="dossier-head">
+      <div class="dossier-title">
+        <p class="eyebrow">MATERIAL DOSSIER</p>
+        <h1>{{ result.query.material }}</h1>
+        <p class="subhead">
+          {{ result.query.o2_pct }}% O₂ · {{ result.query.pressure_psia }} psia
+          {% if result.query.flow_direction %}· {{ result.query.flow_direction }} flow{% endif %}
+          · {{ result.query.material_class }}
         </p>
-        <div class="hero-badges">
-          <span class="badge">{{ stats.total }} curated records</span>
-          <span class="badge">{{ stats.datasets|length }} datasets</span>
-          <span class="badge">A–D evidence grade</span>
-          <span class="badge">No fabricated outcome data</span>
+        <div class="dossier-flags">
+          <span class="grade-pill grade-{{ result.grade|lower }}">{{ result.grade }}</span>
+          <span class="flag">{{ result.verdict|replace('_', ' ') }}</span>
+          {% if result.outside_envelope %}<span class="flag warn">Outside tested envelope</span>{% endif %}
         </div>
-        <div class="hero-note">
-          Built for the NASA Space Apps Challenge. Screening support — not certification,
-          flight approval, or a substitute for NASA-STD-6001 Test 1.
-        </div>
+        <a class="back-link" href="/">← Evidence dashboard</a>
       </div>
 
-      <form class="assess-card" method="get" action="/assess" id="assess-form">
-        <div class="card-kicker">MATERIAL DOSSIER</div>
-        <label class="field">
-          <span>Material or alias</span>
-          <input id="material" name="material" value="{{ form.material }}" list="material-options"
-                 placeholder="PMMA, SIBAL, Nomex, silicone…" autocomplete="off" required>
-          <datalist id="material-options">
-            {% for item in inventory %}
-            <option value="{{ item.example_material }}"></option>
-            {% endfor %}
-          </datalist>
-        </label>
+      <form class="dossier-search" method="get" action="/assess" id="assess-form">
+        <div class="dossier-search-row">
+          <label class="field">
+            <span>Material or alias</span>
+            <input id="material" name="material" value="{{ form.material }}" list="material-options"
+                   placeholder="PMMA, SIBAL, Nomex, silicone…" autocomplete="off" required>
+            <datalist id="material-options">
+              {% for item in inventory %}
+              <option value="{{ item.example_material }}"></option>
+              {% endfor %}
+              <option value="Nylon webbing"></option>
+            </datalist>
+          </label>
 
-        <label class="field">
-          <span>Cabin atmosphere</span>
-          <select id="atmosphere" name="atmosphere">
-            {% for preset in presets %}
-            <option value="{{ preset.key }}"
-                    data-o2="{{ preset.o2_pct }}"
-                    data-pressure="{{ preset.pressure_psia }}"
-                    {% if preset.key == form.atmosphere %}selected{% endif %}>
-              {{ preset.label }}
-            </option>
-            {% endfor %}
-            <option value="custom" data-custom="true" {% if form.atmosphere == 'custom' %}selected{% endif %}>
-              Custom atmosphere
-            </option>
-          </select>
-        </label>
+          <label class="field">
+            <span>Cabin atmosphere</span>
+            <select id="atmosphere" name="atmosphere">
+              {% for preset in presets %}
+              <option value="{{ preset.key }}"
+                      data-o2="{{ preset.o2_pct }}"
+                      data-pressure="{{ preset.pressure_psia }}"
+                      {% if preset.key == form.atmosphere %}selected{% endif %}>
+                {{ preset.label }}
+              </option>
+              {% endfor %}
+              <option value="custom" data-custom="true" {% if form.atmosphere == 'custom' %}selected{% endif %}>
+                Custom atmosphere
+              </option>
+            </select>
+          </label>
+        </div>
 
-        <div class="field-row">
+        <div class="dossier-field-row">
           <label class="field">
             <span>O₂ % by volume</span>
             <input id="o2" name="o2" type="number" step="0.1" min="0" max="100" value="{{ form.o2 }}">
@@ -81,39 +70,27 @@
             <span>Pressure, psia</span>
             <input id="pressure" name="pressure" type="number" step="0.1" min="0.1" value="{{ form.pressure }}">
           </label>
+          <label class="field">
+            <span>Flow direction</span>
+            <select name="flow">
+              <option value="" {% if not form.flow %}selected{% endif %}>Not specified</option>
+              <option value="concurrent" {% if form.flow == 'concurrent' %}selected{% endif %}>Concurrent</option>
+              <option value="opposed" {% if form.flow == 'opposed' %}selected{% endif %}>Opposed</option>
+              <option value="quiescent" {% if form.flow == 'quiescent' %}selected{% endif %}>Quiescent</option>
+            </select>
+          </label>
         </div>
 
-        <label class="field">
-          <span>Flow direction</span>
-          <select name="flow">
-            <option value="" {% if not form.flow %}selected{% endif %}>Not specified</option>
-            <option value="concurrent" {% if form.flow == 'concurrent' %}selected{% endif %}>Concurrent</option>
-            <option value="opposed" {% if form.flow == 'opposed' %}selected{% endif %}>Opposed</option>
-            <option value="quiescent" {% if form.flow == 'quiescent' %}selected{% endif %}>Quiescent</option>
-          </select>
-        </label>
-
-        <button class="primary" type="submit">Assess evidence <span class="arrow">→</span></button>
+        <button class="primary" type="submit">Update assessment <span class="arrow">→</span></button>
         <p class="form-note">Returns the closest tests, the reason for the grade, and the evidence that would change it.</p>
       </form>
     </section>
 
-    <section class="result-head">
-      <div>
-        <p class="eyebrow">ASSESSMENT</p>
-        <h2>{{ result.query.material }}</h2>
-        <p class="subhead">
-          {{ result.query.o2_pct }}% O₂ · {{ result.query.pressure_psia }} psia
-          {% if result.query.flow_direction %}· {{ result.query.flow_direction }} flow{% endif %}
-          · {{ result.query.material_class }}
-        </p>
-      </div>
-      <div class="result-actions">
-        <a class="ghost" href="/api/assess?material={{ result.query.material|urlencode }}&atmosphere={{ form.atmosphere }}&o2={{ form.o2 }}&pressure={{ form.pressure }}&flow={{ form.flow }}">JSON</a>
-        <button class="ghost" id="copy-link" type="button">Copy link</button>
-        <button class="ghost" id="print" type="button">Print</button>
-      </div>
-    </section>
+    <div class="dossier-actions">
+      <a class="ghost" href="/api/assess?material={{ result.query.material|urlencode }}&atmosphere={{ form.atmosphere }}&o2={{ form.o2 }}&pressure={{ form.pressure }}&flow={{ form.flow }}">JSON</a>
+      <button class="ghost" id="copy-link" type="button">Copy link</button>
+      <button class="ghost" id="print" type="button">Print</button>
+    </div>
 
     <section class="result-grid">
       <article class="grade-card grade-{{ result.grade|lower }}">
@@ -384,20 +361,7 @@
       {% endfor %}
     </section>
 
-    <footer>
-      <div>
-        <strong>Firebreak</strong> · NASA Space Apps Challenge 2026 · Challenge: Flame in Freefall.
-      </div>
-      <div class="foot-links">
-        <a href="https://psi.nasa.gov" target="_blank" rel="noopener">PSI</a>
-        <a href="https://ntrs.nasa.gov" target="_blank" rel="noopener">NTRS</a>
-        <a href="https://standards.nasa.gov" target="_blank" rel="noopener">NASA Standards</a>
-        <a href="/api/stats" target="_blank" rel="noopener">API</a>
-      </div>
-      <div class="boundary foot-boundary">
-        Screening support only. Not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.
-      </div>
-    </footer>
+    {% include "partials/footer.html" %}
   </main>
 
   <script src="/static/app.js"></script>

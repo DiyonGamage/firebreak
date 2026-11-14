@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebreak — Evidence library</title>
+  <meta name="description" content="Search the NASA source documents behind every Firebreak evidence grade.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23090b10'/><path d='M17 3 8 18h6l-1 11 11-17h-6z' fill='%23ff6b35'/></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  {% include "partials/topbar.html" %}
+
+  <main class="shell">
+    <div id="library">
+      <section class="library-hero">
+        <p class="eyebrow">EVIDENCE LIBRARY</p>
+        <h1>Search the source documents.</h1>
+        <p class="lede">
+          Every grade traces back to a passage in {{ stats.documents }} NASA documents
+          across {{ stats.pages }} pages. Search the indexed text, or open a source directly.
+        </p>
+        <form class="library-search" method="get" action="/library">
+          <input type="search" name="q" value="{{ library_query }}"
+                 placeholder="PMMA margin, Test 1, SIBAL, oxygen concentration…"
+                 aria-label="Search source documents" autofocus>
+          <button class="primary" type="submit">Search library <span class="arrow">→</span></button>
+        </form>
+        <div class="hero-badges">
+          <span class="badge">{{ stats.documents }} documents</span>
+          <span class="badge">{{ stats.pages }} pages</span>
+          <span class="badge">NTRS + PSI</span>
+          <span class="badge">Local index</span>
+        </div>
+      </section>
+
+      <section class="library-body">
+        {% if library_query %}
+        <div class="search-meta">Results for “{{ library_query }}”</div>
+        <div class="hit-list">
+          {% for hit in library_hits %}
+          <article class="hit">
+            <div class="hit-top">
+              <span class="role">{{ hit.role }}</span>
+              <span class="mono">{{ hit.citation_id }} · {{ hit.pages }} pp</span>
+            </div>
+            <h3>{{ hit.title }}</h3>
+            <p>…{{ hit.snippet }}…</p>
+            <a class="source-link" href="{{ hit.source_url }}" target="_blank" rel="noopener">Open source ↗</a>
+          </article>
+          {% else %}
+          <p class="empty">No matching passages. Try a broader term.</p>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="search-meta">Suggested searches</div>
+        <div class="case-chips library-suggestions">
+          <a class="case-chip" href="/library?q=PMMA%20margin">PMMA margin</a>
+          <a class="case-chip" href="/library?q=Test%201">Test 1</a>
+          <a class="case-chip" href="/library?q=SIBAL">SIBAL</a>
+          <a class="case-chip" href="/library?q=oxygen%20concentration">oxygen concentration</a>
+          <a class="case-chip" href="/library?q=pressure">pressure</a>
+        </div>
+        {% endif %}
+
+        <div class="section-head library-corpus-head">
+          <div>
+            <p class="eyebrow">INDEXED CORPUS</p>
+            <h2>All source documents</h2>
+          </div>
+          <span class="micro">{{ stats.documents }} files · {{ stats.pages }} pages</span>
+        </div>
+        <div class="doc-grid">
+          {% for doc in documents %}
+          <article class="doc">
+            <div class="role">{{ doc.role }}</div>
+            <h3>{{ doc.title }}</h3>
+            <div class="doc-meta mono">{{ doc.citation_id }} · {{ doc.pages }} pp · {{ '{:,}'.format(doc.chars) }} chars</div>
+            <a class="source-link" href="{{ doc.source_url }}" target="_blank" rel="noopener">Source ↗</a>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+
+    {% include "partials/footer.html" %}
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

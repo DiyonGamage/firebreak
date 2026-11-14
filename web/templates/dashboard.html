@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebreak — Evidence dashboard</title>
+  <meta name="description" content="Evidence-graded spacecraft material flammability screening from NASA microgravity data.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23090b10'/><path d='M17 3 8 18h6l-1 11 11-17h-6z' fill='%23ff6b35'/></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  {% include "partials/topbar.html" %}
+
+  <main class="shell">
+    <section class="dash-hero">
+      <div class="dash-hero-copy">
+        <p class="eyebrow">MICROGRAVITY FLAMMABILITY · EVIDENCE DASHBOARD</p>
+        <h1>What does the evidence <em>actually</em> support?</h1>
+        <p class="lede">
+          Firebreak turns {{ dashboard.counts.total }} NASA combustion records into
+          evidence-graded answers for spacecraft materials. Pick a material and an
+          atmosphere. Get a grade, its sources, and the exact gap that would change it.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">A–D evidence grade</span>
+          <span class="badge">{{ dashboard.counts.anchors }} pressure anchors</span>
+          <span class="badge">Every row source-linked</span>
+          <span class="badge">Runs offline</span>
+        </div>
+        <div class="hero-note">
+          A grade measures the strength of the evidence, not the safety of the material.
+          Screening support only — not certification, flight approval, or a substitute for
+          NASA-STD-6001 Test 1.
+        </div>
+      </div>
+
+      <form class="dash-search" method="get" action="/assess" id="assess-form">
+        <div class="card-kicker">START A DOSSIER</div>
+        <label class="field">
+          <span>Material or alias</span>
+          <input id="material" name="material" value="{{ form.material }}" list="material-options"
+                 placeholder="PMMA, SIBAL, Nomex, silicone…" autocomplete="off" required>
+          <datalist id="material-options">
+            {% for item in inventory %}
+            <option value="{{ item.example_material }}"></option>
+            {% endfor %}
+            <option value="Nylon webbing"></option>
+          </datalist>
+        </label>
+        <label class="field">
+          <span>Cabin atmosphere</span>
+          <select id="atmosphere" name="atmosphere">
+            {% for preset in presets %}
+            <option value="{{ preset.key }}"
+                    data-o2="{{ preset.o2_pct }}"
+                    data-pressure="{{ preset.pressure_psia }}"
+                    {% if preset.key == form.atmosphere %}selected{% endif %}>
+              {{ preset.label }}
+            </option>
+            {% endfor %}
+          </select>
+        </label>
+        <button class="primary" type="submit">Assess evidence <span class="arrow">→</span></button>
+        <p class="form-note">
+          {{ presets|length }} sourced atmosphere presets. Need a custom O₂ or pressure?
+          Open the dossier and edit the condition.
+        </p>
+        <div class="dash-cases">
+          <span>Quick cases</span>
+          {% for case in dashboard.cases[:3] %}
+          <a href="{{ case.href }}">{{ case.label }}</a>
+          {% endfor %}
+        </div>
+      </form>
+    </section>
+
+    <section class="kpi-strip" aria-label="Corpus summary">
+      {% for kpi in dashboard.kpis %}
+      <article class="kpi">
+        <div class="kpi-value">{{ kpi.value }}</div>
+        <div class="kpi-label">{{ kpi.label }}</div>
+        <div class="kpi-note">{{ kpi.note }}</div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="dash-section" id="findings">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">CORPUS FINDINGS</p>
+          <h2>Three things the data says before you ask.</h2>
+        </div>
+        <span class="micro">computed live from the local corpus</span>
+      </div>
+      <div class="finding-grid">
+        {% for finding in dashboard.findings %}
+        <article class="finding">
+          <div class="finding-top">
+            <span class="finding-tag">{{ finding.tag }}</span>
+            <span class="finding-value">{{ finding.value }}</span>
+          </div>
+          <h3>{{ finding.title }}</h3>
+          <p>{{ finding.detail }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dash-section" id="ranked">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">RANKED FINDINGS</p>
+          <h2>Six answers, ordered by decision impact.</h2>
+        </div>
+        <span class="micro">grade = strength of evidence, not safety</span>
+      </div>
+      <div class="insight-grid">
+        {% for card in dashboard.cards %}
+        <article class="insight-card grade-{{ card.grade|lower }}">
+          <div class="insight-grade">
+            <span class="insight-letter">{{ card.grade }}</span>
+            <span class="insight-verdict">{{ card.verdict|replace('_', ' ') }}</span>
+          </div>
+          <div class="insight-body">
+            <div class="insight-kicker">
+              {{ card.atmosphere_label }} · {{ card.o2_pct }}% O₂ · {{ card.pressure_psia }} psia
+            </div>
+            <h3>{{ card.material }}</h3>
+            <p class="insight-text">{{ card.interpretation }}</p>
+            <div class="insight-change">
+              <span>What would change it</span>
+              {{ card.change }}
+            </div>
+            <div class="insight-foot">
+              <span class="mono">{{ card.evidence_count }} matched test{{ '' if card.evidence_count == 1 else 's' }}</span>
+              {% if card.source_url %}
+              <a class="source-link" href="{{ card.source_url }}" target="_blank" rel="noopener">{{ card.source_label }} ↗</a>
+              {% endif %}
+              <a class="insight-open" href="{{ card.href }}">Open dossier →</a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dash-section" id="matrix">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">MATERIAL × ATMOSPHERE</p>
+          <h2>The whole matrix on one screen.</h2>
+        </div>
+        <div class="matrix-legend" aria-label="Grade legend">
+          <span class="grade-pill grade-a">A</span>
+          <span class="grade-pill grade-b">B</span>
+          <span class="grade-pill grade-c">C</span>
+          <span class="grade-pill grade-d">D</span>
+        </div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>Material class</th>
+              {% for atmosphere in dashboard.matrix_atmospheres %}
+              <th>
+                {{ atmosphere.label }}
+                <span>{{ atmosphere.o2_pct }}% O₂ · {{ atmosphere.pressure_psia }} psia</span>
+              </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in dashboard.matrix %}
+            <tr>
+              <td class="matrix-material">
+                {{ row.label }}
+                <span>{{ row.tests }} test{{ '' if row.tests == 1 else 's' }} · {{ row.outcomes }} outcome{{ '' if row.outcomes == 1 else 's' }}</span>
+              </td>
+              {% for cell in row.cells %}
+              <td>
+                <a class="matrix-chip grade-{{ cell.grade|lower }}" href="{{ cell.href }}"
+                   title="{{ cell.title }}" aria-label="{{ cell.title }}">{{ cell.grade }}</a>
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="matrix-note">
+        C and D are evidence gaps, not safety findings. Click any grade to open the full dossier.
+      </p>
+    </section>
+
+    <section class="dash-section" id="how">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">HOW TO READ IT</p>
+          <h2>Four grades. One rule: evidence before opinion.</h2>
+        </div>
+      </div>
+      <div class="read-grid">
+        {% for item in dashboard.grade_legend %}
+        <article class="read-card grade-{{ item.grade|lower }}">
+          <span class="read-grade">{{ item.grade }}</span>
+          <h3>{{ item.label }}</h3>
+          <p>{{ item.meaning }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span>1</span>
+          <div><strong>Pick a material and atmosphere.</strong> The presets are sourced from JSC 29353D.</div>
+        </div>
+        <div class="step">
+          <span>2</span>
+          <div><strong>Read the grade, then the gap.</strong> The grade says how strong the evidence is; the gap says what would raise it.</div>
+        </div>
+        <div class="step">
+          <span>3</span>
+          <div><strong>Open the ledger.</strong> Every row links to PSI or NTRS. No hidden model output.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dash-section" id="si">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">THE SI LAYER</p>
+          <h2>AI retrieves and interprets. Rules decide.</h2>
+        </div>
+        <span class="micro">offline · deterministic grade · zero API keys</span>
+      </div>
+      <div class="pipeline">
+        {% for stage in dashboard.pipeline %}
+        <article class="pipe-stage">
+          <span class="pipe-step">{{ stage.step }}</span>
+          <h3>{{ stage.name }}</h3>
+          <p>{{ stage.detail }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <p class="pipeline-note">{{ dashboard.si_note }}</p>
+    </section>
+
+    <section class="dash-section case-strip">
+      <div>
+        <p class="eyebrow">TRY A CASE</p>
+        <h2>Start from a decision, not a blank box.</h2>
+      </div>
+      <div class="case-chips">
+        {% for case in dashboard.cases %}
+        <a class="case-chip" href="{{ case.href }}">{{ case.label }} →</a>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% include "partials/footer.html" %}
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

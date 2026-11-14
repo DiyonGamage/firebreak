@@ -80,6 +80,19 @@ def test_pmma_exploration_is_outside(conn):
     assert result["grade"] == "C"
 
 
+def test_layup_query_capped_at_c(conn):
+    result = assess(conn, "PMMA & Nomex", 24.1, 14.5, include_sensitivity=False)
+    assert result["grade"] == "C"
+    assert any("R8" in reason for reason in result["reasons"])
+    assert any("layup" in gap.lower() for gap in result["gaps"])
+
+
+def test_pure_material_query_excludes_layup_rows(conn):
+    evidence = retrieve_evidence(conn, "Nomex", 24.1, 14.5)
+    assert evidence
+    assert all("&" not in item["material"] for item in evidence)
+
+
 def test_sibal_outcome_is_documented(conn):
     result = assess(conn, "SIBAL", 24.1, 14.5)
     outcomes = [item["outcome"] for item in result["evidence"] if item["outcome"]]
