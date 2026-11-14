@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebreak — Microgravity flammability evidence</title>
+  <meta name="description" content="Source-linked, evidence-graded spacecraft material flammability screening from NASA microgravity data.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23090b10'/><path d='M17 3 8 18h6l-1 11 11-17h-6z' fill='%23ff6b35'/></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-mark">F</span>
+      <span>FIREBREAK</span>
+      <span class="version">v1.0</span>
+    </a>
+    <div class="mission">NASA Space Apps 2026 <span>/</span> Flame in Freefall</div>
+    <div class="status"><span class="status-dot"></span> EVIDENCE GRADED <span class="status-sep">/</span> OFFLINE-READY</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">SPACECRAFT MATERIAL FLAMMABILITY SCREENING</p>
+        <h1>Know what the evidence <em>actually</em> supports.</h1>
+        <p class="lede">
+          Firebreak reconciles NASA microgravity tests, standards, and literature into
+          <strong>A–D evidence grades</strong>, explicit gaps, and source-linked dossiers.
+          It does not guess.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">629 curated records</span>
+          <span class="badge">6 NASA datasets</span>
+          <span class="badge">A–D evidence grade</span>
+          <span class="badge">No fabricated outcome data</span>
+        </div>
+        <div class="hero-note">
+          Built for the NASA Space Apps Challenge. Screening support — not certification,
+          flight approval, or a substitute for NASA-STD-6001 Test 1.
+        </div>
+      </div>
+
+      <form class="assess-card" method="get" action="/assess" id="assess-form">
+        <div class="card-kicker">MATERIAL DOSSIER</div>
+        <label class="field">
+          <span>Material or alias</span>
+          <input id="material" name="material" value="{{ form.material }}" list="material-options"
+                 placeholder="PMMA, SIBAL, Nomex, silicone…" autocomplete="off" required>
+          <datalist id="material-options">
+            {% for item in inventory %}
+            <option value="{{ item.example_material }}"></option>
+            {% endfor %}
+          </datalist>
+        </label>
+
+        <label class="field">
+          <span>Cabin atmosphere</span>
+          <select id="atmosphere" name="atmosphere">
+            {% for preset in presets %}
+            <option value="{{ preset.key }}"
+                    data-o2="{{ preset.o2_pct }}"
+                    data-pressure="{{ preset.pressure_psia }}"
+                    {% if preset.key == form.atmosphere %}selected{% endif %}>
+              {{ preset.label }}
+            </option>
+            {% endfor %}
+            <option value="custom" data-custom="true" {% if form.atmosphere == 'custom' %}selected{% endif %}>
+              Custom atmosphere
+            </option>
+          </select>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span>O₂ % by volume</span>
+            <input id="o2" name="o2" type="number" step="0.1" min="0" max="100" value="{{ form.o2 }}">
+          </label>
+          <label class="field">
+            <span>Pressure, psia</span>
+            <input id="pressure" name="pressure" type="number" step="0.1" min="0.1" value="{{ form.pressure }}">
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Flow direction</span>
+          <select name="flow">
+            <option value="" {% if not form.flow %}selected{% endif %}>Not specified</option>
+            <option value="concurrent" {% if form.flow == 'concurrent' %}selected{% endif %}>Concurrent</option>
+            <option value="opposed" {% if form.flow == 'opposed' %}selected{% endif %}>Opposed</option>
+            <option value="quiescent" {% if form.flow == 'quiescent' %}selected{% endif %}>Quiescent</option>
+          </select>
+        </label>
+
+        <button class="primary" type="submit">Assess evidence <span class="arrow">→</span></button>
+        <p class="form-note">Returns the closest tests, the reason for the grade, and the evidence that would change it.</p>
+      </form>
+    </section>
+
+    <section class="result-head">
+      <div>
+        <p class="eyebrow">ASSESSMENT</p>
+        <h2>{{ result.query.material }}</h2>
+        <p class="subhead">
+          {{ result.query.o2_pct }}% O₂ · {{ result.query.pressure_psia }} psia
+          {% if result.query.flow_direction %}· {{ result.query.flow_direction }} flow{% endif %}
+          · {{ result.query.material_class }}
+        </p>
+      </div>
+      <div class="result-actions">
+        <a class="ghost" href="/api/assess?material={{ result.query.material|urlencode }}&atmosphere={{ form.atmosphere }}&o2={{ form.o2 }}&pressure={{ form.pressure }}&flow={{ form.flow }}">JSON</a>
+        <button class="ghost" id="copy-link" type="button">Copy link</button>
+        <button class="ghost" id="print" type="button">Print</button>
+      </div>
+    </section>
+
+    <section class="result-grid">
+      <article class="grade-card grade-{{ result.grade|lower }}">
+        <div class="grade-top">
+          <span class="grade-label">EVIDENCE GRADE</span>
+          <span class="grade-letter">{{ result.grade }}</span>
+        </div>
+        <div class="grade-verdict">
+          {% if result.verdict == 'acceptable' %}
+          Evidence supports acceptance at this condition.
+          {% elif result.verdict == 'high_risk' %}
+          Evidence indicates spread at or below this condition.
+          {% elif result.verdict == 'test_needed' %}
+          Evidence is insufficient for acceptance. Test required.
+          {% else %}
+          No usable evidence. Do not infer safety.
+          {% endif %}
+        </div>
+        <div class="grade-meta">
+          <div><span>Confidence</span><strong>{{ (result.confidence * 100)|round(0)|int }}%</strong></div>
+          <div><span>Coverage</span><strong>{{ result.coverage.label|replace('_', ' ') }}</strong></div>
+          <div><span>Tests matched</span><strong>{{ result.evidence|length }}</strong></div>
+        </div>
+        <div class="grade-flags">
+          {% if result.outside_envelope %}<span class="flag warn">Outside tested envelope</span>{% endif %}
+          {% if result.sensitivity_flips %}<span class="flag">Sensitive to ±2</span>{% endif %}
+          {% if result.severity.enabled %}
+          <span class="flag">ΔCO₂ screen: {{ result.severity.band }} ({{ (result.severity['probability_delta_co2_gt_0.5'] * 100)|round(0)|int }}%)</span>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-kicker">WHY THIS GRADE</div>
+        <ul class="reason-list">
+          {% for reason in result.reasons %}
+          <li>{{ reason }}</li>
+          {% endfor %}
+        </ul>
+        <div class="boundary">{{ result.boundary }}</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-kicker">WHAT WOULD CHANGE IT</div>
+        <ul class="gap-list">
+          {% for gap in result.gaps %}
+          <li>{{ gap }}</li>
+          {% endfor %}
+        </ul>
+        <div class="sens-wrap">
+          <div class="panel-kicker small">SENSITIVITY</div>
+          <div class="sens-grid">
+            {% for item in result.sensitivity %}
+            <div class="sens-item">
+              <span class="sens-label">{{ item.variant|replace('_', ' ') }}</span>
+              <span class="grade-pill grade-{{ item.grade|lower }}">{{ item.grade }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel ledger">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">EVIDENCE LEDGER</div>
+          <h2>Closest source-linked tests</h2>
+        </div>
+        <div class="legend">
+          <span><i class="dot dot-ms"></i>microgravity</span>
+          <span><i class="dot dot-1g"></i>1-g</span>
+          <span><i class="dot dot-derived"></i>derived</span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>Dataset</th>
+              <th>Material</th>
+              <th>O₂ %</th>
+              <th>psia</th>
+              <th>Flow</th>
+              <th>Outcome</th>
+              <th>Match</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in result.evidence[:12] %}
+            <tr>
+              <td class="mono">{{ e.experiment_id }}</td>
+              <td>{{ e.dataset }}</td>
+              <td class="material-cell">{{ e.material }}</td>
+              <td class="mono">{{ e.o2_initial_pct if e.o2_initial_pct is not none else '—' }}</td>
+              <td class="mono">{{ e.pressure_psia if e.pressure_psia is not none else '—' }}</td>
+              <td>{{ e.flow_direction or (e.flow_velocity_cm_s|string + ' cm/s' if e.flow_velocity_cm_s else '—') }}</td>
+              <td>
+                {% if e.outcome %}
+                <span class="outcome outcome-{{ e.outcome|replace('_', '-') }}">{{ e.outcome|replace('_', ' ') }}</span>
+                {% else %}
+                <span class="outcome outcome-none">not reported</span>
+                {% endif %}
+              </td>
+              <td class="mono">{{ e.score }}</td>
+              <td><a class="source-link" href="{{ e.source_url }}" target="_blank" rel="noopener">PSI ↗</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="split" id="gaps">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">GAP MAP</div>
+            <h2>ISS internal · 24.1% O₂</h2>
+          </div>
+          <span class="micro">ranked by decision need</span>
+        </div>
+        <div class="table-wrap">
+          <table class="compact">
+            <thead>
+              <tr><th>Class</th><th>Tests</th><th>Outcomes</th><th>Grade</th><th>Top gap</th></tr>
+            </thead>
+            <tbody>
+              {% for row in gap_rows %}
+              <tr>
+                <td>{{ row.material_class }}</td>
+                <td class="mono">{{ row.tests }}</td>
+                <td class="mono">{{ row.outcomes }}</td>
+                <td><span class="grade-pill grade-{{ row.grade|lower }}">{{ row.grade }}</span></td>
+                <td class="gap-cell">{{ row.top_gap }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-kicker">VERIFIED ANCHORS</div>
+        <h2>Standards and findings that constrain the answer</h2>
+        <div class="fact-list">
+          {% for fact in result.facts %}
+          <div class="fact">
+            <div class="fact-id">{{ fact.id }}</div>
+            <p>{{ fact.statement }}</p>
+            <div class="fact-cite">{{ fact.citation }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </article>
+    </section>
+
+    <section class="panel assistant" id="assistant">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">OFFLINE EVIDENCE ROUTER</div>
+          <h2>Ask Firebreak</h2>
+        </div>
+        <span class="micro">Cactus 3 · local · no API key</span>
+      </div>
+      <form class="search assistant-form" id="assistant-form">
+        <input id="assistant-query" type="text" placeholder="Assess SIBAL at ISS internal, find gaps, check PMMA coverage…" autocomplete="off">
+        <label class="cactus-toggle"><input id="assistant-cactus" type="checkbox"> Cactus router (slow, local)</label>
+        <button type="submit">Route</button>
+      </form>
+      <div class="assistant-answer" id="assistant-answer" hidden></div>
+      <div class="assistant-trace" id="assistant-trace" hidden></div>
+    </section>
+
+    <section class="panel library" id="library">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">EVIDENCE LIBRARY</div>
+          <h2>Search the source documents</h2>
+        </div>
+        <form class="search" method="get" action="/library">
+          <input type="search" name="q" value="{{ library_query }}" placeholder="PMMA margin, Test 1, SIBAL…" aria-label="Search source documents">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+      {% if library_query %}
+      <div class="search-meta">Results for “{{ library_query }}”</div>
+      <div class="hit-list">
+        {% for hit in library_hits %}
+        <article class="hit">
+          <div class="hit-top">
+            <span class="role">{{ hit.role }}</span>
+            <span class="mono">{{ hit.citation_id }} · {{ hit.pages }} pp</span>
+          </div>
+          <h3>{{ hit.title }}</h3>
+          <p>…{{ hit.snippet }}…</p>
+          <a class="source-link" href="{{ hit.source_url }}" target="_blank" rel="noopener">Open source ↗</a>
+        </article>
+        {% else %}
+        <p class="empty">No matching passages. Try a broader term.</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if result.document_hits %}
+      <div class="search-meta">Source passages related to “{{ result.query.material }}”</div>
+      <div class="hit-list">
+        {% for hit in result.document_hits %}
+        <article class="hit">
+          <div class="hit-top">
+            <span class="role">{{ hit.role }}</span>
+            <span class="mono">{{ hit.citation_id }} · {{ hit.pages }} pp</span>
+          </div>
+          <h3>{{ hit.title }}</h3>
+          <p>…{{ hit.snippet }}…</p>
+          <a class="source-link" href="{{ hit.source_url }}" target="_blank" rel="noopener">Open source ↗</a>
+        </article>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="doc-grid">
+        {% for doc in documents %}
+        <article class="doc">
+          <div class="role">{{ doc.role }}</div>
+          <h3>{{ doc.title }}</h3>
+          <div class="doc-meta mono">{{ doc.citation_id }} · {{ doc.pages }} pp · {{ '{:,}'.format(doc.chars) }} chars</div>
+          <a class="source-link" href="{{ doc.source_url }}" target="_blank" rel="noopener">Source ↗</a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-value">{{ stats.total }}</div>
+        <div class="stat-label">curated experiment records</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{ stats.solid }}</div>
+        <div class="stat-label">solid-material tests</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{ stats.documents }}</div>
+        <div class="stat-label">source documents · {{ stats.pages }} pages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{ stats.atmospheres }}</div>
+        <div class="stat-label">atmosphere presets</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">
+          {% if stats.ml_metrics %}{{ stats.ml_metrics.auc }}{% else %}—{% endif %}
+        </div>
+        <div class="stat-label">ΔCO₂ severity AUC · grouped CV</div>
+      </div>
+    </section>
+
+    <section class="dataset-strip">
+      {% for ds in stats.datasets %}
+      <span><strong>{{ ds.dataset }}</strong> {{ ds.tests }}</span>
+      {% endfor %}
+    </section>
+
+    <footer>
+      <div>
+        <strong>Firebreak</strong> · NASA Space Apps Challenge 2026 · Challenge: Flame in Freefall.
+      </div>
+      <div class="foot-links">
+        <a href="https://psi.nasa.gov" target="_blank" rel="noopener">PSI</a>
+        <a href="https://ntrs.nasa.gov" target="_blank" rel="noopener">NTRS</a>
+        <a href="https://standards.nasa.gov" target="_blank" rel="noopener">NASA Standards</a>
+        <a href="/api/stats" target="_blank" rel="noopener">API</a>
+      </div>
+      <div class="boundary foot-boundary">
+        Screening support only. Not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.
+      </div>
+    </footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

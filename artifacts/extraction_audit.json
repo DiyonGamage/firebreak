@@ -1,0 +1,254 @@
+{
+  "sample_size": 30,
+  "raw_rows_preserved": 30,
+  "field_checks": 60,
+  "field_matches": 60,
+  "field_accuracy": 1.0,
+  "gate": {
+    "field_accuracy_min": 0.95,
+    "passed": true
+  },
+  "method": "Deterministic stratified sample; exact raw-row match and independent field parse against cached PSI CSV.",
+  "details": [
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:M3",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:B7",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:O20",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:O13b",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:O9",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:M10",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:M1",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:F1",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:T10",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "BASS-II",
+      "experiment_id": "PSI-25:B9",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-I",
+      "experiment_id": "PSI-98:S1",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-I",
+      "experiment_id": "PSI-98:S2",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-4",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-9",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-5",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-7",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-1",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-II",
+      "experiment_id": "PSI-99:2-2",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-III",
+      "experiment_id": "PSI-100:S2",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "Saffire-III",
+      "experiment_id": "PSI-100:S1",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "ACME-BRE",
+      "experiment_id": "PSI-20:2020-Dec-17",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "ACME-BRE",
+      "experiment_id": "PSI-20:2019-April-4",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "ACME-BRE",
+      "experiment_id": "PSI-20:2019-Feb-8",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "ACME-BRE",
+      "experiment_id": "PSI-20:2020-Dec-4",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:174#413",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:52#82",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:173#358",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:58#217",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:55#175",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    },
+    {
+      "dataset": "SPICE",
+      "experiment_id": "PSI-107:55#143",
+      "field": "raw_row",
+      "source_value": "exact",
+      "database_value": "exact",
+      "raw_preserved": true
+    }
+  ]
+}

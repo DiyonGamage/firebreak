@@ -1,0 +1,106 @@
+version: 1
+atmospheres:
+  iss_internal:
+    label: ISS Internal
+    o2_pct: 24.1
+    pressure_psia: 14.5
+    source: JSC 29353D Table 1
+  iss_airlock:
+    label: ISS Airlock
+    o2_pct: 30.0
+    pressure_psia: 10.2
+    source: JSC 29353D Table 1
+  gateway:
+    label: Gateway
+    o2_pct: 30.0
+    pressure_psia: 10.2
+    source: JSC 29353D Table 1
+  mpcv:
+    label: MPCV Crew Module
+    o2_pct: 30.0
+    pressure_psia: 10.2
+    source: JSC 29353D Table 1
+  lunar_surface:
+    label: Lunar/Mars Surface (HLS max)
+    o2_pct: 37.0
+    pressure_psia: 8.2
+    source: JSC 29353D Table 1; HEO-DM-1006
+    note: Table range 36-40 percent at 8.2 psia; minimum 33.7 percent; HLS maximum 37 percent.
+  artemis_iii:
+    label: Artemis III
+    o2_pct: 30.0
+    pressure_psia: 9.6
+    source: JSC 29353D Table 1 note 5
+  shuttle_legacy:
+    label: Shuttle Legacy Cabin
+    o2_pct: 30.0
+    pressure_psia: 10.2
+    source: JSC 29353D Table 1
+  iss_payload_bay:
+    label: ISS External / Payload Bay
+    o2_pct: 20.9
+    pressure_psia: 14.7
+    source: JSC 29353D Table 1
+
+evidence:
+  o2_tolerance_pct: 2.0
+  pressure_tolerance_psia: 1.5
+  max_evidence: 12
+  min_similarity: 0.25
+
+rules:
+  - id: R1
+    name: oxygen_monotonicity
+    citation: JSC 29353D section 5.1
+    statement: Material flammability depends strongly on oxygen concentration; higher O2 cannot reduce hazard.
+  - id: R2
+    name: pressure_effect
+    citation: JSC 29353D section 5.1; NASA-STD-6001B Test 1
+    statement: Pressure effect is weaker than O2 but significant; do not assume monotonic; treat as uncertainty.
+  - id: R3
+    name: test1_criteria
+    citation: NASA-STD-6001B section 7.1.3
+    statement: Test 1 pass requires no specimen burn greater than 15 cm and no flame propagation by debris; MOC is the maximum O2 at which five specimens pass.
+  - id: R4
+    name: worst_case_atmosphere
+    citation: NASA-STD-6001B section 7.1.2
+    statement: Test 1 evaluates the worst-case atmosphere; 1-g ratings do not automatically cover microgravity or exploration atmospheres.
+  - id: R5
+    name: microgravity_derating
+    citation: NTRS 20160000593; NTRS 20180004258
+    statement: Microgravity data can show negative margins versus 1-g; PMMA shows a -2.4 percent O2 margin. Apply derating when only 1-g data exist.
+  - id: R6
+    name: evidence_grading
+    citation: Firebreak protocol
+    statement: A is microgravity outcome evidence at or beyond target; B is bracketing microgravity evidence or undocumented outcome; C is 1-g or outside-envelope evidence; D is no usable evidence.
+  - id: R7
+    name: no_guessing
+    citation: Firebreak protocol
+    statement: Unknown or conflicting evidence yields C or D, never a positive acceptance.
+  - id: R8
+    name: layup_warning
+    citation: JSC 29353D revision D
+    statement: Materials that pass individually may fail when tested in a layup or in combination with other materials; configuration matters.
+  - id: R9
+    name: partial_gravity
+    citation: JSC 29353D section 5.1
+    statement: Limited data suggest partial gravity may be worse than Earth gravity or microgravity without forced convection; do not extrapolate silently.
+  - id: R10
+    name: screening_boundary
+    citation: Firebreak protocol
+    statement: Firebreak provides screening support, not certification or flight approval.
+
+facts:
+  - id: F1
+    citation: NTRS 20160000593
+    statement: PMMA 1-g blowoff at 16 percent O2 versus steady microgravity spread at 13.6 percent O2; negative oxygen margin of safety 2.4 percent.
+  - id: F2
+    citation: NTRS 20180004258; JSC 29353D Table 1
+    statement: Historical worst-case atmosphere is 30 percent O2 at 10.2 psia; exploration atmospheres reach 36-40 percent O2 at 8.2 psia in JSC 29353D Table 1 (2018 brief cites 34 percent; HLS maximum is 37 percent).
+  - id: F3
+    citation: NASA-STD-6001B section 7.1.4
+    statement: Maximum Oxygen Concentration is the maximum O2 at which at least five specimens pass the Test 1 acceptance criteria.
+
+gap_targets:
+  - material: Kevlar/PBI
+    note: Exploration habitat webbing candidate; TB 26-05 external anchor only, no ingested microgravity row.

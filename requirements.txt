@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+jinja2
+pydantic
+pyyaml
+requests
+pymupdf
+pandas
+numpy
+scikit-learn
+scipy
+matplotlib
+reportlab
+pytest
+httpx
+cactus-needle

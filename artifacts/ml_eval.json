@@ -1,0 +1,174 @@
+{
+  "evidence_matcher": {
+    "known_queries": 8,
+    "recall_at_3": 1.0,
+    "unknown_queries": 3,
+    "false_match_rate": 0.0,
+    "known_details": [
+      {
+        "query": "PMMA",
+        "expected_class": "PMMA",
+        "hit_at_3": true,
+        "returned": [
+          "PMMA",
+          "PMMA",
+          "PMMA"
+        ]
+      },
+      {
+        "query": "polymethyl methacrylate",
+        "expected_class": "PMMA",
+        "hit_at_3": true,
+        "returned": [
+          "PMMA",
+          "PMMA",
+          "PMMA"
+        ]
+      },
+      {
+        "query": "acrylic sheet",
+        "expected_class": "PMMA",
+        "hit_at_3": true,
+        "returned": [
+          "PMMA",
+          "PMMA",
+          "PMMA"
+        ]
+      },
+      {
+        "query": "SIBAL",
+        "expected_class": "SIBAL",
+        "hit_at_3": true,
+        "returned": [
+          "SIBAL",
+          "SIBAL",
+          "SIBAL"
+        ]
+      },
+      {
+        "query": "cotton-fiberglass",
+        "expected_class": "SIBAL",
+        "hit_at_3": true,
+        "returned": [
+          "SIBAL",
+          "SIBAL",
+          "SIBAL"
+        ]
+      },
+      {
+        "query": "Nomex III",
+        "expected_class": "Nomex",
+        "hit_at_3": true,
+        "returned": [
+          "Nomex",
+          "PMMA/Nomex"
+        ]
+      },
+      {
+        "query": "silicone rubber",
+        "expected_class": "Silicone",
+        "hit_at_3": true,
+        "returned": [
+          "Silicone"
+        ]
+      },
+      {
+        "query": "PMMA & Nomex",
+        "expected_class": "PMMA/Nomex",
+        "hit_at_3": true,
+        "returned": [
+          "PMMA/Nomex",
+          "Nomex",
+          "PMMA"
+        ]
+      }
+    ],
+    "unknown_details": [
+      {
+        "query": "polyethylene film",
+        "false_match": false,
+        "returned": []
+      },
+      {
+        "query": "Kevlar/PBI",
+        "false_match": false,
+        "returned": []
+      },
+      {
+        "query": "unobtainium composite",
+        "false_match": false,
+        "returned": []
+      }
+    ],
+    "gate": {
+      "recall_at_3_min": 0.8,
+      "false_match_rate_max": 0.2,
+      "passed": true
+    }
+  },
+  "coverage_detector": {
+    "cases": [
+      {
+        "material": "PMMA",
+        "o2_pct": 24.1,
+        "pressure_psia": 14.5,
+        "expected": "in_distribution",
+        "actual": "in_distribution",
+        "score": 0.56,
+        "passed": true
+      },
+      {
+        "material": "PMMA",
+        "o2_pct": 37.0,
+        "pressure_psia": 8.2,
+        "expected": "out_of_distribution",
+        "actual": "out_of_distribution",
+        "score": 0.0,
+        "passed": true
+      },
+      {
+        "material": "Silicone",
+        "o2_pct": 22.1,
+        "pressure_psia": 14.5,
+        "expected": "in_distribution",
+        "actual": "in_distribution",
+        "score": 0.75,
+        "passed": true
+      },
+      {
+        "material": "Kevlar/PBI",
+        "o2_pct": 37.0,
+        "pressure_psia": 8.2,
+        "expected": "no_material_evidence",
+        "actual": "no_material_evidence",
+        "score": 0.0,
+        "passed": true
+      }
+    ],
+    "accuracy": 1.0,
+    "gate": {
+      "accuracy_min": 1.0,
+      "passed": true
+    }
+  },
+  "severity_classifier": {
+    "n": 121,
+    "positives": 35,
+    "negatives": 86,
+    "positive_rate": 0.289,
+    "target_threshold_delta_co2_pct": 0.5,
+    "auc": 0.834,
+    "o2_only_auc": 0.607,
+    "accuracy": 0.744,
+    "balanced_accuracy": 0.693,
+    "f1": 0.563,
+    "majority_baseline_accuracy": 0.711,
+    "split": "GroupKFold(5) grouped by material description",
+    "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+    "gate": {
+      "auc_min": 0.75,
+      "auc_beats_o2_only": true,
+      "passed": true
+    }
+  }
+}

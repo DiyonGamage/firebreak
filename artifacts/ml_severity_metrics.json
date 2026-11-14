@@ -1,0 +1,20 @@
+{
+  "n": 121,
+  "positives": 35,
+  "negatives": 86,
+  "positive_rate": 0.289,
+  "target_threshold_delta_co2_pct": 0.5,
+  "auc": 0.834,
+  "o2_only_auc": 0.607,
+  "accuracy": 0.744,
+  "balanced_accuracy": 0.693,
+  "f1": 0.563,
+  "majority_baseline_accuracy": 0.711,
+  "split": "GroupKFold(5) grouped by material description",
+  "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+  "gate": {
+    "auc_min": 0.75,
+    "auc_beats_o2_only": true,
+    "passed": true
+  }
+}

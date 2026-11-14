@@ -1,0 +1,2674 @@
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+JSC 29353D 
+ 
+ 
+Flammability Configuration 
+Analysis for Spacecraft 
+Applications  
+ 
+ 
+ 
+ 
+ 
+December 2024 
+ 
+ 
+ 
+ 
+ 
+ 
+National Aeronautics and  
+Space Administration  
+Lyndon B. Johnson Space Center  
+Houston. Texas 
+
+
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Preface  
+ 
+ 
+This document was prepared to assist International Space Station, and other program 
+hardware customers with the flammability configuration analyses required to justify the 
+use of flammable materials in flight hardware.  The document provides guidance in 
+conducting the flammability assessments required for International Space Station 
+payload hardware by SSP 51700, "Payload Safety Policy and Requirements for the 
+International Space Station".  It may also be used to assess flammability hazards in 
+flight hardware other than payloads, as described in NASA-STD--6001, Flammability, 
+Offgassing, and Compatibility Requirements and Test Procedures and NASA-STD-
+6016, Standard Materials and Processes Requirements for Spacecraft.  It explains 
+procedures and techniques that are considered by NASA to meet the intent of the safety 
+requirements, but it does not preclude alternative approaches.   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+ii  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Flammability Configuration Analysis for 
+Spacecraft Applications 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Prepared By:   
+ 
+       
+ 
+ 
+_____________________  
+ 
+ 
+ 
+ES4 / Michael D. Pedley  
+ 
+ 
+ 
+Reviewed By:   
+ 
+       
+ 
+ 
+_____________________  
+ 
+ 
+ 
+ES4 / Emily Hacopian 
+ 
+ 
+ 
+Approved By: 
+ 
+           
+ _____________________ 
+ 
+ 
+ 
+ES4/Chief, Materials and Processes  
+ 
+ 
+ 
+Branch 
+ 
+ 
+MICHAEL 
+PEDLEY
+Digitally signed by 
+MICHAEL PEDLEY 
+Date: 2024.12.16 
+11:37:20 -06'00'
+Emily 
+Hacopian
+Digitally signed by 
+Emily Hacopian 
+Date: 2025.01.14 
+11:40:26 -06'00'
+MARYJANE 
+O'ROURKE
+Digitally signed by 
+MARYJANE O'ROURKE 
+Date: 2025.01.16 16:43:23 
+-06'00'
+
+
+ 
+iii  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+REVISIONS 
+VERSION 
+CHANGES 
+DATE 
+Baseline 
+Original version -- update of NSTS 22648 (published 
+October 1988)  
+2/2001 
+Rev. A 
+Revised to address improved understanding of 
+electrical power requirements for ignition; to 
+incorporate information relating to Constellation 
+Program; and to make compatible with the new NASA-
+STD-(I)-6001A 
+10/2007 
+Rev. B 
+Revised to address new ISS controls on normally 
+stowed flammable hardware, add newer test examples, 
+and eliminate references to cancelled Constellation 
+Program 
+7/2014 
+Rev. C 
+Revised to update ISS controls on normally stowed 
+hardware and bring maximum dimensions for 
+flammable materials in line with NASA-STD-6001B test 
+criteria and guidance in NASA-STD-6016A. 
+1/2017 
+Rev. D 
+Interim revision to address finding that materials which 
+pass individually may fail when tested in a layup or in 
+combination with other materials in their intended use 
+case.  
+10/2024 
+
+
+ 
+iv  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+TABLE OF CONTENTS 
+ 
+1.  SCOPE ...................................................................................................................................... 1 
+1.1 
+Purpose ............................................................................................................................. 1 
+ 
+2.  REFERENCE DOCUMENTS ................................................................................................ 2 
+2.1 
+General ............................................................................................................................. 2 
+2.2 
+Government Documents ................................................................................................... 2 
+2.3 
+Non-Government Documents .......................................................................................... 4 
+2.4 
+Order of Precedence ......................................................................................................... 6 
+ 
+3.  ACRONYMS, ABBREVIATIONS, SYMBOLS, AND DEFINITIONS ............................. 6 
+3.1 
+Acronyms, Abbreviations, and Symbols .......................................................................... 6 
+3.2 
+Definitions ........................................................................................................................ 7 
+ 
+4.  TECHNICAL REQUIREMENTS DOCUMENTS .............................................................. 8 
+4.1 
+NASA-STD-6001 ............................................................................................................. 8 
+4.2 
+NASA-STD-6016, Standard Materials and Processes Requirements for Spacecraft ...... 9 
+ 
+5.  FLAMMABILITY ASSESSMENT GUIDELINES............................................................ 10 
+5.1 
+Define the Environment ................................................................................................. 11 
+5.2 
+Evaluate the Overall Hardware Configuration ............................................................... 13 
+5.3 
+Evaluate the Way the Hardware Will Be Used .............................................................. 14 
+5.4 
+Identify the Major Materials to be Assessed .................................................................. 15 
+5.5 
+Determine the Fire Propagation Paths ............................................................................ 17 
+5.6 
+Lithium-Ion and Other High Specific Energy Batteries................................................. 17 
+5.7 
+Clothing .......................................................................................................................... 18 
+ 
+6.  CONTAINERS ....................................................................................................................... 18 
+6.1 
+Sealed Containers ........................................................................................................... 18 
+6.2 
+Vented Containers .......................................................................................................... 19 
+6.3 
+Intermediate Containers ................................................................................................. 20 
+ 
+
+
+ 
+v  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+7.  STOWED HARDWARE ....................................................................................................... 21 
+ 
+8.  FLAMMABILITY REDUCTION METHODS .................................................................. 23 
+8.1  
+General Materials Protection .......................................................................................... 23 
+8.2 
+Wire and Cable ............................................................................................................... 24 
+8.3 
+Electrical Connectors ..................................................................................................... 27 
+8.4 
+Tubes and Hoses............................................................................................................. 27 
+8.5 
+Hook-and-Loop Fasteners .............................................................................................. 27 
+8.6 
+Stowage Bags and Lockers ............................................................................................ 28 
+8.7 
+Thermal Control Blankets .............................................................................................. 30 
+8.8 
+Composites and Fiber-Related Laminates...................................................................... 30 
+ 
+9.  TEST EXAMPLES ................................................................................................................ 31 
+9.1 
+Materials Selection ......................................................................................................... 31 
+9.2 
+Aluminum Tape Overwrap............................................................................................. 31 
+9.3 
+Nomex® Sleeve Covering .............................................................................................. 32 
+9.4 
+Sealed Containers ........................................................................................................... 36 
+9.5 
+Vented Containers .......................................................................................................... 36 
+9.6 
+Intermediate Containers ................................................................................................. 40 
+9.7 
+Special Cases .................................................................................................................. 47 
+ 
+APPENDIX A: NASA-STD-6016C FLAMMABILITY REQUIREMENTS AND 
+EXEMPTIONS ............................................................................................................................ 49 
+ 
+APPENDIX B: NASA-STD-6001 CLARIFICATION MEMO…………...…………………51 
+ 
+LIST OF FIGURES 
+ 
+1 Bluetooth® Speakers .............................................................................................................. 32 
+2 Battery Powered Screwdriver ................................................................................................. 33 
+3 Disposable Dish Rack Overwrapped with 0.003-Inch Aluminum Tape ................................ 34 
+4 Flammable Hose Protected by Double Layer of Natural Nomex HT-9040 ......................... 34 
+5 Wet Wipe Dispenser with Double-Layer Natural Nomex HT-9040 .................................... 35 
+6 Apollo Master Events Sequence Controller ............................................................................ 37 
+
+
+ 
+vi  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+7 Space Shuttle Inertial Measurement Unit ..............................................................................  38 
+8 Space Shuttle Orbiter Proximity Switch Box  ........................................................................ 39 
+9 Simulated Typical Aluminum Electronics Box for Airflow Tests ......................................... 40 
+10 Damaged 6-Inch Diameter Aluminum Vent Screen from Airflow Tests ............................... 41 
+11 ISS Power Inverter Flammability Test ................................................................................... 42 
+12 Simulated MPCV Avionics Box Flammability Test .............................................................. 43 
+13 Apollo Entry Monitor System ................................................................................................. 44 
+14 Apollo Rotational Controller .................................................................................................. 45 
+15 Space Shuttle Orbiter Camcorder ........................................................................................... 46 
+16 ISS Vacuum Cleaner Cable Flammability Test ...................................................................... 48 
+ 
+LIST OF TABLES 
+ 
+1 Maximum Oxygen Concentrations and Pressures for Crewed Spacecraft ............................. 12 
+
+
+ 
+1  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+FLAMMABILITY CONFIGURATION ANALYSIS FOR SPACECRAFT 
+APPLICATIONS 
+ 
+1. 
+SCOPE 
+ 
+1.1 
+Purpose 
+ 
+This handbook provides guidance for flammability configuration analyses required to justify the 
+use of flammable materials in spacecraft flight hardware used in crew breathing environments.  It 
+does not address materials flammability concerns associated with propulsion systems or with 
+high-pressure oxygen systems.  
+ 
+Fire is one of the many potentially catastrophic hazards associated with the operation of crewed 
+spacecraft. A major lesson learned by NASA from the Apollo 204 fire in 1966 was that ignition 
+sources in an electrically powered vehicle should and can be minimized but can never be 
+eliminated. For this reason, spacecraft fire control is based on minimizing potential ignition 
+sources and minimizing materials that can propagate fire. Fire extinguishers have always been 
+provided on crewed spacecraft to provide a means for the crew to respond to a fire but are not 
+considered as part of the fire control process. 
+ 
+“Minimizing materials that can propagate fire” does not mean eliminating all flammable 
+materials―the cost of designing and building spacecraft using only nonflammable materials is 
+extraordinary and unnecessary. It means controlling the quantity and configuration of such 
+materials to eliminate potential fire propagation paths and ensure that any fire would be small, 
+localized, and isolated, and would self-extinguish without harm to the crew. 
+ 
+Over the years, NASA has developed many solutions for controlling the configuration of 
+flammable materials, including potentially flammable materials in commercial off-the-shelf 
+hardware, so that they can be used safely in air and oxygen-enriched environments in crewed 
+spacecraft. This handbook describes and explains these design solutions so payload customers 
+and other organizations can use them in designing safe and cost-effective flight hardware. 
+ 
+Whenever possible, the testing that forms the basis of these guidelines is referenced. In many 
+cases, guidelines are based on historical experience without references. The guidelines without 
+references were originally published in 1988 as the Space Shuttle Program (SSP) document, 
+NSTS 22648, Flammability Configuration Analysis for Space Applications. These guidelines 
+have been used successfully for over 30 years and have been considered to be acceptably 
+conservative.   
+ 
+Recent testing has shown that some of the guidelines in previous releases of this handbook were 
+not adequate.  The concerns raised by this testing were documented in JSC memo ES4-24-030, a 
+copy of which can be found in Appendix B.  In addition, a previous guideline on minimum 
+power levels required for ignition of materials has been found to be incorrect and 
+unconservative.  This revision attempts to correct such inadequate and incorrect guidance in the 
+
+
+ 
+2  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+interim while new testing is conducted in these areas with the intent of providing clearer 
+guidance in the future.   
+ 
+Proper application of this handbook will produce acceptable flammability configurations for 
+hardware located in any compartment of the International Space Station (ISS) or other program 
+crewed vehicles and habitats with oxygen concentrations up to 30 percent oxygen at 10.2 psia 
+(e.g., Multi-Purpose Crew Vehicle [MPCV], Space Launch System [SLS], Gateway, and 
+Commercial Crew Program [CCP]). These guidelines cannot be used for the significantly higher 
+oxygen concentrations planned for lunar missions.  Use of these guidelines does not exempt 
+hardware organizations of the responsibility for safety of the hardware under their control. 
+ 
+ 
+2. 
+REFERENCE DOCUMENTS 
+ 
+2.1 
+General 
+ 
+Documents listed in this section provide references supporting the guidance in this handbook. 
+Latest issuances of referenced documents apply unless specific versions are designated. Access 
+reference documents at https://standards.nasa.gov or by contacting the JSC Materials and 
+Processes Branch (ES4).  
+ 
+2.2 
+Government Documents 
+ 
+Federal 
+ 
+FED L-T-80, Tape, Pressure-Sensitive Adhesive (Aluminum-Backed) 
+ 
+ 
+NASA 
+ 
+NASA-STD-5027, Spacecraft Fire Safety Standard 
+ 
+NASA-STD-6001, Flammability, Offgassing, and Compatibility Requirements and Test 
+Procedures 
+ 
+NASA-STD-6016C Change 1 (2023), Standard Materials and Processes Requirements for 
+Spacecraft 
+ 
+NSTS 22648 (1988), Flammability Configuration Analysis for Spacecraft Applications 
+ 
+HEO-DM-1006, Human Exploration and Operations (HEO) Systems Engineering and 
+Integration (SE&I) Decision Memorandum Updated Exploration Atmospheres (2021) 
+ 
+NASA JSC ISS Safety Review Panel Acrylic Cupola Scratch Pane Assembly Replacement 
+TIM Minutes (2018) 
+
+
+ 
+3  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+International Space Station, Operational Control Agreement Database (OCAD) 122607  
+SSQ 21652, Wire, Electric, Silicone Insulated, Nickel Coated Copper, Space Quality, General 
+Specification for 
+ 
+JSC 20793, Crewed Space Vehicle Battery Safety Requirements 
+ 
+JSC 29353, Flammability Configuration Analysis for Spacecraft Applications 
+ 
+TR-325-001, Atmosphere and Ignition Effects on “Typical” Electronic Box and Contents, 
+NASA JSC-White Sands Test Facility (1984) 
+ 
+TR-325-002, Atmosphere and Ignition Effects on “Typical” Electronic Box and Contents, 
+NASA JSC-White Sands Test Facility (1984)  
+  
+WSTF #07-42203, Electrical Arc Ignition Testing for Constellation Program, Special Test 
+Data Report (2008) 
+ 
+WSTF #10-44740-A, Plastazote™ LD25FR Polyethylene (LDPE) Foam Fire Retardant Low 
+Density Cross Linked, NASA JSC-White Sands Test Facility 
+  
+WSTF #10-44741-A, Plastazote™ LD45FR Polyethylene (LDPE) Foam Fire Retardant Low 
+Density Cross Linked, NASA JSC-White Sands Test Facility 
+ 
+WSTF #11-45093, Power Inverter 120 V dc, NASA JSC-White Sands Test Facility 
+  
+WSTF #12-45702, COTS Vacuum Cleaner Power Cord, NASA JSC-White Sands Test 
+Facility 
+ 
+WSTF #13-46248, Flammability Testing on a Simulation Avionics Box, NASA JSC-White 
+Sands Test Facility 
+ 
+WSTF #14-46333, Charge Bluetooth® Speaker, NASA JSC-White Sands Test Facility 
+ 
+WSTF #14-46338, Mini Bluetooth® Speaker, NASA JSC-White Sands Test Facility 
+ 
+WSTF #18-47446, Synergy® UL8531, Nomex-IIIA, 7.5 Oz/Yd2, Peltex-70 (polyester) 
+batting stiffener, NASA JSC-White Sands Test Facility 
+  
+WSTF #18-47448, COTS USB Cable (UGREEN SKU: 20657) Wrapped with Temp-R-Tape 
+Teflon Tape, NASA JSC-White Sands Test Facility 
+ 
+WSTF #18-47501, Westex Synergy Orange Nomex® Fabric, Style 6171, Lot # 
+010005866729, NASA JSC-White Sands Test Facility 
+ 
+
+
+ 
+4  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+WSTF #20-47923, Velcro USA 191195 2” Loop 100 with 0172 Adhesive-Black, SKU: 
+191195 on Aluminum Substrate, NASA JSC-White Sands Test Facility 
+ 
+WSTF #20-47957, COTS USB Cable (UGREEN) Wrapped with 3M 361 1-inch (Fiberglass 
+Cloth Tape with Silicone Adhesive), NASA JSC-White Sands Test Facility 
+ 
+WSTF #20-47967, COTS USB Cable (UGREEN SKU:50445JP) Wrapped with Nitto 
+(Permacel) P-212 1-inch (Glass Cloth Tape with Silicone Adhesive), NASA JSC-White Sands 
+Test Facility 
+ 
+WSTF #21-47989, COTS USB Cable (Tensility International Corp, P/N 10-03678) Double 
+Wrapped with Nomex® (IIIA, 7.5 oz) and Overwrapped with Nitto (Permacel) P-212 1-inch 
+(Glass Cloth Tape with Silicone Adhesive), NASA JSC-White Sands Test Facility 
+  
+WSTF #21-47990, COTS USB Cable (Tensility International Corp, P/N 10-03678) Wrapped 
+with 3M 5413 Kapton 1-inch Tape (Polyimide Film Tape with Silicone Adhesive), NASA 
+JSC-White Sands Test Facility 
+ 
+WSTF #22-48300, 3M 425 Aluminized Tape 2” wide with Acrylic Adhesive 
+    
+WSTF #92-26027, HT90-40 Natural Nomex® and HiAir Nomex® Velcro (30 percent 
+O2/10.2psia, Both Single and Double layered Nomex® substrates), NASA JSC-White Sands 
+Test Facility 
+ 
+WSTF #92-26459, Aplix Nylon 808 Pile on HT-90-40 Nomex® (30 percent O2/10.2psia, 
+Both Single and Double layered Nomex® substrates), NASA JSC-White Sands Test Facility 
+ 
+WSTF #92-26460, Aplix Nylon 808 Fire Retardant Pile on HT-90-40 Nomex (30 percent 
+O2/10.2psia, Both Single and Double layered Nomex® substrates), NASA JSC-White Sands 
+Test Facility 
+ 
+Government Web Site 
+ 
+MAPTIS (http://maptis.nasa.gov)  
+ 
+2.3 
+Non-Government Documents 
+ 
+American National Standards Institute/National Electrical Manufacturers Association 
+(ANSI/NEMA) 
+ 
+ANSI/NEMA-WC-27500 (Formerly MIL-C-27500), Aerospace and Industrial Electrical Cable 
+ 
+ 
+ 
+
+
+ 
+5  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ASTM International 
+ 
+ASTM MNL36, Safe Use of Oxygen and Oxygen Systems: Handbook for Design, Operation, 
+and Maintenance, Second Edition, Harold D. Beeson, Sarah R. Smith, Walter F. Stewart Ed., 
+ASTM International, Philadelphia, 2007 
+ 
+SAE International 
+ 
+SAE AS22759 (Formerly MIL-W-22759), Wire, Electrical, Fluoropolymer-insulated, Copper or 
+Copper Alloy 
+ 
+SAE AS81044 (Formerly MIL-W-81044), Wire, Electrical, Crosslinked Polyalkene, Crosslinked 
+Alkane-imide Polymer, or Polyarylene Insulated, Copper or Copper Alloy 
+ 
+International Organization for Standardization (ISO) 
+ 
+ISO 14624-1, Space systems — Safety and compatibility of materials — Part 1: Determination 
+of upward flammability of materials 
+ 
+Other 
+ 
+Benning, M.A., Zabrenski, J.S., and Le, N.B., The Flammability of Aluminum Alloys and 
+Aluminum Bronzes as Measured by Pressurized Oxygen Index, Flammability and Sensitivity of 
+Materials in Oxygen-Enriched Atmospheres, ASTM STP 986, D. W. Schroll, Ed., American 
+Society for Testing and Materials, Philadelphia, 1988, pp. 54-71 
+ 
+Christiansen, P., Mrozik, W., and Weaving, J., Improving the Safety of Lithium-Ion Battery 
+Cells, Faraday Insights Issue 17, July 2023 
+ 
+Ferkul, P.V. and Olson, S.L., Zero-Gravity Centrifuge Used for the Evaluation of Material 
+Flammability in Lunar-Gravity, AIAA 2010-6260, 40th Int. Conf. Env. Syst. (2010) 
+ 
+Hirsch D., Williams, J., Harper, S., Beeson, H., and Pedley, M. D., Oxygen Concentration 
+Flammability Thresholds of Selected Aerospace Materials Considered for the Constellation 
+Program, 2nd IAASS Conference: Space Safety in a Global World (2007) 
+ 
+Hirsch, D.B., Williams, J.H., Haas, J.P., Beeson, H.D., Ruff, G.A., and Pedley, M.D., 
+Pressure Effects on the Extinguishment Limits of Aerospace Materials, 39th International 
+Conference on Environmental Systems, 12-16 July 2009, Savannah, Georgia, 09ICES-0267 
+ 
+Osorio, A.F., Mizutani, K., Fernandez-Pello, C., and Fujita, O., Microgravity flammability 
+limits of ETFE insulated wires exposed to external radiation, Proc. Combust. Inst. 35: 2683-
+2689 (2015) 
+ 
+
+
+ 
+6  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Sacksteder, K.R. and T’ien, J.S., Buoyant Downward Diffusion Flame Spread and Extinction in 
+Partial-Gravity Accelerations, Proc. Combust. Inst. 25:1685-1692 (1994) 
+ 
+2.4 
+Order of Precedence 
+ 
+The guidance established in this handbook does not supersede or waive existing guidance found 
+in other Agency documentation.  
+ 
+3. 
+ACRONYMS, ABBREVIATIONS, SYMBOLS, AND DEFINITIONS 
+ 
+3.1 
+Acronyms, Abbreviations, and Symbols 
+ 
+ºF 
+ 
+ 
+Degrees Fahrenheit 
+> 
+ 
+ 
+Greater Than 
+ABS  
+ 
+Acrylonitrile Butadiene Styrene 
+AC 
+ 
+ 
+Alternating Current 
+Al 
+ 
+ 
+Aluminum 
+ANSI  
+ 
+American National Standards Institute 
+CCP 
+ 
+ 
+Commercial Crew Program 
+cm 
+ 
+ 
+Centimeters 
+cm2 
+ 
+ 
+Centimeters squared 
+COTS  
+ 
+Commercial Off-the-Shelf 
+CTB 
+ 
+ 
+Cargo Transfer Bag 
+DC 
+ 
+ 
+Direct Current 
+ECTFE 
+ 
+Ethylene Chlorotrifluoroethylene 
+EMS  
+ 
+Entry Monitor System  
+ETFE  
+ 
+Ethylene Tetrafluoroethylene (commonly known by the brand name Tefzel®) 
+EVA  
+ 
+Extravehicular Activity 
+FED 
+ 
+ 
+Flight Events Demonstration 
+FEP 
+ 
+ 
+Fluorinated Ethylene Propylene (commonly known as FEP Teflon®) 
+GOX  
+ 
+Gaseous Oxygen 
+HDBK  
+ 
+Handbook 
+HEO  
+ 
+Human Exploration and Operations 
+HLS 
+ 
+ 
+Human Lander System 
+IASS  
+ 
+International Association for the Advancement of Space Safety  
+IMU 
+ 
+ 
+Inertial Measurement Unit 
+in 
+ 
+ 
+Inches 
+ISS 
+ 
+ 
+International Space Station 
+JSB 
+ 
+ 
+Jettison Stowage Bags 
+JSC 
+ 
+ 
+Johnson Space Center 
+LDPE  
+ 
+Low Density Polyethylene  
+MAPTIS  
+Materials and Processes Technical Information System 
+mm 
+ 
+ 
+Millimeter 
+MPCV  
+ 
+Multi-Purpose Crew Vehicle 
+
+
+ 
+7  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+MSFC  
+ 
+Marshall Space Flight Center 
+MUA  
+ 
+Materials Usage Agreement 
+NASA  
+ 
+National Aeronautics and Space Administration 
+NEMA 
+  
+National Electrical Manufacturers Association 
+NSTS  
+  
+National Space Transportation System 
+OCAD  
+  
+Operational Control Agreement Database 
+PBI 
+ 
+ 
+Polybenzimidazole 
+psia 
+ 
+ 
+Pounds per Square Inch Absolute 
+PTFE  
+ 
+Polytetrafluoroethylene (commonly known by the brand name Teflon®) 
+PVC  
+ 
+Polyvinyl Chloride 
+RSR 
+ 
+ 
+Resupply Stowage Rack 
+scfm 
+ 
+ 
+Standard Cubic Feet per Minute 
+SE&I  
+ 
+Systems Engineering and Integration 
+SI 
+ 
+ 
+Système Internationale or metric system of measurement 
+SLS 
+ 
+ 
+Space Launch System 
+SSQ 
+ 
+ 
+Space Station Quality 
+STD 
+ 
+ 
+Standard 
+TIM 
+ 
+ 
+Technical Interchange Meeting 
+TVSA  
+ 
+Thrust Vector Servo Amplifier  
+UOP  
+ 
+Utility Outlet Panel 
+WSTF  
+ 
+White Sands Test Facility 
+ZSR 
+ 
+ 
+Zero-gravity Softrack 
+ 
+3.2 
+Definitions  
+ 
+Barrier, Fire: An obstruction (such as a partition, enclosure, or shielding material) that prohibits 
+or tends to inhibit ignition and burning propagation of flammable protected materials. A fire 
+barrier material meets ignition resistance and shielding requirements when the material prevents 
+ignition of flammable materials it is designed to protect when subjected to NASA-STD-6001, 
+Flammability, Offgassing, and Compatibility Requirements and Test Procedures, Test 1. 
+ 
+Break, Fire: A gap, opening, or nonflammable material between flammable materials which 
+would prevent propagation of burning. 
+ 
+Containers, Intermediate: Containers that have no active vents or cooling airflow but are not 
+physically sealed to prevent air exchange. 
+ 
+Containers, Sealed: Containers that are enclosed adequately enough to preclude the 
+replenishment of a combustible atmosphere under conditions of a fire. 
+ 
+Containers, Vented: Containers that have active vents, are unsealed, and permit atmosphere 
+exchange. Vented containers may or may not contain forced air convection. 
+ 
+Containment, Fire: The situation in which a fire and/or burning material does not progress 
+beyond the confines of a configuration. 
+
+
+ 
+8  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Enriched Oxygen (and Oxygen Enriched): Environments containing oxygen concentrations 
+higher than the 20.9 percent in terrestrial air. 
+ 
+Flammable: Describes a material that fails to meet acceptance criteria when tested for 
+flammability according to the requirements of NASA-STD-6001.  
+ 
+Heat Sink: A structure or panel of high thermal conductivity in contact with a flammable 
+material that extracts sufficient heat by conduction to lower the temperature below the ignition 
+point and prevent it from propagating fire.  
+ 
+Ignition Source: A source of heat sufficiently intense and localized to induce combustion. 
+Potential ignition sources in spacecraft cabin environments are almost entirely electrical, but not 
+all electrical sources are potential ignition sources (see section 4.1 in this handbook). Chemical 
+ignition sources must be considered.  
+ 
+Nonflammable: Describes a material that meets the acceptance criteria when tested according to 
+the requirements of NASA-STD-6001.  
+ 
+Propagation Paths: The paths taken by a flame front that represent fire paths between 
+flammable materials. They are not necessarily straight or coplanar.  
+ 
+Responsible Hardware Organization: Organization responsible for designing the hardware and 
+certifying it for flight. 
+ 
+Vent:  Opening that allows the cabin atmosphere to enter or pass out of a container.  Active 
+vents have forced air convection driven by a fan, whereas passive vents are openings for pressure 
+equalization without forced air convection. 
+ 
+Void Space: Unoccupied volume in a container. 
+ 
+ 
+4. 
+TECHNICAL REQUIREMENTS DOCUMENTS 
+ 
+4.1 
+NASA-STD-6001 
+ 
+NASA-STD-6001 describes material flammability tests and requires a system flammability 
+evaluation for materials that fail those tests. All flight hardware used in NASA crewed space 
+programs are required to comply with the flammability testing requirements of NASA-STD-
+6001 or be assessed to prohibit fire propagation based on the (presumed flammable) hardware 
+design or configuration.  
+ 
+Note: NASA-STD-6001 contains several required material flammability tests: 
+ 
+ 
+Test 1 – Upward Flame Propagation 
+
+
+ 
+9  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+Test 4 – Electrical Wire Insulation Flammability  
+ 
+Test 17 – Upward Flammability of Materials in GOX 
+ 
+Test 18 – Arc Tracking 
+ 
+It also contains several supplemental tests (e.g., NASA-STD-6001, section A.2.4, 
+Configurational Flammability [Test 10]1), that may be used, as needed, for further evaluation of 
+materials that fail the basic tests or for testing special hardware configurations.  
+ 
+For general-purpose solid materials used in vehicle crew compartments, the fundamental 
+flammability test is Test 1, or a special configurational variation of this test.  Test 1 can be 
+performed on single materials or on layups/combinations of materials.  Test 4 is used for 
+electrical wire insulation in power circuits. The other tests are not required for payloads or any 
+other flight program. Test 17 applies only to pressurized oxygen systems. (Test 1 may also be 
+used for oxygen systems at pressures below 50 pounds per square inch absolute [psia]). 
+ 
+4.2 
+NASA-STD-6016, Standard Materials and Processes Requirements for Spacecraft 
+ 
+Hardware used in NASA programs, including the MPCV, SLS, Gateway, HLS, and CCP, is 
+required to meet the intent of NASA-STD-6016. This Standard requires Materials Usage 
+Agreements (MUAs) for hardware containing materials that do not meet the NASA-STD-6001 
+flammability requirements. The guidelines in this handbook can be used for hardware 
+flammability assessment to support MUA acceptance rationale.  
+ 
+Note: Versions of NASA-STD-6016 released prior to Revision A contained an appendix with 
+standard MUA rationale codes for the most common acceptable configurations containing 
+flammable materials. In subsequent releases, these codes were replaced with rationale language 
+in the flammability control section detailing specific approved exceptions to the flammability 
+requirements in NASA-STD-6001. The NASA-STD-6016C flammability requirements are 
+reproduced in Appendix A of this handbook. 
+ 
+NASA-STD-6016 requires materials to be nonflammable or self-extinguishing in their use 
+configuration as defined by NASA-STD-6001, Test 1, or an appropriate configurational 
+flammability test per NASA-STD-6001, with several exceptions. The basis of several of these 
+exceptions is explained in this handbook.  
+ 
+This release of JSC 29353 refers explicitly to NASA-STD-6016C as the flammability 
+requirements will be revised in future revisions.  The most significant NASA-STD-6016C 
+exception that will be revised is for materials used in minor quantities with dimensions 
+controlled so the potential fire propagation path is less than 15 linear centimeters (cm) (6 linear 
+inches]) and the surface area is no more than 80 square centimeters (cm2) (12 square inches) in 
+ 
+1 Test 10, formerly titled Simulated Panel or Major Assembly Flammability Test, is a supplemental test in  
+NASA-STD-6001B.  It may be reinstated as a required test in future revisions of NASA-STD-6001. 
+
+
+ 
+10  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+crew environments2, and 30 linear cm (12 linear inches) for external materials that are exposed 
+only to air during ground processing, launch, and landing with no identified propagation path or 
+ignition source. The exception for pressurized environments was based on the NASA-STD-6001, 
+Test 1 flammability acceptance criterion (no test specimen of five standard-sized specimens [30 
+cm by 6.5 cm {12 inches by 2.5 inches} burns >15 cm (6 inches)] and no test specimen 
+propagates a flame by the transfer of burning debris). “No propagation path” means such 
+materials must be sufficiently separated from other flammable materials so that fire cannot 
+“jump” from one flammable material to another. “No propagation path” also means that, if such 
+materials are ignited, they must be unable to ignite adjacent materials that pass the standard 
+NASA-STD-6001 flammability test but can be ignited by a more severe ignition source than the 
+standard igniter used in NASA-STD-6001 testing directly or by transfer of burning debris (this 
+aspect has not been considered adequately in the past).  A 15-cm (6-inch) fire break separation is 
+normally adequate. Smaller separations may be acceptable, but design-specific testing is required 
+for verification.   
+ 
+NASA-STD-6016 requires MUAs for hardware containing materials that do not meet the NASA-
+STD-6001 flammability requirements. As such, document hardware configurations analyzed and 
+accepted for flammability via the approach laid out in this handbook in an approved MUA.  
+ 
+ 
+5. 
+FLAMMABILITY ASSESSMENT GUIDELINES 
+ 
+The following guidelines provide assessment procedures that allow users to evaluate 
+flammability hazards associated with their equipment. Users can employ these guidelines as a 
+similarity basis for certifying their hardware. For payloads, include an explanation of this 
+assessment process and its results in the hazard report. 
+ 
+Existing test data on material flammability characteristics can be obtained by consulting the 
+MSFC Materials and Processes Technical Information System (MAPTIS) database, which can be 
+accessed via the Request Form at http://maptis.nasa.gov. When using MAPTIS data, understand 
+that materials flammability is affected by the material thickness, test conditions, and any 
+substrate to which the material is attached. Fabric seams and added flammable materials such as 
+hook-and-loop fasteners, zippers and sewing thread may affect the flammability of materials 
+used in assembled hardware.  Detailed configurations within such hardware may need to be 
+tested to verify that materials identified by MAPTIS as meeting flammability requirements still 
+meet those requirements in their use configuration.  Coatings and adhesive tapes have commonly 
+been tested on aluminum substrates and may be substantially more flammable on nonmetallic 
+substrates or (in the case of tapes) when used to wrap nonmetallic materials.  Flammability data 
+taken from materials on aluminum substrates has historically been applied to materials on other 
+metal substrates of equal or greater thickness.  However, aluminum has a higher thermal 
+conductivity than many metals so this approach may not be valid. 
+ 
+ 
+2 This allowance will be reduced for future revisions of NASA-STD-6016.  Some of the other exceptions will also 
+be deleted or revised.  
+
+
+ 
+11  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+When a flammability assessment results in an unacceptable configuration, reduction of 
+flammability hazards is necessary to correct the flammability problems. The primary methods 
+used by NASA to reduce flammability hazards are the limitation of flammable materials by 
+replacement with nonflammable materials and the restriction of propagation paths, either by 
+covering flammable materials with a nonflammable material or by separation of flammable 
+materials. 
+ 
+When the results of the flammability configuration analysis are inconclusive, the hardware 
+configuration (or a simulated configuration with acceptable fidelity) may be tested for 
+flammability to determine acceptability. The responsible hardware organization should contact 
+the appropriate NASA Materials and Processes (M&P) organization to determine what testing is 
+required. Alternatively, the hardware organization may choose to assume the configuration is 
+flammable and implement appropriate measures to eliminate the flammability hazard. 
+ 
+To conduct a flammability configuration assessment, use the following procedures.  
+ 
+5.1 
+Define the Environment 
+ 
+Material flammability depends strongly on the oxygen concentration in the environment to which 
+the materials will be exposed. The effect of system pressure is weaker but still significant. Before 
+starting any flammability assessment, it is necessary to define the maximum oxygen 
+concentration and associated pressure in the use environment. The maximum oxygen 
+concentration is estimated from the maximum oxygen concentration allowed by the 
+environmental control system oxygen concentration control band plus the maximum oxygen 
+concentration sensor error, so it will be appreciably higher than the nominal oxygen 
+concentration. Table 1, Maximum Oxygen Concentrations and Pressures for Crewed Spacecraft, 
+shows maximum oxygen concentrations and pressures for crewed spacecraft in current NASA 
+programs. 
+ 
+The gravity level for the use application may be significant. Limited data exist suggesting that 
+flammability in partial gravity (lunar and Martian) may be worse than in Earth’s gravity or in 
+microgravity without forced convection (see Ferkul and Olson, 2010; Sacksteder and T’ien, 
+1994; Osorio et al., 2015). While more is known or can be determined about the effect of oxygen 
+concentration, HLS and EHP missions to the Moon and Mars require that partial gravity impacts 
+be accounted for to the extent possible. This handbook does not consider the effects of partial 
+gravity because available data are currently too limited. As more data become available, account 
+for the effect of lunar or Martian gravity to the greatest extent possible. 
+ 
+The design solutions in this handbook for controlling materials flammability are appropriate for 
+environments to 30 percent oxygen at 10.2 psia, unless otherwise noted. Past NASA programs 
+used much higher oxygen concentrations (i.e., 100 percent for Apollo and 70 percent for Skylab). 
+Per Human Exploration and Operations (HEO) Systems Engineering and Integration (SE&I) 
+Decision Memorandum HEO-DM-1006 (2021), habitable exploration elements that operate on 
+the lunar or Martian surface will use a minimum oxygen concentration of 33.7 percent at 8.2 
+psia. The maximum oxygen concentration for the HLS Program is specified to be 37 percent, but 
+
+
+ 
+12  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+this concentration may be exceeded in other lunar or Martian habitable exploration elements. The 
+general approach to configurational flammability control is the same at high oxygen 
+concentrations as at 30 percent oxygen. Many of the fire barrier materials identified in this 
+handbook are inappropriate for the HLS 37 percent oxygen concentration. At the same time, 
+some of the test examples in this handbook were tested at high oxygen concentrations, including 
+two tests in 100 percent oxygen from the Apollo Program. 
+ 
+Table 1—Maximum Oxygen Concentrations and Pressures for Crewed Spacecraft 
+ 
+Vehicle 
+Maximum Oxygen 
+Concentration (percent) 
+Cabin Pressure at Maximum 
+Oxygen Content (psia) 
+ 
+Space Shuttle Orbiter Cabin1 
+30 
+10.2 
+ 
+Space Shuttle Orbiter Payload 
+Bay2 
+ 
+20.9 
+14.7 
+ISS Internal 
+24.1 
+14.5 
+ 
+ISS Airlock3 
+ 
+30 
+10.2 
+ISS External2 
+20.9 
+14.7 
+ 
+MPCV Crew Module Internal 
+ 
+30 
+10.2 
+MPCV Crew Module External2 
+20.9 
+14.7 
+ 
+Gateway 
+30 
+10.2 
+CCP Crew Module Internal 
+30 
+10.2 
+Habitable Exploration 
+Elements on Lunar or Martian 
+Surface4 ,5 
+36-40 
+8.2 
+Habitable Exploration 
+Elements Operating in 
+Cislunar Vicinity or Deep 
+Space When Docked to Other 
+Vehicles 
+30 
+10.2 
+SLS 2 
+20.9 
+14.7 
+ 
+1. Maximum oxygen concentration was 25.9 percent at 14.5 psia during normal operations, and 30 percent at 10.2 
+psia during preparation for extravehicular activity (EVA). 
+2. Ground environment prior to launch. 
+3. Maximum oxygen concentration is 24.1 percent at 14.5 psia during normal operations, and 30 percent at 10.2 
+psia during preparation for EVA. 
+4. Oxygen concentration is 33.7 percent minimum with higher nominal and maximum values required to address 
+tolerances (control range, sensor accuracy, etc.). The nominal and tolerance values will be design/system 
+dependent. 
+5. Maximum oxygen concentration for Artemis-III will be 30 percent at 9.6 psia.  The baseline beyond Artemis-III 
+is 8.2 psia. 
+
+
+ 
+13  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Configurations that are acceptable under these conditions are satisfactory for lower oxygen 
+concentrations at the same or lower pressures. Although it is sometimes assumed that 
+flammability depends only on the partial pressure of oxygen, this assumption is incorrect for 
+mixtures of oxygen with diluents such as nitrogen as both the partial pressure of oxygen and the 
+partial pressure of the diluent affect flammability. Flammability test experience from the Space 
+Shuttle Program is that 30 percent oxygen at 10.2 psia is a more severe environment than 25.9 
+percent oxygen at 14.7 psia (the worst-case Space Shuttle orbiter environment when not 
+ 
+conducting EVAs) for nearly all materials. Higher pressures at a given oxygen concentration can 
+result in a more severe environment, depending upon the material and specific oxygen 
+concentration/pressure combination. (The ISS airlock prebreathe environment always bounds the 
+normal flammability ISS environment of 24.1 percent oxygen maximum at 14.7 psia.) 
+ 
+5.2 
+Evaluate the Overall Hardware Configuration 
+ 
+Flight hardware is often in the form of a “black box,” a container with internal electronics, 
+experiments, etc. Such containers are frequently effective at containing internal fires. Sealed 
+containers have no vent openings and a verified maximum leak rate. Vented containers have 
+active vents that facilitate the replenishment of oxygen during combustion. These containers may 
+or may not contain associated cooling airflow. Intermediate containers have no active vents or 
+cooling airflow but are not physically sealed to prevent air exchange; many commercial off-the-
+shelf (COTS) electronics items fall into this intermediate category. 
+ 
+1. If the hardware is a closed box without vents or power, then the materials inside the 
+box will not contribute to the fire hazard unless the box is constructed from a non-effective fire 
+barrier material―the box acts as a fire barrier. 
+ 
+2. If the electrical power within the box is exclusively from alkaline batteries, no 
+ignition can occur in Earth’s gravity or microgravity. NASA testing of solid materials in an 
+atmosphere containing 34 percent oxygen at 15 psia previously resulted in a conclusion that they 
+cannot be ignited by electrical powers of less than 25 watts (see WSTF # 07-42203, 2008)3.  
+However, recent reevaluation of that testing found that the actual voltage in the test was 
+considerably lower than reported and the power was more like 5 watts. Further testing is required 
+before a new power threshold can be identified. Small, low-voltage alkaline and coin batteries 
+are still believed to be incapable of delivering powers required for ignition, although larger 
+batteries (such as lithium-ion rechargeable batteries for portable electronic devices) can certainly 
+achieve higher power levels. 
+ 
+Note: Combustion theory and very limited experimental data indicate that electrical power 
+required for ignition may be lower in partial gravity environments than in Earth’s gravity. In the 
+absence of specific data, use a maximum short-circuit power draw less than 2 watts for lunar 
+and Martian environments. 
+ 
+3 Excluding materials with a finely divided surface flock on the surface, such as moleskin and some medical 
+dressings), none of which are used in electrically powered boxes. 
+
+
+ 
+14  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+Guidelines for assessing the ability of containers to contain internal fires are provided in section 
+6 of this handbook. 
+ 
+5.3 
+Evaluate the Way the Hardware Will Be Used 
+ 
+Hardware that is normally stowed in a fireproof/fire barrier container and exposed to the cabin 
+environment for short periods during use may be acceptably controlled by compliance with 
+stowage constraints (see section 6 of this handbook). Fireproof/fire barrier containers provided 
+by NASA include stowage lockers that fully enclose hardware and stowage bags such as the ISS 
+and MPCV cargo transfer bags (CTB) which use a Nomex® fabric that meets flammability 
+requirements in 30 percent oxygen at 10.2 psia (see section 8.6 of this handbook). 
+ 
+The acceptability of the ISS and MPCV CTBs is currently uncertain.  Although the Nomex 
+acreage has been verified to meet flammability requirements in up to 30% oxygen at 10.2 psia, 
+the effects of small areas of added flammable items are more significant than previously realized.  
+In recent large-scale flammability testing for the HLS Program, CTBs designed so the acreage 
+met flammability requirements propagated fire, with burning seams, hook-and-loop fasteners, 
+and/or plastic zippers providing enough energy to ignite the Nomex acreage.  
+ 
+For general purpose hardware, passing the standard flammability test using the standard igniter 
+adequately protects against ignition by primary ignition sources, nearly all of which are 
+electrical, other than lithium-ion battery runaway failures.  However, hardware items like CTBs 
+that are used as fire barriers to protect flammable items stored inside need to be more robust 
+from a flammability standpoint and also protect from secondary ignition sources.  Secondary 
+ignition sources are known flammable materials that have been ignited by a primary ignition 
+source.  The HLS testing showed that materials that did not ignite when exposed to a standard 
+igniter did ignite when exposed to burning socks ignited by a standard igniter.  NASA-STD-6016 
+does not currently address this concern and the current NASA-STD-6001 configurational 
+flammability test is not adequate to address it; but future revisions of these standards will address 
+the issue. 
+ 
+Note: Nonflammable Nomex® has always been considered to be an excellent fire barrier material 
+because it does not melt and forms a char when exposed to a flame. It should still be effective for 
+containments designed to address the above concerns, although configurational testing will be 
+required, at least until guidance on acceptable configurations can be established.  Also, Nomex® 
+flammability varies with brand, weight, and color. Flammability data for tested brands, weights, 
+and colors of Nomex® are in MAPTIS; if data do not exist for the specific Nomex® being used, 
+test the Nomex® to verify acceptability. 
+ 
+Conduct a flammability analysis for hardware that is permanently mounted in a rack or a locker 
+space. 
+ 
+ 
+ 
+
+
+ 
+15  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+5.4 
+Identify the Major Materials to be Assessed 
+ 
+a. Materials that are unexposed, overcoated with a fire-blocking material that has been 
+verified for the use environment are acceptable and do not need to be assessed.  Materials that 
+are no more than 0.25 inch thick and sandwiched between nonporous, nonflammable materials 
+with only the edges exposed may be acceptable provided that the nonporous, nonflammable 
+material doesn’t melt and expose the flammable material underneath; at this time, testing is 
+required to verify acceptability.  Assess any other material within a crew-habitable compartment.  
+As noted in section 4.2 of this handbook, materials must be sufficiently separated from other 
+flammable materials so that fire cannot “jump” from one flammable material to another, with a 
+15-cm (6-inch) fire break separation normally adequate and design-specific testing required to 
+verify the acceptability of smaller separations. The flammable material must be unable to ignite 
+adjacent materials that pass the NASA-STD-6001 flammability test but might be ignited by a 
+higher energy ignition source.   
+ 
+Flammable materials with a continuous linear dimension less than 4 inches or an area less than 4 
+square inches are acceptable on metallic substrates provided that they do not release burning 
+drips that could ignite other materials.  NASA-STD-6016C allows materials with any continuous 
+linear dimension less than 6 inches or an area less than 12 square inches (and does not clearly 
+limit such materials to metallic substrates) but this allowance will change for future revisions of 
+NASA-STD-6016. 
+ 
+b.  Assess any material outside of a crew-habitable compartment if it occurs in a 
+quantity with any continuous area greater than 12 square inches. The boundary of the material to 
+be assessed is the point where there is sufficient separation from other flammable materials to 
+prevent fire propagation (see section 4.2 of this handbook).  
+ 
+c. Metallic panels and structures, including titanium, are nonflammable when tested per 
+NASA-STD-6001, Test 1, in environments containing 30 percent oxygen or less and need not be 
+considered unless the environment exceeds this level4. Stainless steels and aluminum alloys are 
+not flammable at higher oxygen concentrations such as those for habitable exploration elements 
+on lunar or Martian surfaces (see Benning, Zabrenski, and Le, 1988; ASTM MNL36, 2007). This 
+may also apply for magnesium and titanium, but data do not exist. Metallic screens may be 
+flammable, even at ISS oxygen concentrations.  Verify metallic screens to be nonflammable if 
+used alone or to be non-ignitable if used as a fire barrier material.  Note that as-purchased vent 
+screen material may have a residual coating of flammable lubricant used in the screen 
+manufacturing process. The lubricant needs to be removed for effective use as a fire barrier 
+material. 
+ 
+d. Ceramics are nonflammable in environments containing up to 40 percent oxygen at 
+pressures up to 14.7 psia and need not be considered for such environments. 
+ 
+4 Some metallic materials such as magnesium may burn in these environments when tested per NASA-STD-6001, 
+Test 17; but the burning metal igniter used in that test is not a credible ignition source for crew cabin environments.  
+They do not burn when a standard Test 1 igniter is used. 
+
+
+ 
+16  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+e. With the exception of adhesives on adhesive tapes, adhesives sandwiched between 
+non-porous surfaces that do not melt and expose the adhesive need not be considered. The outer 
+layer of adhesive tapes may not adequately protect flammable adhesives from ignition. 
+ 
+When using MAPTIS to obtain flammability characteristics, match the database flammability 
+rating to the design-specific environmental use application. An A-rating in MAPTIS for test 
+conditions that are at least as severe as the use conditions stated in MAPTIS means the material 
+on its own is acceptable in unlimited quantities; however, configurations containing other 
+materials as well need to be assessed as described in Section 5.3. Control material 
+quantity/exposure for ratings other than A-rating or retest the material in a more representative 
+configuration than that of the standard NASA-STD-6001 flammability test5. Consider the 
+following key factors in material flammability when using MAPTIS flammability data:  
+ 
+a. Oxygen concentration – If MAPTIS flammability data obtained at higher oxygen 
+concentrations and the same pressure show that a material is acceptable, then it is generally 
+acceptable at lower concentrations and the identical pressure. An A-rated material at 30 percent 
+oxygen is almost always acceptable for use at lower oxygen concentrations.  Since even small 
+increases in oxygen concentration can change the flammability rating, a material that is 
+acceptable in 24.1 percent oxygen may be flammable in 24.5 percent oxygen at the same 
+pressure.  
+ 
+Note: Hardware designed for internal or external use on ISS is acceptable for transport in 
+pressurized areas of vehicles with higher oxygen concentrations, provided it is unpowered and 
+stowed in a locker or validated fire barrier stowage bag. Unpowered metal boxes, which may be 
+painted, are also acceptable. Assess hardware not meeting these constraints for flammability at 
+the higher oxygen concentration and pressure. 
+ 
+b. Pressure – This parameter for the environments under consideration usually has a 
+much smaller effect on flammability than oxygen concentration, but it should not be ignored. At 
+a given oxygen concentration, higher pressures are generally more flammable than lower 
+pressures. Relatively large changes in pressure are generally required to alter a material’s 
+flammability rating. The effects are material-dependent and should be evaluated (see Hirsch, 
+Williams, Haas, Beeson, Ruff, and Pedley, 2009). 
+ 
+c. Material thickness – Flammability varies with material thickness, so the thickness 
+associated with the MAPTIS rating should be approximately the same as the use thickness. In 
+general, flammability decreases with increasing thickness, so a material is usually acceptable if a  
+ 
+ 
+ 
+5 Unless a special test configuration is identified in MAPTIS, the MAPTIS rating is for materials tested with bottom 
+edge ignition. In many cases when there is no edge exposure in the use application, less conservative configuration 
+testing with face ignition (with the material mounted 15 degrees off vertical or in a J configuration) is more 
+appropriate. 
+
+
+ 
+17  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+thinner version of the same material is A-rated for flammability. However, exceptions occur, so 
+such extrapolations must be documented in the flammability assessment6.  
+ 
+d. Coatings and substrates – Thin coatings bonded to or sprayed on metallic substrates 
+are generally not flammable because the substrate acts as a heat sink. Most MAPTIS coating 
+flammability data were obtained using 0.006- or 0.02-inch aluminum (Al) substrates. Coating 
+flammability decreases with increasing substrate thickness, so a coating on a metallic substrate is 
+acceptable if it is A-rated for flammability on a thinner substrate. If no data exist, the coating is 
+less than 0.002 inch thick, and the metal substrate is at least 0.020 inch thick, then the coating is 
+acceptable for oxygen concentrations up to 30% oxygen at 10.2 psia. The same may apply at 
+higher oxygen concentrations but insufficient data exist at this time. Nonmetallic substrates are 
+not effective heat sinks, so flammability data obtained using metallic substrates are not 
+applicable. In such cases, test the specific configuration for flammability if test data do not 
+already exist. 
+ 
+5.5 
+Determine the Fire Propagation Paths 
+ 
+Determine whether externally exposed materials (including container housings) represent fire 
+propagation paths exceeding 6 inches in crew-habitable compartments or 12 inches in other 
+areas. For any given material application, propagation from one flammable material application 
+to the next is not acceptable. Fire propagation paths can be limited by appropriately sized fire 
+breaks. Verify effective fire break spacing via testing or via existing data by similarity at a given 
+set of use conditions. If fire propagation is possible, then take positive action to control or 
+eliminate the hazard. Sample solutions are included in sections 6 and 7 of this handbook.  
+ 
+5.6 
+Lithium-Ion and Other High Specific Energy Batteries 
+ 
+High specific energy cells and batteries such as rechargeable lithium-ion and large lithium cells 
+and batteries contain considerable stored energy and may be a credible ignition source under 
+abuse or other off-nominal operating conditions. A far more serious concern is the potential for 
+lithium-ion batteries to catch fire as a result of thermal runaway. Such fires are extremely rare 
+(an evaluation of statistics for 2017 for lithium-ion batteries in portable consumer electronics 
+devices showed a 1 in 8 million occurrence of a battery cell fire [see NASA JSC ISS Safety 
+Review Panel Acrylic Cupola Scratch Pane Assembly Replacement TIM Minutes, 2018] but are 
+high energy and capable of igniting materials that pass the NASA-STD-6001 flammability test.  
+Faraday Insights Issue 17, July 2023, states that rates of catastrophic lithium-ion battery failure 
+(fire or explosion) remain extremely low, ranging from 1 in 10 million to 1 in 40 million cells 
+experiencing such a failure. 
+ 
+ 
+6 The acceptability of data for a slightly different thickness requires some judgment based both on the difference in 
+thickness and the MAPTIS burn length data. There is a lot more leeway on thickness differences when a material 
+has a maximum burn length of something like 2 inches than for a material that has a maximum burn length close to 
+the 6-inch pass/fail criterion.   
+
+
+ 
+18  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+All batteries used in crewed spaceflight hardware are screened in accordance with JSC 20793 for 
+defects that would make them susceptible to igniting. In addition, battery designs with greater 
+than 80-watt-hours energy employing high specific energy cells (for example, lithium-ion 
+chemistries) with catastrophic failure modes are subject to testing to ascertain the severity of a 
+worst-case single-cell thermal runaway event and the propensity of the design to demonstrate 
+cell-to-cell propagation in the intended application and environment. Because of the low 
+probability of lithium-ion battery fires and this additional screening for crewed spacecraft 
+applications, lithium-ion battery lots that have been verified to meet the JSC 20793 spacecraft 
+battery requirements are considered to be improbable ignition sources in flammability 
+configuration analysis. That does not obviate the need for emergency fire extinguishment 
+equipment to be able to control lithium-ion battery fires. 
+ 
+5.7 
+Clothing 
+ 
+The use of flammable outer clothing has long been accepted for the Space Shuttle and ISS 
+Programs. With the exception of exercise clothing (see below), the only restriction has been that 
+the flammable material forms a char when burning, rather than melting, which would result in 
+severe burns. To meet this restriction, outer clothing has usually been limited to 100 percent 
+cotton or verified nonflammable Nomex®. Wool, some cotton/polyester blends, and other 
+flammable materials that have been shown to form a char have been accepted. Materials used for 
+underwear have not been restricted for flammability because they are covered by outer clothing. 
+Flammable socks have not been restricted as their mass is too small to create a propagation path 
+concern. Synthetic exercise clothing has been permitted during the Space Shuttle and ISS 
+Programs because use is limited to exercise periods. Any flammable clothing is required to be 
+stowed in validated fire barrier containers when not worn. 
+ 
+This approach on clothing flammability also applies to MPCV missions, which have the same 
+worst-case environment of 30 percent oxygen at 10.2 psia as the Space Shuttle Program. This 
+approach is not expected to be acceptable for HLS and other EVA-intensive exploration missions 
+with maximum oxygen concentrations of 36-40 percent at 8.2 psia.  The Gateway Program will 
+have the same worst-case environment as MPCV, but no decision has been made on the 
+acceptability of flammable clothing. 
+ 
+ 
+6. 
+CONTAINERS 
+ 
+Evaluate the fire containment capability of containers according to the amount of fuel involved, 
+container wall characteristics, and the presence of a combustion-supporting environment. 
+ 
+6.1 
+Sealed Containers 
+ 
+Hermetically sealed containers have a verified low leak rate and may be filled with an inert gas 
+such as nitrogen. Environmentally sealed containers also have a verified low leak rate (higher 
+
+
+ 
+19  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+than hermetically sealed containers) and they normally contain air. Containers with a helium leak 
+rate less than 1 × 10-4 cm3/second are considered to be sealed. 
+ 
+Fire propagation in a sealed container depends upon the container structural configuration. If the 
+sealed container contains an inert gas, then it can be assumed that fire will not be initiated. 
+Further, it may be assumed that for sealed metal containers with an air environment, or a 
+spacecraft atmosphere similar to those in Table 1 in this handbook, fire will be contained if the 
+container wall is at least 0.060 inch thick.7 The same assumption would apply to nonmetallic 
+containers, provided the container materials are nonflammable and are not melted by an internal 
+fire. Even flammable nonmetallic containers may be able to contain internal fires in 
+configuration if edges are not exposed and the fire does not breach the container exterior (see 
+section 9.6 in this handbook). 
+ 
+For the much higher oxygen concentrations during the Apollo and Skylab Programs, the 
+container internal void space was a significant factor in flammability assessment and was 
+generally limited to less than 30 percent of its total volume. For ISS and expected future crewed 
+mission environments, a larger void space is acceptable; and the normal (tight) packing of flight 
+electronics limits the internal void space acceptably, as demonstrated by the simulated MPCV 
+avionics box testing in 40 percent oxygen described in section 9.6 of this handbook. 
+ 
+6.2 
+Vented Containers  
+ 
+Materials inside vented, fire-proof/validated fire barrier containers will not propagate fire if vent 
+sizes are limited and insufficient oxygen is present to support prolonged combustion. A fire may 
+propagate if forced air convection is present and/or the container vent area is a large percentage 
+of the total surface area, facilitating the replenishment of oxygen during combustion. Tests have 
+shown that vented containers will contain fires if the container vents are covered with a fine 
+metal screen (at least 60 mesh) using fire-resistant metals (e.g., stainless steel or nickel) rather 
+than relatively flammable metals (e.g., titanium, or magnesium), or if the vent area is less than 1 
+percent of the total surface area8. Although relatively flammable, 60-mesh aluminum is more 
+effective as a vent screen than coarser aluminum screen material and more effective than 60-
+mesh stainless steel because of its higher thermal conductivity. A vent screen may not prevent 
+ignition of highly flammable materials located immediately outside the screen, so keep 
+flammable materials away from container vents. For other vented container configurations, 
+address conditions (such as initial oxygen concentration, airflow, vent type, and vent locations) 
+that could lead to uncontrolled fires. 
+ 
+ 
+7 The basis of the 0.06-inch wall thickness is not documented. Thinner walls may be adequate for steel containers 
+because of their melting point. Design-specific testing of wall material and minimum thickness is necessary for 
+flammability acceptance consideration of metal walls under 0.060 inches thick. 
+8 This 1 percent number is based on the electronic box testing with forced air convection described in section 9.5 and 
+Figure 11 of this handbook. Containers with relatively larger vent areas are almost certainly acceptable when forced 
+air convection is not present. 
+
+
+ 
+20  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+For containers that are not powered while mated to or installed in the spacecraft and do not have 
+internal sources of power, internal fire initiation is not credible. The container still needs to be 
+able to withstand an external fire.  
+ 
+When forced air convection is present, its flow velocity and volumetric flow rate are major 
+factors in the combustion of materials inside vented containers. If forced air flow is not required, 
+it is desirable from a flammability standpoint to cover all vents and assess the hardware as an 
+intermediate container9. If forced airflow is present, the relation between flow rate and 
+flammability is complex. At low flow velocities, flammable internal materials burn more 
+vigorously with increasing flow velocity, thus decreasing the effectiveness of the container. At 
+very high flow velocities, the airflow will prevent maintenance of stable flames, thus “blowing 
+out” the fire. The intermediate flow velocities represent the worst case. The worst-case flow 
+velocity is configuration dependent and may be affected by gravity and pressure conditions. It is 
+difficult to determine by analysis the acceptable flow velocities for a specific vented container 
+configuration. An exception is laptop computers and similar items that have slow forced airflow 
+and tightly packed electronics; such items can be assumed to have negligible air flow. 
+ 
+6.3 
+Intermediate Containers 
+ 
+As noted previously, intermediate containers are not airtight but do not have active vents or 
+airflow. They are a common configuration in crewed NASA spacecraft. Examples include 
+avionics boxes that are cold-plate cooled, not sealed, and may have covered vents for pressure 
+equalization; fully enclosed NASA-provided stowage lockers and nonflammable stowage bags 
+(note the issues with current CTB designs identified in Section 5.3); and most commercial 
+electronics items that do not contain an internal cooling fan. Note that the MPCV stowage 
+lockers are not full enclosed as the inner walls are in grid form, not solid and the Nomex fabric 
+ISS Zero-G Softracks may have similar issues to the CTBs. 
+ 
+NASA-provided fully enclosed stowage lockers and validated fire barrier stowage bags can be 
+treated as containers that act as barriers to external fire. Flammable materials stowed in these 
+containers do not constitute a fire risk while in the containers, provided they are unpowered. 
+Evaluate powered payloads/experiments stowed in lockers for an entire mission or located in 
+place of a locker from a flammability standpoint because they present a potential fire hazard.  
+For atmospheres containing up to 30% oxygen at 10.2 psia, many commercial electronics items 
+can be addressed through the stowage constraints described in section 7 of this handbook. Items 
+that do not comply with these stowage constraints may be acceptable if the case can be shown to 
+be nonflammable and capable of containing an internal fire. Many commercial electronic items 
+can be obtained in metallic or nonflammable polycarbonate cases and the internal components 
+have a high packing density that minimizes the internal void space.  
+ 
+In addition, many small commercial items are powered internally by alkaline button, or coin cell 
+batteries. Such batteries are not considered to be capable of delivering sufficient energy to ignite 
+ 
+9 External factors may prevent this approach. For example, the MPCV crew module must be depressurized for some 
+contingency activities, so containers must be vented to relieve the internal pressure. 
+
+
+ 
+21  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+solid, flammable materials (however, see section 5.2 of this handbook). Although the potential 
+for ignition sources cannot be eliminated on a vehicle scale, it is assumed that internal ignition is 
+not possible for such battery-powered components. The only potential for ignition is from 
+external ignition sources, which can be eliminated by a validated fire barrier case or by covering 
+the case with a validated fire barrier material (see section 8.1 of this handbook). 
+ 
+ 
+7. 
+STOWED HARDWARE 
+ 
+Many small, commercial, off-the-shelf components are used in a spacecraft. Examples include 
+cameras, power tools, compact and digital video and audio systems, and tablet computers; 
+medical devices and medications; clothing; and personal hygiene items. Most of these items are 
+stowed in lockers or validated fire barrier stowage bags at use conditions, taken out only as 
+required, and returned after use. The majority of this hardware for ISS and MPCV is provided as 
+NASA Johnson Space Center (JSC) government-furnished equipment or by the ISS Cargo 
+Mission Contract. Similar arrangements have been initiated for Gateway and HLS. JSC has 
+determined that such stowed hardware is acceptable for flammability in atmospheres to 30 
+percent oxygen at 10.2 psia regardless of the materials used, provided the component has limited 
+use10, is crew tended when in use, and is stowed in validated fire barrier stowage containers or 
+lockers when not in use. 
+ 
+Setting specific flight rules for each hardware item controlled by stowage is considered to be an 
+unreasonable imposition on crew operations. During the Space Shuttle Program, NASA relied on 
+crew housekeeping, which was sufficient to ensure that flammable items were returned to 
+stowage after use. The same approach was not effective for ISS, because the much larger 
+pressurized volume allowed for many unstowed items to be left out indefinitely (commonly 
+attached to walls with hook-and-loop fasteners). In response, ISS developed a generic 
+Operational Control Agreement Database (OCAD) for control of flammable items on ISS. At the 
+time of writing, this OCAD is currently OCAD 122607. ISS OCAD numbers do change when 
+any changes are made to the content.  
+ 
+Note: The ISS OCAD refers to materials in use at 24.1 percent oxygen and may not apply to 
+higher oxygen concentration environments.  
+ 
+The text of OCAD 122607 reads: 
+ 
+1. When not in use, flammable items will be stowed in non-flammable stowage 
+containers or compartments. 
+ 
+2. Non-flammable stowage containers include: CTBs, JSBs [Jettison Stowage Bags], 
+other bags or containers made of non-flammable material, ZSR/RSR [Zero-Gravity 
+ 
+10 Examples of acceptable limited use include payload experiments that operate only for 2-3 days in total, hygiene 
+items like toothbrushes and toothpaste tubes that are used daily but only for a few minutes each time, contingency 
+hardware used only in off-nominal situations, and items used only for photographic or public affairs opportunities. 
+
+
+ 
+22  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Softrack/Resupply Stowage Rack] compartments, and designated stowage areas in 
+payload or other racks. 
+ 
+3. When deployed in the open cabin for use, flammable items will be kept away from 
+rack power outlets, utility outlet panels (UOPs) and power strips (a.k.a. Junction 
+boxes). 
+ 
+4. A guideline of approximately 6” between the flammable item and power sources will 
+be provided in crew training. Measurement in real time is not required. 
+ 
+This operational control applies to the list of items below. This list is not all inclusive. 
+ 
+1. Plastic or Trash Bags (Ziplocs, waste bags, food packaging, etc.) 
+ 
+2. Fabric and Foam (clothing, towels, Velcro, foam packing material, etc.) 
+ 
+3. Off-the-shelf plastics (camcorders, mp3 players, inflatable globe, etc.) (not laptops) 
+ 
+4. Paper (procedure books, wipes, reading materials, pictures, post-its, etc.) 
+ 
+5. Bungees 
+ 
+For the purposes of the ISS OCAD, power electrical cables are not considered to be a credible 
+ignition source except at electrical connections. It is assumed that wiring under this OCAD 
+would be visible to the crew, so there is a low probability of undetected damage other than at 
+connections.  
+ 
+Responsible hardware organizations may use the controls in OCAD 122607 (or any current flight 
+successor) as rationale for accepting stowed, flammable hardware (or stowed hardware of 
+unknown flammability) for use on ISS, provided the use of this OCAD is properly documented. 
+ISS hardware that is used in compliance with OCAD 122607 will always be accepted for 
+flammability.  
+ 
+Hardware items that do not meet the OCAD constraints normally require additional 
+design/operational mitigations to control flammability while unstowed. When hardware items 
+have unique operational controls unrelated to stowed hardware flammability (as is commonly the 
+case for payload hardware), the controls for stowed hardware flammability are added to the 
+hardware-unique OCAD so that all operational controls are covered by a single OCAD―not two 
+separate OCADs. Use the generic flammability OCAD on ISS payload hardware only if there are 
+no payload-unique operational controls.  
+ 
+MPCV has similar operational controls for flammable items although the MPCV program 
+requires separate generic flammability OCADs for different hardware categories, not a single 
+generic OCAD. Such controls may not be appropriate for exploration mission environments, 
+
+
+ 
+23  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+especially habitable exploration elements on the lunar or Martian surface, but no decision has 
+been made at this time. 
+ 
+When operational controls are specified for controlling flammability, identify the use of such 
+controls in the materials certification documentation. A separate MUA to document the use of 
+operational controls is not required for ISS or MPCV hardware.  
+ 
+ 
+8. 
+FLAMMABILITY REDUCTION METHODS 
+ 
+This section describes common methods used to control flammability hazards. These methods 
+include replacement of flammable materials with nonflammable alternatives and methods of 
+protecting flammable materials by covering with validated fire barrier materials. These 
+flammability reduction methods may not be effective for the high oxygen concentrations 
+required for EVA-intensive exploration missions. 
+ 
+8.1  
+General Materials Protection 
+ 
+Commercial items with flammable outer surfaces (such as acrylonitrile butadiene styrene [ABS], 
+polyvinyl chloride [PVC], polyethylene, and/or polyamides [nylons]) may be covered with a 
+validated fire barrier tape. A 0.003-inch-thick aluminum tape protects most plastics, foam, and 
+cardboard from external flame initiation, including protection in 40 percent oxygen at 10.2 psia.  
+(See WSTF 22-48300.) Acrylic adhesives are, themselves, extremely flammable; and narrow 
+tapes with acrylic adhesives and significant overlap may not provide adequate protection. Tapes 
+with silicone adhesives perform notably better. Even Federal Specification L-T-80, Tape, 
+Pressure Sensitive Adhesive (Aluminum-Backed), aluminum tape with an acrylic adhesive may 
+be ineffective when used to wrap items like wire harnesses. If aluminum tape cannot be used for 
+electrical reasons, then Kapton® polyimide tape with a silicone adhesive will provide the same 
+protection for oxygen concentrations to 30 percent at 10.2 psia.  
+ 
+Other nonflammable tapes such as nonflammable fiberglass tape with a silicone adhesive11 may 
+also work, but testing is required to verify that the nonflammable tape is validated as a fire 
+barrier and is able to protect the shielded flammable material from burning. Flammable PVC-
+insulated electrical cables have been shown to burn in 30 percent oxygen at 10.2 psia when 
+covered by nonflammable Fluorinated Ethylene Propylene (FEP) Teflon® tape, nonflammable 
+Nitto P-212 glass cloth tape, or nonflammable 3M 361 glass cloth tape. (See WSTF 18-47448, 
+WSTF #20-47957, and WSTF #20-47967.) The FEP Teflon® tape does not provide adequate 
+ 
+11 Although the glass fibers in fiberglass tapes are not flammable, the sizing and adhesive have a substantial effect 
+on flammability. Some fiberglass tapes (such as Nitto P-213 glass cloth tape, which has an acrylic adhesive) are 
+flammable in air, while others (such as Nitto P-212 and 3M 361 glass cloth tapes, which have a silicone adhesive) 
+have been shown to meet flammability requirements in 30 percent oxygen at 10.2 psia. The effectiveness of 
+wrapping with Kapton® and fiberglass tapes for flammability has not been tested for oxygen concentrations above 
+30 percent oxygen at 10.2 psia. 
+
+
+ 
+24  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+protection because it melts away, and the porosity of the glass cloth tapes allows the PVC 
+insulation to burn even though the tape does not. 
+ 
+For applications where tape is aesthetically unacceptable but fire protection is needed, the 
+flammable surfaces may be coated with a validated fire barrier material such as a 
+fluoroelastomer. NASA has used fluoroelastomer coatings successfully in environments up to 30 
+percent oxygen at 10.2 psia. The coating application can be complex, and the coating is easily 
+damaged. The original coating selected was Fluorel® (hexafluoropropene and vinylidene fluoride 
+copolymer) mill stock, but this material is no longer available. Other fluoroelastomer mill stock 
+materials have been used. These fluoroelastomer coatings have not been tested for higher oxygen 
+concentrations and are not expected to be effective for habitable exploration elements on the 
+lunar or Martian surface12. Verify the effectiveness of a nonflammable fire barrier coating by test 
+because coating and/or substrate melting can lead to the substrate burning. 
+ 
+The most common nonmetallic case materials for commercial items used in space flight (such as 
+cameras, camcorders, video and audio players, and laptop computers) are ABS and 
+polycarbonates. ABS is flammable and polycarbonates are normally acceptable at oxygen 
+concentrations to 30 percent. Polycarbonate/ABS blends are acceptable for use in ISS 
+environments up to 24.1 percent oxygen at 14.7 psia. In many cases, the responsible hardware 
+organization may be able to select a commercial item with a metallic or polycarbonate case, thus 
+eliminating the need for wrapping or coating with a validated fire barrier material.  When 
+commercial hardware with a polycarbonate case will be used at oxygen concentrations above 
+24.1%, conduct testing to verify the acceptability of the polycarbonate case. 
+ 
+Electrically powered items with internal flammable materials can usually be treated as fire-
+resistant containers for internal fires. In some cases, even a highly flammable case can be an 
+adequate fire barrier against propagation of an internal fire to the outside of the container. 
+(Section 9.6 of this handbook shows an example.) An extreme option is to fill the component 
+internal volume with a nonflammable material (such as a nonflammable, glass-filled, epoxy-
+potting compound) to provide acceptable flammability protection from internal ignition sources.  
+ 
+8.2 
+Wire and Cable 
+ 
+Most aerospace-grade electrical wire insulation is nonflammable in crewed environments. 
+Limitations are usually driven by other factors such as flexibility and cut-through resistance. 
+Below are some examples of nonflammable insulation: 
+ 
+1. Polytetrafluoroethylene (PTFE) (SAE AS22759, Wire, electric, fluoropolymer-
+insulated, copper or copper alloy, formerly MIL-W-22759; ANSI/NEMA-WC-27500, Standard 
+for Aerospace and Industrial Electrical Cable, formerly MIL-C-27500); or equivalent) - good 
+general-purpose wire insulation that has high flexibility but poor cut-through resistance. 
+ 
+ 
+12 These coatings use Perfluoroalkyl and Polyfluoroalkyl Substances (PFAS) and are becoming increasingly difficult 
+to acquire because of new national regulations and major manufacturer discontinuations. 
+
+
+ 
+25  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+2. Polyimide―no longer used except in flat circuits because polyimide-insulated wiring 
+is notch sensitive and has a propensity to arc track. 
+ 
+3. PTFE-Polyimide Hybrids (SAE AS-22759, ANSI/NEMA-WC-27500, or equivalent) 
+- good general-purpose wire insulation that has a lower flexibility than PTFE but higher cut-
+through resistance. 
+ 
+PTFE, polyimide, and PTFE-polyimide hybrid insulated wiring constructions have all been 
+shown to meet NASA flammability requirements in all the spacecraft environments listed in 
+Table 1. 
+ 
+4. Ethylene-tetrafluoroethylene copolymer (ETFE) (e.g., SAE AS-22759, ANSI/NEMA-
+WC-27500, or equivalent) - suitable for external applications but flammable in enriched oxygen; 
+flexibility and cut-through resistance performance similar to PTFE-polyimide hybrids. 
+ 
+ETFE-insulated wiring constructions (including radiation cross-linked ETFE) meet NASA 
+flammability requirements in air and ISS 24.1 percent oxygen maximum at 14.7 psia, but, with 
+rare exceptions, they do not meet flammability requirements in 30 percent oxygen at 10.2 psia. 
+ 
+A custom silicone-insulated construction is sometimes used in power circuits (see ISS 
+specification SSQ 21652, Wire, Electric, Silicone Insulated, Nickel Coated Copper, Space 
+Quality, General Specification for). This construction is nonflammable in air and in ISS 
+environments and is exceptionally flexible. 
+ 
+Electrical wiring found in commercial off-the-shelf hardware typically has PVC, polyethylene, 
+or chloroprene insulation. These insulation materials are flammable in ISS and exploration 
+enriched-oxygen environments and their use is discouraged. (PVC-insulated wiring is usually 
+nonflammable in air.) They may be used when demonstrated to be acceptable in a design-
+specific configuration by a flammability configuration analysis or test. Commercial wiring inside 
+electronics boxes and signal wiring outside such boxes can usually be accepted by this method. 
+External power cables nearly always need to be replaced or protected from ignition. Flammable 
+insulation is acceptable on wires in external payloads that are not powered after receipt by 
+NASA until the payload is installed in a vacuum13. 
+ 
+Verify methods for protecting flammable cables in the use conditions by test or by similarity to 
+existing test data. Examples include the following: 
+  
+1. Covering with PTFE expandable sleeving: This approach has been used successfully 
+for oxygen concentrations up to 30 percent oxygen at 10.2 psia but may not work at the oxygen 
+concentrations planned for habitable exploration elements on the lunar or Martian surface. 
+ 
+ 
+13 Unrelated to flammability, PVC-insulated wiring is not acceptable for vacuum applications because of outgassing 
+concerns. 
+
+
+ 
+26  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+2. Wrapping with FEP Teflon® tape (used widely for protecting commercial cables such 
+as USB cables used on ISS): This design solution does not work for exploration atmospheres, 
+because testing has shown that tape-wrapped cables burn in 30 percent oxygen at 10.2 psia, as 
+described in Section 8.1.  Testing has been initiated to verify the acceptability of this approach 
+for ISS 24.1 percent oxygen and it should not be used for new hardware design at this time. 
+ 
+3. Wrapping with Kapton® polyimide tape with silicone adhesive: This design solution 
+works for 30 percent oxygen at 10.2 psia (see WSTF #21-47990) but may not work at the oxygen 
+concentrations planned in habitable HLS elements on the lunar or Martian surface. Note: 
+Kapton® tape-wrapped cable may be unacceptably stiff. 
+ 
+4. Wrapping with a validated fire barrier fiberglass-backed silicone adhesive tape: This 
+approach may not work at the high oxygen concentrations in habitable exploration elements. 
+Note: fiberglass-backed acrylic adhesive tape is, itself, highly flammable, even in air, so not 
+suitable for flammability protection. 
+ 
+5. Covering with a sleeve of validated fire barrier fabric (e.g., metallic braid tubing, 
+nonflammable Nomex® fabric, Beta cloth, and polybenzimidazole [PBI].). If a nonmetallic fire 
+barrier material is used, verify its effectiveness by test; if the sleeve is sewn together, verify that 
+the thread will survive exposure to a fire. 
+ 
+6. Covering by heat shrinking a polyvinylidene fluoride or PTFE sleeve: This may not 
+work at the high oxygen concentrations in habitable elements, so verify the acceptability by test. 
+ 
+7. Combined covering approaches may be needed: PVC cables have been found to burn 
+in 30 percent oxygen at 10.2 psia when wrapped with a nonflammable fiberglass-backed silicone 
+adhesive tape, but not when wrapped in a layer of Nomex® and then overwrapped with the 
+nonflammable fiberglass-backed silicone adhesive tape (see WSTF #20-47967 and WSTF #21-
+47989). 
+ 
+Note: Flammability is one of many requirements for spacecraft power cables and these design 
+solutions make cables acceptable only from a flammability standpoint.  
+ 
+Note: Protective covers may unacceptably affect the usability of signal cables for items such as 
+earphones and headsets. 
+ 
+Wire and cable accessories such as cable markers and cable ties should not contribute to fire 
+propagation paths. Polyvinylidene fluoride or fluoroelastomer cable markers are nonflammable 
+to at least 30 percent oxygen at 10.2 psia. Other types of cable marker material may be 
+acceptable if used in small, discrete quantities provided their dimensions are small, they are well 
+separated from other flammable materials and do not release burning drips that could ignite other 
+materials. Lacing cords made from PTFE, PTFE/fiberglass, or verified nonflammable Nomex® 
+and cable ties made from ETFE or ethylene chlorotrifluoroethylene (ECTFE) fluoropolymers are 
+acceptable for oxygen concentrations to 30 percent oxygen at 10.2 psia but may be flammable at 
+higher oxygen concentrations. Flammable cable tie wraps may be used on nonflammable cables, 
+
+
+ 
+27  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+provided that they are spaced approximately 2 inches apart to prevent fire propagation14 and do 
+not release burning drips that could ignite other materials. 
+  
+8.3 
+Electrical Connectors 
+ 
+In air and moderately enriched-oxygen environments (up to 40 percent oxygen), the shell of a 
+metal shell connector prevents fire propagation from the nonmetallic materials used inside the 
+connector to other nonmetallic materials, regardless of the material inside the connector. The 
+configuration is always acceptable for flammability, and testing is not required. 
+ 
+Testing or flammability configuration analysis is required for nonmetallic shell connectors. The 
+acceptability of flammable polymeric materials used internal to the connector depends on the 
+flammability of the shell material and its ability to act as a fire barrier. 
+ 
+8.4 
+Tubes and Hoses 
+ 
+External tubes or hoses such as a vacuum cleaner hose made from flammable materials may be 
+replaced with a nonflammable material or covered with a validated fire barrier material. Clear 
+PTFE or FEP Teflon® tubes and hoses are readily available to replace flammable materials. If 
+flammable tubes or hoses are used, the exterior can be protected by a validated fire barrier fabric 
+covering such as nonflammable Nomex®, PBI, and Beta cloth15. If a polymeric fire barrier 
+material is used, verify its effectiveness by test; if the sleeve is sewn together, verify that the 
+seam will survive exposure to a fire.  Also assess the potential for internal ignition of the tube 
+walls. 
+ 
+Tubing and hoses used in medical experiments are usually flammable and cannot be replaced or 
+covered without compromising the experiment. Such hardware can usually be accepted as 
+complying with the stowage guidelines in section 6 of this handbook. 
+ 
+8.5 
+Hook-and-Loop Fasteners 
+ 
+Hook-and-loop fasteners are commonly used in spacecraft pressurized environments.  Standard 
+practice is to place the loop material on surfaces such as walls to which loose hardware will be 
+attached and to place the hook material on loose items that need to be attached.  All types of 
+hook-and-loop fasteners are flammable in spacecraft habitable areas. The following usage limits 
+for the loop side of hook-and-loop fasteners in habitable areas have been demonstrated to prevent 
+fire propagation between nylon loop material when attached to metallic substrates in 
+atmospheres up to 36 percent oxygen at 8.2 psia (see WSTF #20-47923), and when attached to 
+ 
+14 Unpublished testing on a harness with a highly flammable lacing tape used for cable ties showed that the lacing 
+tape would not propagate a flame across a harness when used with a 1-inch gap or greater. 
+15 Nomex® has been used successfully in up to 30 percent oxygen at 10.2 psia. As noted earlier, because 
+flammability of Nomex® fabrics is variable, obtain test data to verify acceptability. Beta cloth and PBI fabrics were 
+used successfully in the Apollo and Skylab programs at much higher oxygen concentrations than is used in current 
+programs or planned for future programs, and testing is not required. Test fabrics that contain PBI blended with 
+other materials. 
+
+
+ 
+28  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+double-layer Nomex® HT9040 substrates in atmospheres up to 30 percent oxygen at 10.2 psia 
+(see WSTF #92-26027, WSTF #92-26459, and WSTF #92-26460):   
+ 
+1. Maximum size: 4 square inches, individually or in pieces. 
+ 
+2. Maximum length: 4 inches.  
+ 
+3. Minimum separation distance: 2 inches in any direction from another piece.  
+ 
+These usage limits did not prevent fire propagation on single-layer Nomex HT9040 and the use 
+of multiple loop fastener patches with these dimensions made the Nomex burn.  Hook-and-loop 
+flammability testing has not been conducted for other substrates.  For nonmetallic substrates 
+(including composite substrates) other than double-layer Nomex HT9040 in atmospheres up to 
+30 percent oxygen at 10.2 psia, conduct testing to determine acceptable dimensional limitations.  
+For atmospheres above 30 percent oxygen, also conduct testing for fasteners on metallic and 
+ceramic substrates. 
+ 
+NASA normally uses nylon hook-and-loop fasteners in habitable areas because of their 
+significantly greater durability than hook-and-loop fasteners made from other materials. Nomex® 
+hook-and-loop fasteners are commonly used for EVA operations because they have good low-
+temperature performance. Several brands of nylon and Nomex® hook-and-loop fasteners have 
+been qualified for flight. 
+ 
+8.6 
+Stowage Bags and Lockers 
+ 
+Metallic stowage lockers with solid walls and a closed door that do not contain ignition sources 
+are acceptable without reservation16. Base material selection criteria for nonmetallic stowage 
+lockers on fire containment capability supported by test data. Acceptable stowage bags may be 
+constructed from the following fabrics:  
+ 
+1. Validated fire barrier Nomex® where many but not all brands, weights and colors of 
+Nomex® meet flammability requirements in 30 percent oxygen at 10.2 psia. No Nomex® material 
+meets flammability requirements for HLS environments containing >36 percent oxygen. Because 
+Nomex® flammability varies, verify the specific manufacturer and grade of Nomex® via test.  
+ 
+2. PBI.  
+ 
+3. Other fabrics that meet flammability requirements and provide a validated fire barrier. 
+ 
+ 
+ 
+ 
+16 In some stowage locker designs such as those for MPCV, the internal walls are open grid structures rather than 
+solid metal. Assess on a case-by-case basis their ability to contain an internal fire. 
+
+
+ 
+29  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Examples of acceptable stowage bags are as follows:  
+ 
+1. Beta cloth bags: Bags made of Beta cloth are acceptable for stowage of potentially 
+flammable materials. The disadvantages of Beta cloth are its low durability and a tendency to 
+shed glass fibers.  
+ 
+2. Nomex® bags: Bags made of fire barrier Nomex® fabric are widely used in the ISS 
+and MPCV programs. However, as noted in Section 5.3, the acceptability of the ISS and MPCV 
+CTBs is currently uncertain.  Although the Nomex acreage has been verified to meet 
+flammability requirements in up to 30% oxygen at 10.2 psia, the effects of small areas of added 
+flammable items such as seams, hook-and-loop fasteners, and plastic zippers are more significant 
+than previously realized.   
+ 
+Verify the flammability of the specific Nomex® fabric through MAPTIS or by test because some 
+brands and weights are flammable in this atmosphere. Nomex® is flammable in exploration 
+environments containing 36 percent oxygen and above. 
+ 
+Conduct flammability tests on layups of the bag design that evaluate fire propagation by seams 
+and any flammable materials used in the bag construction.  Tests of this type will be conducted 
+for the ISS and MPCV CTBs in the near future. These CTBs have outer and inner layers of 
+Nomex® with a flammable stiffener between the layers. For Westex Synergy® UL8531 Nomex® 
+IIIA, the outer layer has been shown to protect the flammable stiffener from burning for 
+atmospheres to 30 percent oxygen at 10.2 psia (see WSTF #18-47446).  However, they also have 
+an exposed flammable zipper, hook-and-loop fasteners, handles, and seams that have not been 
+tested. 
+ 
+Test the ability of the bag to act as a fire barrier that protects internal flammable materials from 
+secondary ignition by burning flammable materials.  Although necessary, a standard 
+methodology for this test has not yet been developed, although it is in work. 
+ 
+Note: Dyes used to color Nomex® may affect its flammability. Westex Synergy® Nomex®, Style 
+6171, meets flammability requirements in 30 percent oxygen at 10.2 psia in natural, red, and 
+royal blue colors but not in orange coloration (see WSTF #18-47501). Ammonium dihydrogen 
+phosphate fire retardant has been used to make Nomex® fabrics nonflammable, but this fire 
+retardant is water-soluble. Scotchgard® can be applied to protect against incidental contact but 
+may slightly increase flammability. Water-resistant fire retardants are being evaluated for 
+habitable exploration elements on the lunar or Martian surface.  
+ 
+Stowage bags can have flammable items stowed inside provided they do not contain ignition 
+sources (such as electrical power) and are not susceptible to spontaneous ignition or chemical 
+reaction. The ISS and MPCV Programs allow fully certified and undamaged batteries, including 
+lithium-ion rechargeable batteries, to be stowed inside such bags without additional containment.  
+Swollen or otherwise damaged lithium-ion batteries require additional battery-specific 
+containment. 
+ 
+
+
+ 
+30  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Note: Most stowage bags and lockers contain foam assemblies as part of the packaging. The 
+most common foam packaging materials are polyurethane and polyethylene foams, which are 
+normally flammable, although Plastazote® fire retardant polyethylene foams meet flammability 
+requirements in the ISS environment of 24.1 percent oxygen at 14.7 psia (see WSTF #10-44740 
+and WSTF #10-44741-A). These packing materials are acceptable if they stay inside the stowage 
+container, no ignition sources are present, and the container is opened only to remove or replace 
+hardware. If the container is open for significant periods, or the packing material is planned to 
+be removed from the container, then, for atmospheres to 30 percent oxygen at 10.2 psia, cover 
+the packing material with a single layer of validated fire barrier Nomex®. Nomex® is sometimes 
+used even when fire protection is not required because it facilitates insertion and removal of 
+hardware. A Kynar® foam, Zotek® F30, is nonflammable to 45 percent oxygen (Hirsch, 
+Williams, Harper, Beeson, Pedley, 2007) and can be used without any need for the operational 
+constraints or the Nomex® covering. Closed-cell foams like Plastazote® and Zotek® F30 are not 
+vacuum compatible. 
+ 
+8.7 
+Thermal Control Blankets 
+ 
+Thermal control blankets are the most widely used potentially flammable external materials. 
+These blankets typically contain 12 to 40 layers of 0.0005- to 0.002-inch-thick film separated by 
+scrim cloth. Blanket materials are usually constructed of metal-coated polyethylene terephthalate 
+or polyimide film with an organic separator scrim. For durability, the inner and outer layers are 
+generally thicker than the internal layers. The outer layer has controlled optical properties and is 
+usually polyimide, silver Teflon®, or Beta cloth. 
+ 
+Acceptable thermal control blankets are typically constructed as follows:  
+ 
+1. The outer layer is made of a validated fire barrier material such as polyimide film (at 
+least 0.0015 inch thick), silver Teflon®, or Beta cloth.  
+ 
+2. Internal layers can be a combination of flammable films or scrims.  
+ 
+3. Edges are hemmed or suitably finished so that the inner flammable layers are 
+protected.  
+ 
+For exposure to spacecraft external environments, assess erosion of outer surfaces by low-Earth-
+orbit atomic oxygen and embrittlement by ultraviolet radiation. 
+ 
+8.8 
+Composites and Fiber-Related Laminates 
+ 
+Graphite-epoxy composite structures are generally nonflammable in the ISS environment of 24.1 
+percent oxygen at 14.7 psia. Composite flammability is dependent on the specific construction, 
+thickness configuration, and resins used, with a few being flammable in 24.1 percent oxygen at 
+14.7 psia and at least one being nonflammable in 100 percent oxygen at 10.2 psia (Hirsch, 
+Williams, Harper, Beeson, Pedley, 2007). Bismaleimide-based carbon composites have not been 
+widely tested, but the bismaleimide resin is similar to polyimides, so they are likely to be 
+
+
+ 
+31  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+nonflammable in all environments listed in Table 1 of this handbook (Hirsch, Williams, Harper, 
+Beeson, Pedley, 2007).  
+ 
+Fiber-reinforced laminates can be more flammable than graphite-based composites. Verify the 
+flammability characteristics of laminates by test or protect the laminates. Flammable laminates 
+may be used in external payloads, provided that ignition sources are not located within 6 inches 
+of the laminates. Otherwise, place firestops such as aluminum tape on the exposed laminate 
+surfaces with their maximum separation and minimum width verified by test. 
+ 
+ 
+9. 
+TEST EXAMPLES 
+ 
+The following test examples show the implementation of many of the flammability reduction 
+methods previously discussed and their effectiveness as has been demonstrated by test. These 
+examples, together with the guidelines in earlier sections, can be used to assess the fire risk of 
+other configurations. Many hardware configurations can be assessed by similarity to these design 
+solutions or compliance to the guidelines without the need for testing. Unless specified 
+otherwise, all tests used a chemical igniter complying with the ISO 14624-1 specifications, as 
+required by NASA-STD-6001. 
+ 
+9.1 
+Materials Selection 
+ 
+The ISS Program initially selected a portable Bluetooth speaker system with an ABS case. Since 
+this speaker system is expected to be left out in the ISS vehicle for long periods, flammability 
+cannot be adequately controlled through stowage. The Bluetooth® speaker burned completely 
+when tested for flammability in 24.1 percent oxygen at 14.7 psia (see WSTF #14-46333). A 
+comparable Bluetooth® speaker from another manufacturer has an aluminum case. It was 
+undamaged and still operated after flammability testing in similar conditions (WSTF #14-
+46338). Figure 1, Bluetooth® Speakers, shows the Bluetooth® speaker with the ABS case before 
+and after test, and the Bluetooth speaker with the aluminum case after test.  
+ 
+Note: These results should not be interpreted as suggesting either Bluetooth® speaker is 
+superior for general purpose use on the ground. Flammability is not a discriminator when 
+selecting such items for ground use―only in the specialized spacecraft environment. 
+ 
+9.2 
+Aluminum Tape Overwrap 
+ 
+A battery-powered screwdriver was tested to demonstrate the effectiveness of 0.003-inch-thick 
+aluminum tape as a fire barrier in 30 percent oxygen at 10.0 psia (see NSTS 22648). The plastic-
+cased screwdriver burned completely when tested unprotected but was unaffected when tested 
+wrapped with the tape (see Figure 2, Battery Powered Screwdriver).  The adhesive used by the 
+tape was not identified.  As noted in Section 8.1, aluminum tape with a silicone adhesive is 
+preferred, but aluminum tape with an acrylic adhesive should be effective for this kind of 
+application where the tape is cleanly adhered to the flammable substrate. 
+
+
+ 
+32  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+(a) ABS case speaker pretest   (b) ABS case speaker post-test  (c) Aluminum case speaker post-test 
+ 
+Figure 1—Bluetooth® Speakers 
+ 
+NASA tested a disposable dish rack with a cardboard outer case overwrapped with 0.003-inch-
+thick aluminum tape (see NSTS 22648). Only the area near the igniter was scorched. Figure 3, 
+Disposable Dish Rack Overwrapped with 0.003-Inch Aluminum Tape, shows the dish rack 
+pretest and post-test condition.  
+ 
+9.3 
+Nomex® Sleeve Covering 
+ 
+A flammable silicone rubber vacuum cleaner hose was covered with a double-layer natural 
+Nomex HT-9040® sleeve and tested for flammability in 25.9 percent oxygen at 14.7 psia (see 
+NSTS 22648). This sleeve provided the hose with sufficient protection that only a small area of 
+the Nomex® sleeve was scorched. Figure 4, Flammable Hose Protected by Double-Layer of 
+Natural Nomex HT 9040®, shows the pretest and post-test conditions of the hose. A single layer 
+of verified nonflammable Nomex® sleeve was not tested for this application, but testing for other 
+applications shows that it would have provided an acceptable fire barrier (see WSTF #18-47446).  
+The Nomex used in this test appears to be a continuous sleeve with no seam.  A sewn sleeve with 
+a seam along its length would need to be tested to verify that the seam remains intact when 
+exposed to the igniter flame. 
+ 
+
+
+ 
+33  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+ 
+ 
+(a)  Pretest, no aluminum tape 
+                             (b)  Post-test, no aluminum tape 
+ 
+ 
+ 
+ 
+(c)  Protected by 0.003-inch-thick aluminum tape 
+ 
+Figure 2—Battery Powered Screwdriver 
+ 
+
+
+ 
+34  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+(a) Pretest 
+ 
+ 
+ 
+ 
+ 
+(b) Post-test 
+ 
+Figure 3—Disposable Dish Rack Overwrapped with 0.003-Inch Aluminum Tape 
+ 
+ 
+ 
+ 
+(a) Pretest 
+ 
+ 
+ 
+ 
+ 
+(b) Post-test 
+ 
+Figure 4—Flammable Hose Protected by Double Layer of Natural Nomex HT-9040®  
+
+
+ 
+35  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+NASA has tested double-layer natural Nomex HT-9040® bags. The Space Shuttle wet wipe 
+dispenser was made of double-layer Nomex®. When tested at 25.9 percent oxygen at 14.3 psia, 
+flame scorched the area surrounding the igniter. Figure 5, Wet Wipe Dispenser with Double 
+Layer of Natural Nomex HT-9040®, shows the pretest and post-test conditions of this dispenser 
+(see NSTS 22648). The thread used to sew this bag is unidentified but clearly did not ignite or 
+otherwise fail. 
+ 
+In the past, a double layer of natural Nomex HT-9040® was commonly specified for 
+flammability protection. In recent years, it has been established that a continuous single layer of 
+any Nomex® that passes the NASA-STD-6001 flammability test and also exhibits non-breaching 
+performance at test conditions is sufficient. (An example is the CTB design with a single layer of 
+Synergy® UL8531 Nomex® IIIA effectively protecting flammable stiffener batting in 30 percent 
+oxygen at 10.2 psia) (see WSTF #18-47446).  However, as noted in Section 5.3, seams in the 
+Nomex are a potential flammability concern and the addition of flammable materials such as 
+hook-and-loop fastener patches and zippers may change the overall flammability. 
+ 
+ 
+ 
+(a) Pretest 
+ 
+ 
+ 
+ 
+ 
+(b) Post-test 
+ 
+Figure 5—Wet Wipe Dispenser with Double-Layer of Natural Nomex HT-9040 
+ 
+
+
+ 
+36  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+9.4 
+Sealed Containers 
+ 
+Inert gas-filled sealed containers 
+ 
+A limited number of tests have been conducted on internal ignition of inert gas-filled sealed 
+containers (see NSTS 22648). The ignition source was internal electrical wiring, electrically 
+overloaded until the wire insulation fused. The standard igniter was not used because it does not 
+burn in the absence of oxygen. As expected, even when highly flammable materials were present 
+inside the container, no ignition occurred; and the only damage was from the electrical overload.  
+ 
+ 
+Oxygen-enriched gas-filled sealed containers 
+ 
+Several tests have been conducted on sealed containers filled with enriched-oxygen 
+environments. An example is the Apollo Program master events sequence controller. This item 
+was tested with an internal atmosphere of 100 percent oxygen at 16 psia using a standard igniter 
+(see NSTS 22648). Although all internal polymeric materials were flammable in this atmosphere, 
+the resultant fire was contained with minor internal damage from local surface burning of the 
+room-temperature vulcanizing silicone rubber coating on the circuitry and components (see 
+Figure 6, Apollo Master Events Sequence Controller). The container internal void space for this 
+test was approximately 30 percent. This test environment is a more demanding flammability 
+environment than those identified for ISS and human exploration of space. 
+ 
+9.5 
+Vented Containers 
+ 
+The Space Shuttle orbiter inertial measurement unit was a formed aluminum box containing 
+polyurethane-coated circuit boards, chloroprene vent hoses, MIL-W-8104417 polyalkene-
+insulated wire, and about 20 percent void space. The polyurethane coating, chloroprene hoses,  
+and polyalkene-insulated wire were flammable. The inertial measurement unit was tested for 
+internal flammability in 25.9 percent oxygen at 14.3 psia, and in 30 percent oxygen at 10.0 psia 
+at its normal cooling flow rate of 6.3 standard cubic feet per minute (scfm) (see NSTS 22648). 
+The unit passed both flammability tests with minimal damage. Figure 7, Space Shuttle Inertial 
+Measurement Unit, shows the pretest and post-test conditions of this unit. 
+ 
+A Space Shuttle orbiter proximity switch box constructed of sheet metal was also flammability 
+tested (see NSTS 22648). This box contained electrical components, polyurethane-coated circuit 
+boards, and 50 percent void space. Flammability tests were conducted with a gas flow rate of 1.1 
+scfm in 25.9 percent oxygen at 14.3 psia, and in 30 percent oxygen at 10.0 psia. This unit also 
+passed both flammability tests with minimal damage. Figure 8, Space Shuttle Orbiter Proximity 
+Switch Box, shows the pretest and post-test conditions of this unit. 
+ 
+ 
+ 
+17 MIL-W-81044, Wire, Electric, Crosslinked Polyalkene, Crosslinked Alkane-imide Polymer, or Polyarylene 
+Insulated, Copper or Copper Alloy, has been replaced by SAE AS81044, but the Shuttle wiring was purchased to the 
+military specification. 
+
+
+ 
+37  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+(a) Pretest, cover in place 
+ 
+(b) Pretest, cover removed to show electronics 
+ 
+(c) Post-test, cover removed after testing 
+ 
+Figure 6—Apollo Master Events Sequence Controller 
+ 
+An additional series of tests was conducted to evaluate the effects of air flow and air flow rates 
+on the flammability of worst-case items contained in simulated typical electronic boxes (see TR-
+325-001, 1984 and TR-325-002, 1984). These tests were performed in 30 percent oxygen at 10.0 
+psia, using flow rates of 6.5 to 20.0 scfm. The boxes were constructed of sheet metal and 
+contained the following flammable materials: 
+ 
+1. Polyurethane packing foam. 
+2. Plastic sheet, laminated, copper-clad General Electric uncoated circuit boards. 
+3. MIL-W-81044 polyalkene-insulated electrical wire.  
+ 
+Figure 9, Simulated Typical Aluminum Electronics Box for Airflow Tests, shows a typical 
+electronic box used in this testing. Testing was conducted using standard igniters. Although the 
+internal materials ignited and burned readily in these tests, the fire was contained in the boxes in 
+all cases except one performed at a flow rate of 15 scfm. In this one test, the polyurethane foam  
+
+
+ 
+38  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+Pretest, case in place  
+ 
+ 
+                        (b)  Pretest, case removed 
+ 
+ 
+ 
+(c)  Post-test, minimal internal damage 
+ 
+Figure 7—Space Shuttle Inertial Measurement Unit 
+ 
+burned sufficiently to ignite the large (6-in diameter) aluminum vent screen, allowing fire 
+external to the box (see Figure 10, Damaged 6-Inch Diameter Aluminum Vent Screen from 
+Airflow Tests). The screen material used for this test was window screen material. As noted in 
+section 6.2 of this handbook, 60-mesh aluminum vent screen material is more effective than 
+stainless steel vent screens or than coarser aluminum vent screens because of the higher thermal 
+conductivity of the aluminum. Window screen material is approximately 300 mesh which has 
+notably finer strand size and the finer strands cannot withstand a fire. Additional tests on this box 
+configuration demonstrated fire containment at lower and higher air velocities (10 scfm and 
+below; 20 scfm and above). At velocities below 10 scfm and above 20 scfm, the box is an 
+effective fire container. At velocities between these values, it is not. These results show that for 
+fire to propagate, the air flow has to be sufficient to replenish the oxygen consumed by the fire 
+but not high enough to extinguish (“blow out”) the fire. This example illustrates the difficulty of 
+generalizing the effects of flow velocity on the ability of vented containers to contain fires. 
+ 
+ 
+ 
+
+
+ 
+39  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+  
+(a)  External view, pretest 
+ 
+ 
+ 
+ 
+(b)  Internal view, pretest 
+ 
+(c)  Internal view, case removed after test 
+ 
+Figure 8—Space Shuttle Orbiter Proximity Switch Box 
+ 
+The vent in this test was large, although corresponding to only about 1 percent of the 
+component’s total surface area, and the aluminum screen was only partially consumed. Despite 
+the internal material flammability, all fires at the test flow rates would likely have been contained 
+if a more fire-resistant material than aluminum had been used (such as stainless steel or nickel). 
+Because screen flammability is both material and configuration dependent, verify screens used as 
+fire barriers in vented enclosures to be effective for the use conditions.  
+ 
+Note: To apply historical data on fire barrier performance, previous testing should have been 
+conducted on screens with equivalent or thinner wire diameters in the same use conditions. 
+ 
+ 
+ 
+
+
+ 
+40  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+Figure 9—Simulated Typical Aluminum Electronics Box for Airflow Tests 
+ 
+A more recent example of a vented container test was conducted on a power inverter for ISS. 
+This power inverter takes standard ISS direct current (DC) power of 120- or 28-volts DC and 
+converts it to 110 volts alternating current (AC). The flight power inverters have a custom 
+metallic case with additional 110-volt outlets, but the unmodified commercial unit has a metallic 
+case and was used for flammability testing. The inverter has an internal cooling fan that was 
+powered during the flammability testing, but the inverter electronics were not powered. The 
+internal materials were unidentified but assumed to be flammable in the test environment of 24.1 
+percent oxygen at 14.7 psia. 
+ 
+Inverter flammability testing was conducted with the standard flammability test igniter located so 
+its flame would impinge on likely flammable materials (see WSTF 11-45093). Three tests were 
+conducted with no indication of ignition beyond the igniter location (see Figure 11, ISS Power 
+Inverter Flammability Test). In an initial test, the igniter failed to ignite because the cooling fan 
+air flow prevented ignition. In subsequent tests, the igniter was relocated outside the direct air 
+flow to maintain a flame. 
+ 
+9.6 
+Intermediate Containers 
+ 
+Simulated MPCV avionics boxes were tested in an environment of 40 percent oxygen at 14.7 
+psia to demonstrate that fire suppression capability was not required because an internal fire 
+would self-extinguish at a much higher oxygen concentration than the worst-case MPCV 
+environment of 30 percent oxygen at 10.2 psia (see WSTF 13-46248). The simulated boxes were 
+fabricated from 6061 aluminum alloy with a wall thickness less than 0.1 in and with Gore® 
+
+
+ 
+41  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+Figure 10—Damaged 6-Inch Diameter Aluminum Vent Screen from Airflow Tests 
+ 
+Protective Adhesive Vents for pressure equalization (see Figure 12a, Pretest [Gore® vents on 
+front face]). Initial tests were conducted with electronic circuitry and polyurethane foam inside 
+the box. The ribbon cable and foam ignited but self-extinguished within approximately 30 
+seconds with only smoke propagating outside the box (see Figure 12b, Post-test [burned internal 
+electronics and foam]). The test was repeated with only the flammable polyurethane foam and 
+free internal volumes of 60 and 80 percent. In both cases, the polyurethane foam ignited but self- 
+extinguished with relatively little material consumed (see Figure 1c, Post-test [burned foam―80 
+percent free volume, 20 percent foam]). 
+ 
+This testing demonstrates that a fire will not propagate outside a metallic intermediate container 
+when there is no forced-air convection for atmosphere exchange and positive vents are present 
+only for pressure equalization.  
+ 
+The Apollo entry monitor system (see Figure 13, Apollo Entry Monitor System) and rotational 
+controller assembly (see Figure 15, Apollo Rotational Controller) were tested in 100 percent 
+oxygen at 6.2 and 16.5 psia (see NSTS 22648). The entry monitor system is a metal box 
+containing circuit boards, a power supply, and other electronics. When ignited, the monitor 
+system burned for over 4 minutes, reached a peak internal temperature of 1250 F, but contained 
+the fire. The rotational controller assembly is a hand controller-type device with a silicone rubber 
+
+
+ 
+42  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+(a)  External view, pretest 
+ 
+(b)  Internal view, case removed after test 
+ 
+Figure 11—ISS Power Inverter Flammability Test 
+ 
+boot over the handle opening to form a dust seal that contained polyurethane-coated circuit 
+boards. When ignited, the controller assembly burned for 3 minutes, reached an internal 
+temperature of 1280 F, but also contained the fire. 
+ 
+Another example of the effectiveness of unsealed containers is the Space Shuttle orbiter 
+camcorders. Essentially all commercial off-the-shelf camcorders manufactured at that time had a 
+flammable ABS case. Internal ignition testing of a camcorder in 30 percent oxygen at 10.2 psia 
+using a standard igniter showed that the case did not ignite and contained the fire (see JSC 
+29353). The only damage to the case was sagging where it was partially melted by the flame (see 
+Figure 15a, Camcorder, External View [Internal Ignition, Post-Test]). A major contributor to the 
+fire containment was the high internal component packing density. 
+ 
+When this camcorder design was tested with an external igniter, the camcorder was effectively 
+consumed (see Figure 15b, Camcorder, External View [External Ignition, Post-Test]). 
+Subsequent testing showed that ABS will not burn in 30 percent oxygen at 10.2 psia when 
+protected by the addition of a 0.008-in thick fluoroelastomer coating (see JSC 29353).  
+ 
+Commercial off-the-shelf camcorders with ABS cases and this protective coating on the exterior 
+were flown on the Space Shuttle orbiter in the early 1990s. 
+ 
+
+
+ 
+43  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+(a) Pretest (Gore® vents on front face) 
+(b)  Post-test (burned internal electronics and foam) 
+ 
+ 
+ 
+(c)  Post-test (burned foam―80 percent free volume, 20 percent foam) 
+ 
+Figure 12—Simulated MPCV Avionics Box Flammability Test 
+ 
+Note: Many current commercial camcorders have a polycarbonate case and are acceptable for 
+flammability in 30 percent oxygen at 10.2 psia. If camcorders do not have this type of 
+nonflammable case, they are usually small enough that they can be controlled for flammability 
+through stowage (see section 7 of this handbook). Flammability testing of individual camcorders 
+is not necessary, provided the design is similar to previously flown units. 
+ 
+ 
+
+
+ 
+44  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+(a) Pretest (cover removed) 
+ 
+ 
+ 
+(b) Post-test, cover removed after test 
+ 
+Figure 13—Apollo Entry Monitor System 
+ 
+
+
+ 
+45  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+(a) Pretest 
+ 
+ 
+ 
+(b) Post-test 
+ 
+Figure 14—Apollo Rotational Controller 
+ 
+
+
+ 
+46  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+(a) External View (Internal Ignition, Post-Test) 
+ 
+ 
+ 
+(b) External View (External Ignition, Post-Test) 
+ 
+Figure 15— Space Shuttle Orbiter Camcorder  
+
+
+ 
+47  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+9.7 
+Special Cases 
+ 
+When a hardware design does not fit any of the previous examples, it may be possible to accept 
+the hardware through a design-specific test program. An example is the testing that was 
+conducted for the ISS commercial off-the-shelf vacuum cleaner power cable, intended to plug 
+into the ISS power inverter. The vacuum cleaner (see Figure 17a, ISS COTS vacuum cleaner) is 
+constructed of flammable materials but considered acceptable because it has no credible internal 
+ignition sources, is always tended by the crew while in use, and is stowed in a fireproof/validated 
+fire barrier container when not in use. The power cable is a standard household vacuum cleaner 
+cable with PVC wire insulation wrapped in cotton and contained in a PVC jacket. An 
+intentionally damaged cable is shown in Figure 17b, Damaged Section of vacuum cleaner cable.  
+Although this construction is designed to be nonflammable in air, it is flammable in the ISS 
+oxygen/pressure environment. Since a high current passes through the cable with serious 
+potential to act as an ignition source, this cable was considered to be a significant potential fire 
+risk. 
+ 
+Because of this concern, a test program was conducted to determine whether ignition could occur 
+as a result of an electrical short between damaged vacuum cleaner cable wires. The testing 
+showed that such ignition could occur (see Figure 17c, Burned cable post-test), but only with 
+cable damage so severe that it would have been visually detectable by crew members before it 
+reached the point where it could cause ignition (see WSTF 12-45702). The configuration in 
+Figure 17b, which resulted in ignition, had significant lengths of bare conductors with frayed 
+cotton looped into intimate contact with the conductors at the electrical short location.  
+ 
+Replacing the cable with a nonflammable cable would have impacted the intended ISS approach 
+of minimizing hardware certification costs by purchasing commercial off-the-shelf items and 
+using them powered by the ISS power inverter without modification. This cable would have been 
+unacceptable if it had been planned to be deployed unattended for long periods because of the 
+potential for ignition by possible external ignition sources. The stowage approach that was 
+planned to control the vacuum cleaner flammability was adequate for the cable. 
+ 
+ 
+
+
+ 
+48  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+ 
+ 
+(a) ISS COTS vacuum cleaner    
+(b)  Damaged Section of vacuum cleaner cable 
+ 
+(c)  Burned cable post-test 
+ 
+Figure 16—ISS Vacuum Cleaner Cable Flammability Test 
+ 
+ 
+ 
+
+
+ 
+49  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+APPENDIX A: NASA-STD-6016C FLAMMABILITY 
+REQUIREMENTS AND EXEMPTIONS 
+ 
+A.1 
+PURPOSE 
+ 
+This Appendix provides the materials flammability control requirements of NASA-STD-6016C 
+(2021) for information only. This content may not be the same as in the current release. 
+Contractual program requirements will be as specified in the NASA-STD-6016 release, and 
+NASA-STD-5027 release, if applicable. 
+ 
+ 
+4.2.1.1  Flammability Control 
+ 
+[MPR 44] Materials that are nonflammable or self-extinguishing in their use configuration as 
+defined by NASA-STD-6001B, Test 1 or an appropriate configurational flammability test per 
+NASA-STD-6001B, shall be used for flammability control with the following exceptions:  
+ 
+a. Ceramics, metal oxides, and inorganic glasses are exempt.  
+ 
+b. Materials that are designed to ignite and burn in their use application (e.g., 
+pyrotechnic materials) are exempted from flammability requirements, provided that 
+systems/experiments using such materials are designed so that the burning materials cannot 
+act as an ignition source for other hardware.  
+ 
+c. Materials used in minor quantities (i.e., dimensions controlled so the potential fire 
+propagation path is less than 15 linear cm (6 linear inch) and the surface area is no more than 
+80 cm2 (12 in2)) in crew environments and 30 linear cm (12 linear inch) for external 
+materials) with no propagation path or ignition source.  
+ 
+d. Materials used in sealed containers are exempt because insufficient oxygen is 
+available to maintain combustion.  
+ 
+e. Materials within vented electronics packages with metallic cases and no forced air 
+convection are exempt because of the self-extinguishing effect of expanding combustion 
+gases in a constrained volume.  
+ 
+f. Materials that have been shown by test to meet the requirements of NASA-STD-
+6001B may be used in an environment with an oxygen concentration lower than the test level 
+without further testing, provided that the oxygen partial pressure is no greater than the partial 
+pressure at the test level or general test data exist to demonstrate that the higher oxygen 
+partial pressure is outweighed by the lower percentage concentration for the environments in 
+question.  
+ 
+g. Materials are acceptable when used on a metal substrate that provides an adequate 
+heat sink. A heat sink is considered adequate in the use configuration by test or analysis. 
+When testing is conducted, materials passing the flammability test on a metal substrate are 
+
+
+ 
+50  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+acceptable on metal substrates of the same thickness or greater. Materials that are flammable 
+but have a thickness less than 0.25 mm (0.010 inch) and are attached to a metallic surface 
+greater than 1.6 mm (0.062 inch) thick are acceptable by analysis.  
+ 
+h. Materials are unexposed, overcoated with a verified fire-blocking material, or no 
+more than 0.25 inch thick and sandwiched between nonflammable materials with only the 
+edges exposed.  
+ 
+Many situations arise where flammable materials are used in an acceptable manner without 
+test, using mitigation practices and the MUA approval system. Guidelines for hardware 
+flammability assessment and mitigation can be found in JSC 29353, Flammability 
+Configuration Analysis for Spacecraft Applications.  
+ 
+i. Flammability configuration analysis in accordance with JSC 29353 shows hardware 
+configuration to be self-extinguishing.  
+ 
+Material flammability ratings and tests based on NASA-STD-6001B for many materials are 
+found in the MAPTIS database. 
+ 
+ 
+
+
+ 
+51  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+APPENDIX B: NASA-STD-6001 CLARIFICATION MEMO
+
+
+ 
+52  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 
+
+
+ 
+53  
+ 
+APPROVED FOR PUBLIC RELEASE — DISTRIBUTION IS UNLIMITED 
+ 

@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-11-14T11:14:50.037455+00:00",
+  "db_path": "C:\\Users\\diyon\\Documents\\Firebreak\\data\\processed\\firebreak.sqlite",
+  "counts": {
+    "BASS-II": 129,
+    "Saffire-I": 2,
+    "Saffire-II": 9,
+    "Saffire-III": 2,
+    "ACME-BRE": 18,
+    "SPICE": 469
+  },
+  "total": 629
+}

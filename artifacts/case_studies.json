@@ -1,0 +1,1180 @@
+[
+  {
+    "key": "pmma",
+    "title": "PMMA at ISS internal atmosphere",
+    "material": "PMMA",
+    "o2": 24.1,
+    "pressure": 14.5,
+    "flow": null,
+    "note": "The canonical negative-margin case: 1-g blow-off at 16% O2 versus steady microgravity spread at 13.6% O2.",
+    "grade": "B",
+    "verdict": "test_needed",
+    "confidence": 0.85,
+    "outside_envelope": false,
+    "coverage": {
+      "material": "PMMA",
+      "material_class": "PMMA",
+      "coverage_score": 0.56,
+      "label": "in_distribution",
+      "evidence_count": 97,
+      "outcome_count": 0,
+      "nearest": [
+        {
+          "experiment_id": "PSI-25:B1",
+          "dataset": "BASS-II",
+          "material": "100 micron PMMA film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 0.44,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 1.9,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-25:B2",
+          "dataset": "BASS-II",
+          "material": "200 micron PMMA film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 0.44,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 1.9,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-25:B3",
+          "dataset": "BASS-II",
+          "material": "100 micron film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 0.44,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 1.9,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        }
+      ],
+      "gaps": [
+        "Pressure is not reported in the matched evidence."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": true,
+      "material_class": "PMMA",
+      "probability_delta_co2_gt_0.5": 0.667,
+      "band": "high",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      },
+      "caveat": "Within-BASS-II CO2-rise screen; not a flammability, ignition, or flight-approval prediction."
+    },
+    "reasons": [
+      "Retrieved 12 solid-material tests; 0 include a documented outcome.",
+      "Closest evidence: PSI-25:B1 (100 micron PMMA film 2 cm wide, 22.2% O2, outcome=None).",
+      "No documented spread or extinction outcome; conditions support a test plan, not acceptance."
+    ],
+    "gaps": [
+      "Documented outcome (spread, extinction, or no ignition) at the query condition.",
+      "Pressure-resolved test data.",
+      "Flow direction (concurrent versus opposed)."
+    ],
+    "evidence": [
+      {
+        "experiment_id": "PSI-25:B1",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "100 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.1,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=62; air=5; frames=57; CO2_init=0.44; CO2_final=0.44; CO_init=0; CO_final=6",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "060a3bdc0e53aff4",
+        "score": 0.861
+      },
+      {
+        "experiment_id": "PSI-25:B2",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "200 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.2,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=62; air=5; frames=none; CO2_init=0.44; CO2_final=; CO_init=6; CO_final=",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "a1b5d13a1e505c55",
+        "score": 0.861
+      },
+      {
+        "experiment_id": "PSI-25:B3",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "100 micron film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.1,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=47; air=2; frames=253; CO2_init=0.43; CO2_final=0.49; CO_init=12; CO_final=19",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "86ad957f52ea0359",
+        "score": 0.861
+      },
+      {
+        "experiment_id": "PSI-25:B4",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "300 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.3,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=61; air=5; frames=137; CO2_init=0.44; CO2_final=0.51; CO_init=-1; CO_final=10",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "6983944f4eda8bed",
+        "score": 0.861
+      },
+      {
+        "experiment_id": "PSI-25:B5",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "200 micron 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.2,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=59; air=5; frames=206; CO2_init=0.43; CO2_final=0.43; CO_init=0; CO_final=12",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "52d6c56712312165",
+        "score": 0.861
+      }
+    ],
+    "citations": [
+      {
+        "experiment_id": "PSI-25:B1",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "060a3bdc0e53aff4"
+      },
+      {
+        "experiment_id": "PSI-25:B2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "a1b5d13a1e505c55"
+      },
+      {
+        "experiment_id": "PSI-25:B3",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "86ad957f52ea0359"
+      }
+    ]
+  },
+  {
+    "key": "pmma_lunar",
+    "title": "PMMA at lunar surface atmosphere",
+    "material": "PMMA",
+    "o2": 37.0,
+    "pressure": 8.2,
+    "flow": null,
+    "note": "Beyond the tested O2 envelope; the grade must downgrade even for a well-studied material.",
+    "grade": "C",
+    "verdict": "test_needed",
+    "confidence": 0.75,
+    "outside_envelope": true,
+    "coverage": {
+      "material": "PMMA",
+      "material_class": "PMMA",
+      "coverage_score": 0.0,
+      "label": "out_of_distribution",
+      "evidence_count": 97,
+      "outcome_count": 0,
+      "nearest": [
+        {
+          "experiment_id": "PSI-25:B1",
+          "dataset": "BASS-II",
+          "material": "100 micron PMMA film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 1.0,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 14.8,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-25:B2",
+          "dataset": "BASS-II",
+          "material": "200 micron PMMA film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 1.0,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 14.8,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-25:B3",
+          "dataset": "BASS-II",
+          "material": "100 micron film 2 cm wide",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 1.0,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 14.8,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        }
+      ],
+      "gaps": [
+        "Query O2 is 14.8 points above tested evidence.",
+        "Pressure is not reported in the matched evidence."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": true,
+      "material_class": "PMMA",
+      "probability_delta_co2_gt_0.5": 0.667,
+      "band": "high",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      },
+      "caveat": "Within-BASS-II CO2-rise screen; not a flammability, ignition, or flight-approval prediction."
+    },
+    "reasons": [
+      "Retrieved 12 solid-material tests; 0 include a documented outcome.",
+      "Closest evidence: PSI-25:B1 (100 micron PMMA film 2 cm wide, 22.2% O2, outcome=None).",
+      "Query O2=37.0% exceeds the tested maximum of 22.2% by more than 2.0%; grade downgraded.",
+      "No documented spread or extinction outcome; conditions support a test plan, not acceptance."
+    ],
+    "gaps": [
+      "Documented outcome (spread, extinction, or no ignition) at the query condition.",
+      "Microgravity test at or above 37.0% O2.",
+      "Pressure-resolved test data.",
+      "Flow direction (concurrent versus opposed)."
+    ],
+    "evidence": [
+      {
+        "experiment_id": "PSI-25:B1",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "100 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.1,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=62; air=5; frames=57; CO2_init=0.44; CO2_final=0.44; CO_init=0; CO_final=6",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "060a3bdc0e53aff4",
+        "score": 0.675
+      },
+      {
+        "experiment_id": "PSI-25:B2",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "200 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.2,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=62; air=5; frames=none; CO2_init=0.44; CO2_final=; CO_init=6; CO_final=",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "a1b5d13a1e505c55",
+        "score": 0.675
+      },
+      {
+        "experiment_id": "PSI-25:B3",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "100 micron film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.1,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=47; air=2; frames=253; CO2_init=0.43; CO2_final=0.49; CO_init=12; CO_final=19",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "86ad957f52ea0359",
+        "score": 0.675
+      },
+      {
+        "experiment_id": "PSI-25:B4",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "300 micron PMMA film 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.3,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=61; air=5; frames=137; CO2_init=0.44; CO2_final=0.51; CO_init=-1; CO_final=10",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "6983944f4eda8bed",
+        "score": 0.675
+      },
+      {
+        "experiment_id": "PSI-25:B5",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "200 micron 2 cm wide",
+        "material_class": "PMMA",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": 0.2,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=59; air=5; frames=206; CO2_init=0.43; CO2_final=0.43; CO_init=0; CO_final=12",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "52d6c56712312165",
+        "score": 0.675
+      }
+    ],
+    "citations": [
+      {
+        "experiment_id": "PSI-25:B1",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "060a3bdc0e53aff4"
+      },
+      {
+        "experiment_id": "PSI-25:B2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "a1b5d13a1e505c55"
+      },
+      {
+        "experiment_id": "PSI-25:B3",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "86ad957f52ea0359"
+      }
+    ]
+  },
+  {
+    "key": "saffire",
+    "title": "Saffire-II silicone and SIBAL",
+    "material": "Silicone",
+    "o2": 22.1,
+    "pressure": 14.5,
+    "flow": "concurrent",
+    "note": "Microgravity no-spread for silicone versus 1.2 mm/s in 1-g; SIBAL spreads at 2.1 mm/s in microgravity.",
+    "grade": "B",
+    "verdict": "test_needed",
+    "confidence": 0.62,
+    "outside_envelope": false,
+    "coverage": {
+      "material": "Silicone",
+      "material_class": "Silicone",
+      "coverage_score": 0.75,
+      "label": "in_distribution",
+      "evidence_count": 4,
+      "outcome_count": 4,
+      "nearest": [
+        {
+          "experiment_id": "PSI-99:2-2",
+          "dataset": "Saffire-II",
+          "material": "Silicone",
+          "o2_initial_pct": 22.1,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": "no_spread",
+          "penalty": 0.25,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "o2_gap_pct": 0.0,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-99:2-3",
+          "dataset": "Saffire-II",
+          "material": "Silicone",
+          "o2_initial_pct": 22.1,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": "no_spread",
+          "penalty": 0.25,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "o2_gap_pct": 0.0,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-99:2-4",
+          "dataset": "Saffire-II",
+          "material": "Silicone",
+          "o2_initial_pct": 22.1,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": "no_spread",
+          "penalty": 0.25,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "o2_gap_pct": 0.0,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        }
+      ],
+      "gaps": [
+        "Pressure is not reported in the matched evidence."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": false,
+      "reason": "Unseen material class 'Silicone' for the BASS-II severity model.",
+      "material_class": "Silicone",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      }
+    },
+    "reasons": [
+      "Retrieved 4 solid-material tests; 4 include a documented outcome.",
+      "Closest evidence: PSI-99:2-2 (Silicone, 22.1% O2, outcome=no_spread).",
+      "Source tables do not report pressure; A grade is capped at B."
+    ],
+    "gaps": [
+      "Pressure-resolved test data."
+    ],
+    "evidence": [
+      {
+        "experiment_id": "PSI-99:2-2",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "Silicone",
+        "material_class": "Silicone",
+        "o2_initial_pct": 22.1,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 0.61,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": 1.2,
+        "outcome": "no_spread",
+        "derived": true,
+        "notes": "burn time reported as insignificant",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "d5836c2d862e7c5b",
+        "score": 1.0
+      },
+      {
+        "experiment_id": "PSI-99:2-3",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "Silicone",
+        "material_class": "Silicone",
+        "o2_initial_pct": 22.1,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 1.03,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": "no_spread",
+        "derived": true,
+        "notes": "burn time reported as insignificant",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "83387cd01e27dfd1",
+        "score": 1.0
+      },
+      {
+        "experiment_id": "PSI-99:2-1",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "Silicone",
+        "material_class": "Silicone",
+        "o2_initial_pct": 21.5,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 0.27,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": "no_spread",
+        "derived": true,
+        "notes": "burn time reported as insignificant",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "ceca8a64af7ba8fb",
+        "score": 0.964
+      },
+      {
+        "experiment_id": "PSI-99:2-4",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "Silicone",
+        "material_class": "Silicone",
+        "o2_initial_pct": 22.1,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Opposed",
+        "gravity": "microgravity",
+        "thickness_mm": 0.37,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": 0.6,
+        "outcome": "no_spread",
+        "derived": true,
+        "notes": "burn time reported as insignificant",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "0a0cc484965535b1",
+        "score": 0.95
+      }
+    ],
+    "citations": [
+      {
+        "experiment_id": "PSI-99:2-2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "dataset": "Saffire-II",
+        "provenance_hash": "d5836c2d862e7c5b"
+      },
+      {
+        "experiment_id": "PSI-99:2-3",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "dataset": "Saffire-II",
+        "provenance_hash": "83387cd01e27dfd1"
+      },
+      {
+        "experiment_id": "PSI-99:2-1",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "dataset": "Saffire-II",
+        "provenance_hash": "ceca8a64af7ba8fb"
+      }
+    ]
+  },
+  {
+    "key": "saffire_sibal",
+    "title": "Saffire-II SIBAL spread",
+    "material": "SIBAL",
+    "o2": 22.1,
+    "pressure": 14.5,
+    "flow": "concurrent",
+    "note": "A documented microgravity spread outcome at 22.1% O2; pressure is not reported in the source table.",
+    "grade": "B",
+    "verdict": "test_needed",
+    "confidence": 0.85,
+    "outside_envelope": false,
+    "coverage": {
+      "material": "SIBAL",
+      "material_class": "SIBAL",
+      "coverage_score": 0.75,
+      "label": "in_distribution",
+      "evidence_count": 32,
+      "outcome_count": 1,
+      "nearest": [
+        {
+          "experiment_id": "PSI-99:2-5",
+          "dataset": "Saffire-II",
+          "material": "Cotton-Fiberglass (SIBAL)",
+          "o2_initial_pct": 22.1,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": "spread",
+          "penalty": 0.25,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "o2_gap_pct": 0.0,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-98:S1",
+          "dataset": "Saffire-I",
+          "material": "SIBAL Fabric",
+          "o2_initial_pct": 21.5,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": null,
+          "penalty": 0.31,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+          "o2_gap_pct": 0.6,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-98:S2",
+          "dataset": "Saffire-I",
+          "material": "SIBAL Fabric",
+          "o2_initial_pct": 21.5,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": null,
+          "penalty": 0.31,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+          "o2_gap_pct": 0.6,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        }
+      ],
+      "gaps": [
+        "Pressure is not reported in the matched evidence."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": true,
+      "material_class": "SIBAL",
+      "probability_delta_co2_gt_0.5": 0.068,
+      "band": "low",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      },
+      "caveat": "Within-BASS-II CO2-rise screen; not a flammability, ignition, or flight-approval prediction."
+    },
+    "reasons": [
+      "Retrieved 12 solid-material tests; 1 include a documented outcome.",
+      "Closest evidence: PSI-99:2-5 (Cotton-Fiberglass (SIBAL), 22.1% O2, outcome=spread).",
+      "Source tables do not report pressure; A grade is capped at B."
+    ],
+    "gaps": [
+      "Pressure-resolved test data."
+    ],
+    "evidence": [
+      {
+        "experiment_id": "PSI-99:2-5",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "Cotton-Fiberglass (SIBAL)",
+        "material_class": "SIBAL",
+        "o2_initial_pct": 22.1,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 0.37,
+        "spread_rate_mm_s": 2.1,
+        "spread_rate_1g_mm_s": null,
+        "outcome": "spread",
+        "derived": true,
+        "notes": "",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "a83082681e6ac169",
+        "score": 1.0
+      },
+      {
+        "experiment_id": "PSI-98:S1",
+        "dataset": "Saffire-I",
+        "platform": "Cygnus",
+        "material": "SIBAL Fabric",
+        "material_class": "SIBAL",
+        "o2_initial_pct": 21.5,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 0.37,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+        "provenance_hash": "4da49067781982d2",
+        "score": 0.964
+      },
+      {
+        "experiment_id": "PSI-98:S2",
+        "dataset": "Saffire-I",
+        "platform": "Cygnus",
+        "material": "SIBAL Fabric",
+        "material_class": "SIBAL",
+        "o2_initial_pct": 21.5,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Opposed",
+        "gravity": "microgravity",
+        "thickness_mm": 0.37,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+        "provenance_hash": "9323ec4e19daaccc",
+        "score": 0.914
+      },
+      {
+        "experiment_id": "PSI-25:T25",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "2 cm SIBAL",
+        "material_class": "SIBAL",
+        "o2_initial_pct": 20.8,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": null,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=1; fan=53 45; air=5 2.5; frames=75; CO2_init=0.36; CO2_final=0.39; CO_init=-1; CO_final=17",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "81663d3eef1e2766",
+        "score": 0.897
+      },
+      {
+        "experiment_id": "PSI-25:T26",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "2 cm SIBAL",
+        "material_class": "SIBAL",
+        "o2_initial_pct": 20.8,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": null,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=1; fan=53 45; air=5 2.5; frames=87; CO2_init=0.36; CO2_final=0.43; CO_init=-1; CO_final=24",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "ca5538f1b1b80533",
+        "score": 0.897
+      }
+    ],
+    "citations": [
+      {
+        "experiment_id": "PSI-99:2-5",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "dataset": "Saffire-II",
+        "provenance_hash": "a83082681e6ac169"
+      },
+      {
+        "experiment_id": "PSI-98:S1",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+        "dataset": "Saffire-I",
+        "provenance_hash": "4da49067781982d2"
+      },
+      {
+        "experiment_id": "PSI-98:S2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+        "dataset": "Saffire-I",
+        "provenance_hash": "9323ec4e19daaccc"
+      }
+    ]
+  },
+  {
+    "key": "nomex",
+    "title": "Nomex at ISS internal atmosphere",
+    "material": "Nomex",
+    "o2": 24.1,
+    "pressure": 14.5,
+    "flow": null,
+    "note": "Three BASS-II Nomex conditions; no documented spread outcome and no brand/weight metadata.",
+    "grade": "B",
+    "verdict": "test_needed",
+    "confidence": 0.59,
+    "outside_envelope": false,
+    "coverage": {
+      "material": "Nomex",
+      "material_class": "Nomex",
+      "coverage_score": 0.56,
+      "label": "in_distribution",
+      "evidence_count": 4,
+      "outcome_count": 0,
+      "nearest": [
+        {
+          "experiment_id": "PSI-25:F1",
+          "dataset": "BASS-II",
+          "material": "Nomex natural (nomex III)",
+          "o2_initial_pct": 22.2,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 0.44,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 1.9,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-99:2-7",
+          "dataset": "Saffire-II",
+          "material": "PMMA & Nomex",
+          "o2_initial_pct": 22.1,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": 20.0,
+          "outcome": null,
+          "penalty": 0.45,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "o2_gap_pct": 2.0,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        },
+        {
+          "experiment_id": "PSI-25:F3",
+          "dataset": "BASS-II",
+          "material": "Nomex natural (nomex III)",
+          "o2_initial_pct": 21.7,
+          "pressure_psia": null,
+          "flow_velocity_cm_s": null,
+          "outcome": null,
+          "penalty": 0.49,
+          "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "o2_gap_pct": 2.4,
+          "pressure_gap_psia": null,
+          "flow_gap_cm_s": null
+        }
+      ],
+      "gaps": [
+        "Pressure is not reported in the matched evidence."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": true,
+      "material_class": "Nomex",
+      "probability_delta_co2_gt_0.5": 0.251,
+      "band": "low",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      },
+      "caveat": "Within-BASS-II CO2-rise screen; not a flammability, ignition, or flight-approval prediction."
+    },
+    "reasons": [
+      "Retrieved 4 solid-material tests; 0 include a documented outcome.",
+      "Closest evidence: PSI-25:F1 (Nomex natural (nomex III), 22.2% O2, outcome=None).",
+      "No documented spread or extinction outcome; conditions support a test plan, not acceptance."
+    ],
+    "gaps": [
+      "Documented outcome (spread, extinction, or no ignition) at the query condition.",
+      "Pressure-resolved test data."
+    ],
+    "evidence": [
+      {
+        "experiment_id": "PSI-25:F1",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "Nomex natural (nomex III)",
+        "material_class": "Nomex",
+        "o2_initial_pct": 22.2,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": null,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=82; air=9.5; frames=208; CO2_init=0.46; CO2_final=0.45; CO_init=0; CO_final=2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "11a67916025c7bf9",
+        "score": 0.861
+      },
+      {
+        "experiment_id": "PSI-25:F3",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "Nomex natural (nomex III)",
+        "material_class": "Nomex",
+        "o2_initial_pct": 21.7,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": null,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=1; fan=61; air=8; frames=46; CO2_init=0.36; CO2_final=none; CO_init=2; CO_final=none",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "721eef670057cafc",
+        "score": 0.831
+      },
+      {
+        "experiment_id": "PSI-25:F2",
+        "dataset": "BASS-II",
+        "platform": "ISS",
+        "material": "Nomex natural (nomex III)",
+        "material_class": "Nomex",
+        "o2_initial_pct": 21.0,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": null,
+        "flow_direction": null,
+        "gravity": "microgravity",
+        "thickness_mm": null,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "flow_restrictor=2; fan=92; air=15; frames=72; CO2_init=0.37; CO2_final=0.39; CO_init=105; CO_final=82",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "provenance_hash": "74edb9575be056a0",
+        "score": 0.789
+      },
+      {
+        "experiment_id": "PSI-99:2-7",
+        "dataset": "Saffire-II",
+        "platform": "Cygnus",
+        "material": "PMMA & Nomex",
+        "material_class": "PMMA/Nomex",
+        "o2_initial_pct": 22.1,
+        "pressure_psia": null,
+        "flow_velocity_cm_s": 20.0,
+        "flow_direction": "Concurrent",
+        "gravity": "microgravity",
+        "thickness_mm": 0.37,
+        "spread_rate_mm_s": null,
+        "spread_rate_1g_mm_s": null,
+        "outcome": null,
+        "derived": false,
+        "notes": "",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+        "provenance_hash": "1bfec99eaa18a3f3",
+        "score": 0.718
+      }
+    ],
+    "citations": [
+      {
+        "experiment_id": "PSI-25:F1",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "11a67916025c7bf9"
+      },
+      {
+        "experiment_id": "PSI-25:F3",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "721eef670057cafc"
+      },
+      {
+        "experiment_id": "PSI-25:F2",
+        "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+        "dataset": "BASS-II",
+        "provenance_hash": "74edb9575be056a0"
+      }
+    ]
+  },
+  {
+    "key": "kevlar_pbi",
+    "title": "Kevlar/PBI webbing at lunar surface",
+    "material": "Kevlar/PBI",
+    "o2": 37.0,
+    "pressure": 8.2,
+    "flow": null,
+    "note": "No Firebreak microgravity evidence. TB 26-05 reports 37%/35% MOC at 8.2 psia; source URL not yet ingested.",
+    "grade": "D",
+    "verdict": "insufficient_evidence",
+    "confidence": 0.2,
+    "outside_envelope": false,
+    "coverage": {
+      "material": "Kevlar/PBI",
+      "material_class": "Kevlar/PBI",
+      "coverage_score": 0.0,
+      "label": "no_material_evidence",
+      "evidence_count": 0,
+      "outcome_count": 0,
+      "nearest": [],
+      "gaps": [
+        "No microgravity or 1-g evidence for this material class."
+      ],
+      "caveat": "Coverage is descriptive; absence of evidence is not evidence of safety."
+    },
+    "severity": {
+      "enabled": false,
+      "reason": "Unseen material class 'Kevlar/PBI' for the BASS-II severity model.",
+      "material_class": "Kevlar/PBI",
+      "metrics": {
+        "n": 121,
+        "positives": 35,
+        "negatives": 86,
+        "positive_rate": 0.289,
+        "target_threshold_delta_co2_pct": 0.5,
+        "auc": 0.834,
+        "o2_only_auc": 0.607,
+        "accuracy": 0.744,
+        "balanced_accuracy": 0.693,
+        "f1": 0.563,
+        "majority_baseline_accuracy": 0.711,
+        "split": "GroupKFold(5) grouped by material description",
+        "scope": "BASS-II PMMA/SIBAL/Nomex/Other; predicts CO2-rise severity, not flammability.",
+        "gate": {
+          "auc_min": 0.75,
+          "auc_beats_o2_only": true,
+          "passed": true
+        }
+      }
+    },
+    "reasons": [
+      "No solid-material evidence matched this material."
+    ],
+    "gaps": [
+      "No usable microgravity or 1-g evidence."
+    ],
+    "evidence": [],
+    "citations": []
+  }
+]
