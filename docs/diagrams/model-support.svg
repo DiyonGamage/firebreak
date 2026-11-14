@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title desc">
+  <title id="title">Model support and abstention</title>
+  <desc id="desc">The BASS-II severity screen answers only between 13.6 and 22.2 percent oxygen for PMMA and SIBAL. The 24.1 percent ISS cabin preset is outside support and returns an abstention. Nomex and other classes fall below the ten-row support floor.</desc>
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#e6e1d5" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <style>
+    .serif { font-family: Georgia, "Times New Roman", serif; }
+    .sans { font-family: "Segoe UI", Inter, system-ui, sans-serif; }
+    .mono { font-family: Consolas, "Cascadia Mono", "Liberation Mono", monospace; }
+    .axis { stroke: #1c1e22; stroke-width: 1; }
+    .tick { stroke: #1c1e22; stroke-width: 1; }
+  </style>
+
+  <rect width="1200" height="460" fill="#f7f4ec"/>
+  <rect x="0.5" y="0.5" width="1199" height="459" fill="none" stroke="#e6e1d5"/>
+
+  <text x="48" y="50" class="mono" font-size="11" fill="#c2410c" letter-spacing="2.2">WHAT THE MODEL CAN ANSWER</text>
+  <text x="48" y="80" class="serif" font-size="19" fill="#2a2c31">BASS-II CO₂-rise screen · grouped by material</text>
+  <text x="1152" y="50" class="mono" font-size="10" fill="#6f727a" text-anchor="end">n = 121 ROWS · 35 POSITIVE</text>
+
+  <!-- oxygen support -->
+  <text x="48" y="124" class="mono" font-size="10" fill="#2a2c31" letter-spacing="1.4">OXYGEN SUPPORT</text>
+
+  <rect class="band" x="102.5" y="214" width="465.8" height="52" fill="#f0e4d6"/>
+  <text x="102.5" y="204" class="mono" font-size="11" fill="#2a2c31">BASS-II support 13.6–22.2% O₂</text>
+  <text x="110" y="232" class="mono" font-size="9.5" fill="#5f636b">PMMA · SIBAL</text>
+
+  <rect x="568.3" y="214" width="151.7" height="52" fill="url(#hatch)"/>
+
+  <line class="axis" x1="70" y1="240" x2="720" y2="240"/>
+  <g class="tick">
+    <line x1="102.5" y1="266" x2="102.5" y2="273"/>
+    <line x1="232.5" y1="266" x2="232.5" y2="273"/>
+    <line x1="340.8" y1="266" x2="340.8" y2="273"/>
+    <line x1="449.2" y1="266" x2="449.2" y2="273"/>
+    <line x1="568.3" y1="266" x2="568.3" y2="273"/>
+  </g>
+  <text x="102.5" y="288" class="mono" font-size="10" fill="#5f636b" text-anchor="middle">13.6</text>
+  <text x="232.5" y="288" class="mono" font-size="10" fill="#5f636b" text-anchor="middle">16</text>
+  <text x="340.8" y="288" class="mono" font-size="10" fill="#5f636b" text-anchor="middle">18</text>
+  <text x="449.2" y="288" class="mono" font-size="10" fill="#5f636b" text-anchor="middle">20</text>
+  <text x="568.3" y="288" class="mono" font-size="10" fill="#c2410c" text-anchor="middle">22.2</text>
+  <text x="720" y="308" class="mono" font-size="9" fill="#6f727a" text-anchor="end">O₂ % by volume</text>
+
+  <g class="marker">
+    <rect x="634" y="110" width="74" height="18" fill="#c2410c"/>
+    <text x="671" y="122.5" class="mono" font-size="9" fill="#f7f4ec" text-anchor="middle" letter-spacing=".8">ABSTAINS</text>
+    <text x="671" y="148" class="mono" font-size="10.5" fill="#c2410c" text-anchor="middle">ISS cabin 24.1%</text>
+    <line x1="671.3" y1="156" x2="671.3" y2="264" stroke="#c2410c" stroke-width="1.2"/>
+    <circle cx="671.3" cy="240" r="3.5" fill="#c2410c"/>
+  </g>
+
+  <!-- class support -->
+  <line x1="780" y1="112" x2="780" y2="368" stroke="#d8d2c4"/>
+  <text x="820" y="124" class="mono" font-size="10" fill="#2a2c31" letter-spacing="1.4">TRAINING SUPPORT BY CLASS</text>
+
+  <text x="820" y="164" class="sans" font-size="12" fill="#1c1e22">PMMA</text>
+  <rect x="920" y="150" width="162" height="19" fill="#1c1e22"/>
+  <text x="1090" y="164" class="mono" font-size="11" fill="#2a2c31">90</text>
+
+  <text x="820" y="209" class="sans" font-size="12" fill="#1c1e22">SIBAL</text>
+  <rect x="920" y="195" width="45" height="19" fill="#1c1e22"/>
+  <text x="973" y="209" class="mono" font-size="11" fill="#2a2c31">25</text>
+
+  <text x="820" y="254" class="sans" font-size="12" fill="#6f727a">Nomex · 2</text>
+  <rect x="920" y="240" width="3.6" height="19" fill="#b9b2a4"/>
+
+  <text x="820" y="299" class="sans" font-size="12" fill="#6f727a">Other · 4</text>
+  <rect x="920" y="285" width="7.2" height="19" fill="#b9b2a4"/>
+
+  <line x1="938" y1="138" x2="938" y2="322" stroke="#8a5a00" stroke-width="1" stroke-dasharray="3 4"/>
+  <text x="943" y="135" class="mono" font-size="9" fill="#8a5a00">10-row floor</text>
+
+  <rect x="820" y="334" width="8" height="8" fill="#1c1e22"/>
+  <text x="834" y="342" class="mono" font-size="9" fill="#5f636b">model answers</text>
+  <rect x="940" y="334" width="8" height="8" fill="#b9b2a4"/>
+  <text x="954" y="342" class="mono" font-size="9" fill="#5f636b">abstains</text>
+
+  <text x="48" y="414" class="sans" font-size="12" fill="#5f636b">Support is training coverage, not a safety finding. Outside it the model abstains instead of extrapolating.</text>
+  <text x="1152" y="414" class="mono" font-size="9" fill="#6f727a" text-anchor="end">artifacts/ml_severity_metrics.json</text>
+</svg>

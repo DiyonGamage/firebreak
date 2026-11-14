@@ -14,9 +14,10 @@
 <meta property="og:image" content="https://diyongamage.github.io/firebreak/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Firebreak F monogram beside the project title on a paper background: evidence-graded flammability screening for spacecraft materials, NASA Space Apps 2026.">
+<meta property="og:image:alt" content="Firebreak project card: a paper background with the headline 'Know what the evidence actually supports' beside a real NASA photograph of a candle flame in microgravity.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://diyongamage.github.io/firebreak/og-card.png">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   :root {
     color-scheme: light;
@@ -101,13 +102,29 @@
   .prose { width: min(var(--measure), 100%); margin-left: auto; margin-right: auto; }
 
   .titleblock { padding: 64px 0 0; }
+  .titlegrid {
+    display: grid; grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 56px; align-items: center;
+  }
+  .titlecopy { max-width: 680px; }
+  .coverplate { margin: 0; }
+  .coverplate .plateframe {
+    border: 1px solid var(--ink); background: #fff; padding: 6px;
+    overflow: hidden;
+  }
+  .coverplate img { width: 100%; height: auto; }
+  .coverplate figcaption { margin: 12px 0 0; max-width: none; font-size: 11.5px; }
+  .credit {
+    display: block; font-family: var(--mono); font-size: 10px; line-height: 1.5;
+    letter-spacing: 0.03em; color: var(--faint); margin-top: 6px;
+  }
   .kicker {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--accent); margin: 0 0 22px;
   }
   h1 {
     font-family: var(--serif); font-weight: 600; font-size: clamp(2.1rem, 4.3vw, 3.2rem);
-    line-height: 1.14; letter-spacing: -0.018em; margin: 0 0 26px; max-width: 27ch;
+    line-height: 1.14; letter-spacing: -0.018em; margin: 0 0 26px; max-width: 22ch;
   }
   .byline {
     font-family: var(--sans); font-size: 13.5px; color: var(--muted);
@@ -147,10 +164,40 @@
     color: var(--muted); margin: 10px auto 0; max-width: var(--measure);
   }
   figcaption b { color: var(--ink-2); font-weight: 600; }
-  .figlabel {
+  .figlabel, .platelabel {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
     text-transform: uppercase; color: var(--ink-2); margin-right: 6px;
   }
+  figure.photo .figframe {
+    border-color: var(--ink); background: #fff; padding: 6px; overflow: hidden;
+  }
+  figure.photo figcaption { max-width: var(--measure); }
+  .prose figure.bleed {
+    width: min(var(--wide), calc(100vw - 48px));
+    margin-left: calc(50% - min(var(--wide), calc(100vw - 48px)) / 2);
+  }
+  .diagramscroll { overflow-x: auto; }
+  .diagramscroll img { width: 100%; height: auto; }
+  .coverplate img, figure.photo img { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  @media (hover: hover) {
+    .coverplate:hover img, figure.photo:hover img { transform: scale(1.008); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal {
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition-delay: var(--d, 0s);
+    }
+    .js .reveal.in { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .coverplate img, figure.photo img { transition: none; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+  .wordmark .mark { transition: color 0.25s, border-color 0.25s; }
+  .wordmark:hover .mark { color: var(--accent); border-color: var(--accent); }
 
   section { padding: 40px 0 8px; }
   section + section { border-top: 1px solid var(--rule-soft); }
@@ -277,8 +324,21 @@
   }
   .boundary b { color: var(--ink-2); font-weight: 600; }
 
+  @media (max-width: 960px) {
+    .titlegrid { grid-template-columns: 1fr; gap: 34px; align-items: start; }
+    .coverplate { max-width: 420px; }
+  }
+  @media (max-width: 900px) {
+    .diagramscroll img { min-width: 940px; }
+  }
   @media (max-width: 760px) {
     body { font-size: 17px; }
+    .prose figure.bleed {
+      width: calc(100vw - 36px);
+      margin-left: calc(50% - (100vw - 36px) / 2);
+    }
+    .diagramscroll img { min-width: 900px; }
+    .coverplate { max-width: 100%; }
     .wrap, .masthead-inner { width: calc(100% - 36px); }
     .titleblock { padding-top: 40px; }
     .masthead-inner { flex-wrap: wrap; gap: 10px; padding: 13px 0; }
@@ -305,6 +365,9 @@
     section + section { border-top: 1px solid #ccc; }
     figure, table { break-inside: avoid; }
     a { text-decoration: none; }
+    .js .reveal { opacity: 1 !important; transform: none !important; }
+    .diagramscroll { overflow: visible; }
+    .diagramscroll img { width: 100%; min-width: 0; }
   }
 </style>
 </head>
@@ -330,19 +393,33 @@
 
 <main id="main">
   <div class="wrap">
-    <div class="titleblock prose">
-      <p class="kicker">NASA Space Apps 2026 · Flame in Freefall</p>
-      <h1>Firebreak: evidence-graded flammability screening for spacecraft materials</h1>
-      <p class="byline">
-        <b>Team LFR</b> <span class="sep">·</span> Kandy, Sri Lanka
-        <span class="sep">·</span> 14 November 2026
-        <span class="sep">·</span> Screening support, not certification
-      </p>
-      <div class="links">
-        <a href="https://github.com/DiyonGamage/firebreak">Source code ↗</a>
-        <a href="#results">Validation</a>
-        <a href="#data">Sources</a>
-        <a href="#cite">Cite this work</a>
+    <div class="titleblock">
+      <div class="titlegrid">
+        <div class="titlecopy">
+          <p class="kicker">NASA Space Apps 2026 · Flame in Freefall</p>
+          <h1>Firebreak: evidence-graded flammability screening for spacecraft materials</h1>
+          <p class="byline">
+            <b>Team LFR</b> <span class="sep">·</span> Kandy, Sri Lanka
+            <span class="sep">·</span> 14 November 2026
+            <span class="sep">·</span> Screening support, not certification
+          </p>
+          <div class="links">
+            <a href="https://github.com/DiyonGamage/firebreak">Source code ↗</a>
+            <a href="#results">Validation</a>
+            <a href="#data">Sources</a>
+            <a href="#cite">Cite this work</a>
+          </div>
+        </div>
+        <figure class="coverplate reveal">
+          <div class="plateframe">
+            <img src="assets/nasa/microgravity-candle-flame.jpg" width="880" height="1100" fetchpriority="high" decoding="async" alt="A candle flame burning in microgravity: a rounded orange flame with a blue halo and soot particles, photographed during the Candle Flames in Microgravity experiment.">
+          </div>
+          <figcaption>
+            <span class="platelabel">Plate 1</span>
+            A candle flame in microgravity, about 25 seconds after ignition, with soot particles moving through the flame.
+            <span class="credit">NASA/MSFC · 1997 · image 9902614</span>
+          </figcaption>
+        </figure>
       </div>
     </div>
 
@@ -372,12 +449,34 @@
         <cite>BASS-II summary report · NASA/TM-20210011385</cite>
       </blockquote>
       <p>A screening system therefore has to answer three questions at once: what evidence exists for this material, how strong is that evidence for the intended environment, and what test would most improve the answer. Firebreak is built around that triple. It does not return a pass or fail; it returns a grade, a verdict, and the specific gap that keeps the grade where it is.</p>
+
+      <figure class="bleed photo reveal">
+        <div class="figframe">
+          <img src="assets/nasa/bass-ii-glovebox.jpg" width="1200" height="800" loading="lazy" decoding="async" alt="NASA astronaut Rick Mastracchio works with the BASS-II experiment inside the Microgravity Science Glovebox aboard the International Space Station.">
+        </div>
+        <figcaption>
+          <span class="figlabel">Plate 2</span>
+          <b>The experiment behind the numbers.</b> NASA astronaut Rick Mastracchio, Expedition 38 flight engineer, works with BASS-II in the Microgravity Science Glovebox in the Destiny laboratory, 18 February 2014. The investigation produced the microgravity burn and extinction rows behind the PMMA and SIBAL evidence grades.
+          <span class="credit">NASA/JSC · ISS038-E-053250</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section id="system" class="prose">
       <span class="secnum">§2</span>
       <h2>System</h2>
       <p>Firebreak has five components. Retrieval finds relevant records for a material and environment; coverage separates what the corpus can support from what it cannot; the severity model predicts whether a record documents meaningful CO<sub>2</sub> rise in BASS-II data; the rule engine assigns the grade; and an explanation layer renders the reasoning in plain language. Every grade is traceable to the records that produced it.</p>
+
+      <p class="scrollhint" aria-hidden="true">Scroll diagram →</p>
+      <figure class="bleed diagram reveal">
+        <div class="diagramscroll">
+          <img src="diagrams/evidence-pipeline.svg" width="1200" height="400" loading="lazy" decoding="async" alt="Diagram of the five-stage Firebreak evidence pipeline: retrieve, check coverage, screen severity, apply rules, cite. Only severity is learned; it cannot write the grade.">
+        </div>
+        <figcaption>
+          <span class="figlabel">Figure 2</span>
+          <b>The evidence pipeline.</b> Five stages turn public records into a cited decision. Retrieval and coverage are deterministic; severity is the only learned component and cannot write the grade. Numbers are from the held-out evaluation.
+        </figcaption>
+      </figure>
 
       <p class="scrollhint" aria-hidden="true">Scroll table →</p>
       <div class="tablewrap" tabindex="0" role="region" aria-label="Table 1">
@@ -423,6 +522,17 @@
 
       <p>Two design choices matter more than the score. First, the model is constrained to be monotonic in oxygen. The unconstrained variant scored slightly higher (AUC 0.815), but it produced 28 reversals in which adding oxygen lowered the predicted risk; that variant was rejected because it contradicts the physics and the binned data. Second, the model abstains instead of extrapolating. BASS-II support stops at 22.2% O<sub>2</sub>, so the 24.1% ISS cabin preset returns an abstention with a link to the nearest supported condition — not a fabricated probability. Roughly 45% of supported-class queries land in an indeterminate conformal set and are routed to testing, which is the intended behaviour for a screening tool: resolve what the data can resolve, and name the rest as a gap.</p>
 
+      <p class="scrollhint" aria-hidden="true">Scroll diagram →</p>
+      <figure class="bleed diagram reveal">
+        <div class="diagramscroll">
+          <img src="diagrams/model-support.svg" width="1200" height="460" loading="lazy" decoding="async" alt="Chart of the severity model's support: PMMA and SIBAL inside 13.6 to 22.2 percent oxygen, Nomex and other classes below the ten-row support floor, and the 24.1 percent ISS cabin preset outside support and abstaining.">
+        </div>
+        <figcaption>
+          <span class="figlabel">Figure 3</span>
+          <b>Support and abstention.</b> The model answers only for PMMA and SIBAL inside 13.6–22.2% O<sub>2</sub>. The 24.1% ISS cabin preset is outside that support and returns an abstention, not a probability. Support is training coverage, not a safety finding.
+        </figcaption>
+      </figure>
+
       <blockquote>
         <p>“Firebreak uses AI where it can be checked. One model screens whether CO<sub>2</sub> rises more than 0.5 points in BASS-II, from oxygen, thickness, and material class. It is monotonic in oxygen, validated by material, and wrapped in 80% conformal sets that return ‘unresolved’ when the data cannot decide — abstaining outside PMMA/SIBAL or 13.6–22.2% O<sub>2</sub>, including the 24.1% ISS preset. Rules assign the grade, never the model.”</p>
         <cite>Twenty-second answer to the judge question, “How did you use AI?”</cite>
@@ -434,7 +544,7 @@
         <img src="screenshots/07-severity-model.png" width="2248" height="992" loading="lazy" alt="Firebreak dossier panel for the CO2-rise severity model: 67 percent probability, high prediction set, support of 13.6 to 22.2 percent oxygen, grouped AUC 0.811 versus 0.605, Brier 0.148, ECE 0.035, conformal coverage 89.6 percent, and zero monotonicity violations.">
       </div>
       <figcaption>
-        <span class="figlabel">Figure 2</span>
+        <span class="figlabel">Figure 4</span>
         <b>The learned screen inside the dossier.</b> For PMMA at the 22.2% reference condition, the model reports a 67% probability of a CO<sub>2</sub> rise, a single-label 80% conformal set (high), and the support and calibration behind both. At the 24.1% ISS cabin preset the same panel abstains because that condition is outside the BASS-II support range. Screenshot from the local dossier.
       </figcaption>
     </figure>
@@ -555,6 +665,7 @@ pytest -q                        # 55 passed</code></pre>
       <span class="secnum">§6</span>
       <h2>Data, code, and citation</h2>
       <p>The corpus is assembled from public NASA sources: the Physical Sciences Informatics system, NASA Technical Reports Server documents including the BASS-II summary report and TB 26-05, and NASA standards JSC 29353D and NASA-STD-6001B. Each record retains its source identifier and page reference, and the repository includes the ingestion scripts that rebuild the SQLite corpus from the raw documents. Full citations are in <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/sources.md">docs/sources.md</a>.</p>
+      <p>The photographic plates are real NASA imagery, not generated illustrations. NASA IDs, centers, and usage terms are listed in <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/credits.md">image credits</a>; NASA does not endorse this project.</p>
       <p>Code is released under the MIT license at <a href="https://github.com/DiyonGamage/firebreak">github.com/DiyonGamage/firebreak</a>. This page is served from the same repository.</p>
 
       <div id="cite">
@@ -587,6 +698,7 @@ pytest -q                        # 55 passed</code></pre>
         <a href="https://psi.nasa.gov/">NASA PSI</a>
         <a href="https://ntrs.nasa.gov/">NASA NTRS</a>
         <a href="https://standards.nasa.gov/standard/NASA/NASA-STD-6001">NASA-STD-6001</a>
+        <a href="https://github.com/DiyonGamage/firebreak/blob/main/docs/credits.md">Image credits</a>
       </div>
     </div>
     <p class="boundary"><b>Boundary of use.</b> Firebreak is screening support only. It does not certify a material, approve a flight configuration, or substitute for NASA-STD-6001 Test 1. Grades describe the strength of public evidence for an environment, not a material's true flammability. All inputs are public; MAPTIS and authentication-gated sources are excluded.</p>
@@ -628,6 +740,28 @@ pytest -q                        # 55 passed</code></pre>
     try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
     document.body.removeChild(area);
     flash(ok ? 'Copied' : 'Copy failed', ok);
+  });
+})();
+</script>
+<script>
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+  function watch(el) {
+    if (!el.classList.contains('reveal')) el.classList.add('reveal');
+    observer.observe(el);
+  }
+  document.querySelectorAll('figure, .tablewrap, blockquote').forEach(watch);
+  document.querySelectorAll('ol.limits li').forEach(function (el, i) {
+    el.style.setProperty('--d', (i * 0.05) + 's');
+    watch(el);
   });
 })();
 </script>
