@@ -42,11 +42,14 @@ python scripts\eval_ml.py
 python scripts\audit_extraction.py
 python scripts\build_case_studies.py
 python -m pytest -q
+python scripts\smoke_e2e.py --cactus
 ```
 
 Current results: extraction audit 100% (60/60 fields, 30/30 rows), 38 tests passing,
 ML-1 recall@3 1.0 with 0.0 false-match rate, ML-2 4/4 coverage cases, ML-3 AUC 0.834
-versus 0.607 for the O2-only baseline. See `docs/validation.md`.
+versus 0.607 for the O2-only baseline. The end-to-end smoke test passes against the
+running app: 7 API assessments, Gap Map, document search, 5 assistant routes, browser
+form + assistant, and one live Cactus route. See `docs/validation.md`.
 
 ## API
 

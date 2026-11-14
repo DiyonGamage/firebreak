@@ -9,6 +9,7 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 |---|---|---|
 | Extraction audit | >= 95% field accuracy | **100%** (60/60 fields; 30/30 raw rows preserved) |
 | Rule and application tests | 38/38 | **38/38 pytest tests pass** |
+| End-to-end smoke test | PASS | **7/7 API assessments, UI form, assistant, Cactus route** |
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
 | ML-2 coverage detector | held-out cases | **4/4** expected labels |
 | ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.834**; O2-only AUC 0.607 |
@@ -73,6 +74,22 @@ The engine deliberately caps a grade at B when the source table does not report
 pressure. Current PSI solid-material tables do not report pressure, so **no A grade is
 awarded from this corpus**; the A path is tested but remains unused until a
 pressure-resolved source is ingested.
+
+## End-to-end smoke test
+
+`python scripts\smoke_e2e.py --cactus` -> **PASS** against the running app.
+
+- 7/7 API assessments returned the expected grade and verdict: PMMA ISS B, PMMA lunar C,
+  silicone B, SIBAL B, Nomex B, Kevlar/PBI D, unknown material D.
+- Gap Map returned 7 classes with the expected grades, including Kevlar/PBI D.
+- Document search returned 3 hits for `PMMA margin`.
+- Five assistant queries routed to the intended tools; an under-specified query asked
+  for a material instead of guessing.
+- Browser form submission rendered Grade B with 12 ledger rows; the browser assistant
+  returned an answer with a visible fallback trace; library search returned 6 hits.
+- One live Cactus query returned `engine=cactus-needle` and routed to `assess_material`.
+
+This is a functional check, not a substitute for the unit tests or the ML gates.
 
 ## Case studies
 

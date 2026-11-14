@@ -222,6 +222,7 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 
 ```powershell
 python -m pytest -q                 # 38 passed
+python scripts\smoke_e2e.py --cactus # PASS: API, UI, assistant, Cactus
 python scripts\audit_extraction.py  # 100%
 python scripts\eval_ml.py           # gates passed
 curl http://127.0.0.1:8010/healthz  # {"status":"ok","experiments":629,"documents":7}
