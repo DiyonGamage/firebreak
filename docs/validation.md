@@ -8,12 +8,12 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Check | Gate | Result |
 |---|---|---|
 | Extraction audit | >= 95% field accuracy | **100%** (60/60 fields; 30/30 raw rows preserved) |
-| Rule and application tests | 38/38 | **38/38 pytest tests pass** |
+| Rule and application tests | 41/41 | **41/41 pytest tests pass** |
 | End-to-end smoke test | PASS | **7/7 API assessments, UI form, assistant, Cactus route** |
 | ML-1 evidence matcher | recall@3 >= 0.8 | **1.0**; false-match rate **0.0** |
-| ML-2 coverage detector | held-out cases | **4/4** expected labels |
+| ML-2 coverage detector | held-out cases | **5/5** expected labels |
 | ML-3 severity classifier | AUC >= 0.75 and beats baseline | **AUC 0.834**; O2-only AUC 0.607 |
-| Case studies | 4/4 documented | **6/6** documented with source-linked evidence |
+| Case studies | 6 cases documented | **6/6** documented with source-linked evidence |
 | Reproducible build | one command per artifact | Yes; deterministic seeds |
 | Offline runtime | works without network | Yes, after build |
 
@@ -22,19 +22,23 @@ support, not certification, flight approval, or a substitute for NASA-STD-6001 T
 | Dataset | Records | Role |
 |---|---:|---|
 | SPICE | 469 | Gas-jet flame data; retained for library, not solid-material grading |
-| BASS-II | 129 | Solid-material microgravity tests; primary evidence base |
+| BASS-II | 129 | Solid-material microgravity tests; primary PSI evidence base |
 | ACME-BRE | 18 | Aggregated gas-fuel tests; not used for solid grading |
 | Saffire-II | 9 | Solid samples with some documented outcomes and 1-g comparisons |
+| BASS-II (NTRS) | 6 | Page-cited pressure-bearing microgravity rows from NASA/TM-20210011385 |
 | Saffire-I | 2 | Metadata-only rows |
 | Saffire-III | 2 | Metadata-only rows |
-| **Total** | **629** | |
+| TB 26-05 (1-g) | 2 | Page-cited 1-g Kevlar/PBI anchors at 8.2 psia from NTRS 20260006043 |
+| **Total** | **637** | |
 
-- **140** solid-material rows are eligible for grading; 2 additional solid rows have
+- **148** solid-material rows are eligible for grading; 2 additional solid rows have
   unspecified material and are retained but excluded from matching.
-- **24** rows have a documented outcome: 18 ACME gas rows and 6 Saffire-II rows.
-  Five Saffire-II outcomes are usable for solid-material grading (one is on an
-  unspecified material).
-- **7** source documents, **356** pages: NTRS reports and NASA standards.
+- **32** rows have a documented outcome: 18 ACME gas rows, 6 Saffire-II rows, 6
+  BASS-II NTRS rows, and 2 TB 26-05 rows. Fourteen documented rows are solid-material;
+  13 of those name a specific material.
+- The 8 external curated rows are labeled `BASS-II (NTRS)` and `TB 26-05 (1-g)` and
+  carry page/section notes plus a provenance hash. They are not presented as PSI rows.
+- **9** source documents, **501** pages: NTRS reports and NASA standards.
 
 ## Extraction audit
 
@@ -57,36 +61,42 @@ note rows.
 
 ## Rule and application tests
 
-`python -m pytest -q` -> **38 passed**.
+`python -m pytest -q` -> **41 passed**.
 
 Coverage includes:
 
 - evidence grading and material-similarity behavior;
 - O2 outside-envelope downgrade;
 - no A grade without reported pressure;
+- external pressure-resolved rows enabling A for PMMA and SIBAL, with page citations;
+- 1-g-only Kevlar/PBI evidence capped at C;
 - conflicting outcomes lower the grade;
 - unknown material returns D, never a positive acceptance;
 - sensitivity variants and deterministic repeatability;
 - source-linked citations;
 - ML gates and assistant fallback.
 
-The engine deliberately caps a grade at B when the source table does not report
-pressure. Current PSI solid-material tables do not report pressure, so **no A grade is
-awarded from this corpus**; the A path is tested but remains unused until a
-pressure-resolved source is ingested.
+The engine caps a grade at B when the source table does not report pressure. That
+remains true for the PSI solid-material tables, whose rows carry `pressure n/r`.
+Grade A is reachable only through the page-cited external rows where the source
+reports pressure: BASS-II NTRS §2.2/§7.1.3 (PMMA at 20.7% O2; SIBAL at 1 atm) and
+TB 26-05 (Kevlar/PBI at 8.2 psia). TB 26-05 is 1-g, so R6 caps Kevlar/PBI at C.
 
 ## End-to-end smoke test
 
 `python scripts\smoke_e2e.py --cactus` -> **PASS** against the running app.
 
-- 7/7 API assessments returned the expected grade and verdict: PMMA ISS B, PMMA lunar C,
-  silicone B, SIBAL B, Nomex B, Kevlar/PBI D, unknown material D.
-- Gap Map returned 7 classes with the expected grades, including Kevlar/PBI D.
+- 7/7 API assessments returned the expected grade and verdict: PMMA ISS A, PMMA lunar C,
+  silicone B, SIBAL A, Nomex B, Kevlar/PBI C, unknown material D.
+- Gap Map returned 8 classes with the expected grades: PMMA and SIBAL A, Nomex and
+  silicone B, Kevlar/PBI C, Nylon webbing D.
 - Document search returned 3 hits for `PMMA margin`.
 - Five assistant queries routed to the intended tools; an under-specified query asked
   for a material instead of guessing.
-- Browser form submission rendered Grade B with 12 ledger rows; the browser assistant
+- Browser form submission rendered Grade A with 12 ledger rows; the browser assistant
   returned an answer with a visible fallback trace; library search returned 6 hits.
+- The browser issued **0 external requests** while the form, assistant, and library
+  flows ran; every request stayed on the local app URL.
 - One live Cactus query returned `engine=cactus-needle` and routed to `assess_material`.
 
 This is a functional check, not a substitute for the unit tests or the ML gates.
@@ -95,12 +105,12 @@ This is a functional check, not a substitute for the unit tests or the ML gates.
 
 | Case | Query | Result | Coverage | Notable evidence |
 |---|---|---|---|---|
-| PMMA / ISS internal | 24.1% O2, 14.5 psia | **B**, test needed | in distribution | BASS-II PMMA series at 22.2%; no documented spread outcome |
-| PMMA / lunar surface | 37% O2, 8.2 psia | **C**, test needed | out of distribution | Outside tested O2 envelope |
-| Saffire-II silicone | 22.1% O2, 20 cm/s | **B**, test needed | in distribution | Microgravity no-spread; 1-g spread rate 1.2 mm/s |
-| Saffire-II SIBAL | 22.1% O2, 20 cm/s | **B**, test needed | in distribution | Documented microgravity spread at 2.1 mm/s |
-| Nomex / ISS internal | 24.1% O2, 14.5 psia | **B**, test needed | in distribution | Three BASS-II conditions; no documented outcome |
-| Kevlar/PBI / lunar surface | 37% O2, 8.2 psia | **D**, insufficient evidence | no material evidence | TB 26-05 external anchor; source URL not yet ingested |
+| PMMA / ISS internal | 24.1% O2, 14.5 psia | **A**, high risk | in distribution | Page-cited BASS-II NTRS row: 100-µm PMMA at 20.7% O2, 1 atm, 2.2 mm/s spread |
+| PMMA / lunar surface | 37% O2, 8.2 psia | **C**, test needed | out of distribution | Outside tested O2 and pressure envelope; downgrade applied |
+| Saffire-II silicone | 22.1% O2, 20 cm/s | **B**, test needed | in distribution | Microgravity no-spread; 1-g spread rate 1.2 mm/s; PSI row lacks pressure |
+| Saffire-II SIBAL | 22.1% O2, 20 cm/s | **A**, high risk | in distribution | Documented microgravity spread; pressure-bearing NTRS anchor |
+| Nomex / ISS internal | 24.1% O2, 14.5 psia | **B**, test needed | in distribution | Three BASS-II conditions; no documented outcome and no pressure |
+| Kevlar/PBI / lunar surface | 37% O2, 8.2 psia | **C**, test needed | in distribution | Two page-cited 1-g no-spread rows at 8.2 psia; R6 caps at C |
 
 Full write-up: `docs/case_studies.md`. Machine-readable artifact:
 `artifacts/case_studies.json`.
@@ -111,9 +121,10 @@ Full write-up: `docs/case_studies.md`. Machine-readable artifact:
 
 TF-IDF character n-grams plus a material-class gate and alias expansion.
 
-- 8 alias queries (PMMA, polymethyl methacrylate, acrylic sheet, SIBAL,
-  cotton-fiberglass, Nomex III, silicone rubber, PMMA & Nomex): **recall@3 = 1.0**.
-- 3 deliberately unknown queries (polyethylene film, Kevlar/PBI, unobtainium
+- 9 alias queries (PMMA, polymethyl methacrylate, acrylic sheet, SIBAL,
+  cotton-fiberglass, Nomex III, silicone rubber, PMMA & Nomex, Kevlar/PBI webbing):
+  **recall@3 = 1.0**.
+- 3 deliberately unknown queries (polyethylene film, Vectran fabric, unobtainium
   composite): **false-match rate = 0.0**.
 - Gate: recall >= 0.8 and false-match <= 0.2; **passed**.
 - Caveat: the benchmark is small and curated; it tests routing/abstention behavior,
@@ -127,8 +138,10 @@ pressure or flow metadata.
 - PMMA at ISS internal -> `in_distribution`.
 - PMMA at lunar surface -> `out_of_distribution`.
 - Silicone at 22.1% O2 -> `in_distribution`.
-- Kevlar/PBI -> `no_material_evidence`.
-- Gate: 4/4; **passed**.
+- Kevlar/PBI at 37% O2, 8.2 psia -> `in_distribution` from 1-g rows, with an explicit
+  "No microgravity evidence" gap.
+- Vectran fabric -> `no_material_evidence`.
+- Gate: 5/5; **passed**.
 
 Coverage is descriptive. Absence of evidence is not evidence of safety.
 
@@ -184,16 +197,17 @@ demo can run with Wi-Fi disabled.
 
 ## Limitations and known discrepancies
 
-1. BASS-II tables do not report pressure or a direct spread outcome; grades are capped
-   at B. `delta_O2` is not trusted.
+1. PSI solid-material tables do not report pressure; those rows cap at B. Grade A
+   depends on page-cited external rows where the report states pressure, so coverage
+   of A-grade materials is limited to PMMA and SIBAL today. `delta_O2` is not trusted.
 2. Saffire-II has only nine samples; several outcomes or materials are missing, and
    some 1-g spread descriptions are qualitative.
 3. ACME-BRE rows are daily aggregates with inconsistent O2 text (including typo-scale
    values) and are excluded from solid-material grading.
 4. SPICE is gas-jet data, not a solid-material test set.
-5. The TB 26-05 Kevlar/PBI anchor (37%/35% MOC at 8.2 psia) is known from the
-   literature but its source URL has not been ingested; it is flagged in the case
-   study rather than silently treated as database evidence.
+5. TB 26-05 is 1-g evidence at 8.2 psia, explicitly labeled and cited to NTRS
+   20260006043. It anchors Kevlar/PBI but cannot satisfy the microgravity requirement,
+   so Kevlar/PBI remains Grade C.
 6. ML-3 is scoped to BASS-II material classes and material-description-grouped CV. It
    is not a certification model and does not predict ignition or flame spread.
 7. JSC 29353D Table 1 lists 36-40% O2 at 8.2 psia (HLS max 37%); the 2018 fire-safety

@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from firebreak.config import DB_PATH, NTRS_API, RAW_NTRS
+from firebreak.config import DB_PATH, NTRS_API, NTRS_SITE, RAW_NTRS
 
 DOCUMENTS = {
     "20150020937": "standard",
@@ -16,6 +16,8 @@ DOCUMENTS = {
     "20200000557": "paper",
     "20180004258": "report",
     "20170000230": "paper",
+    "20210011385": "report",
+    "20260006043": "bulletin",
 }
 
 SCHEMA = """
@@ -60,8 +62,23 @@ def download_pdf(citation_id: str, refresh: bool = False) -> tuple[bytes, Path]:
     RAW_NTRS.mkdir(parents=True, exist_ok=True)
     path = RAW_NTRS / f"{citation_id}.pdf"
     if path.exists() and not refresh:
-        return path.read_bytes(), path
-    url = f"{NTRS_API}/{citation_id}/downloads/{citation_id}.pdf"
+        payload = path.read_bytes()
+        if payload.startswith(b"%PDF"):
+            return payload, path
+    citation = fetch_citation(citation_id)
+    download = next(
+        (
+            item
+            for item in citation.get("downloads", [])
+            if item.get("mimetype") == "application/pdf"
+            and item.get("links", {}).get("pdf")
+        ),
+        None,
+    )
+    if download:
+        url = NTRS_SITE + download["links"]["pdf"]
+    else:
+        url = f"{NTRS_API}/{citation_id}/downloads/{citation_id}.pdf"
     payload = _http_get(url)
     if not payload.startswith(b"%PDF"):
         raise ValueError(f"{citation_id}: response is not a PDF")

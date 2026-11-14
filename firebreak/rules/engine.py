@@ -51,6 +51,11 @@ def _tokens(value: str) -> set[str]:
 def _material_similarity(query: str, candidate: str) -> float:
     query_class = material_class(query)
     candidate_class = material_class(candidate)
+    if query_class == "Other" and candidate_class != "Other":
+        return 0.0
+    if query_class != "Other" and query_class != candidate_class:
+        if query_class not in candidate_class and candidate_class not in query_class:
+            return 0.0
     if query_class != "Other" and query_class == candidate_class:
         base = 1.0
     elif query_class != "Other" and (query_class in candidate_class or candidate_class in query_class):
@@ -131,6 +136,10 @@ def retrieve_evidence(
             + 0.10 * flow_score
             + 0.05 * gravity_score
         )
+        if row["outcome"]:
+            score += 0.08
+        if row["pressure_kpa"] is not None:
+            score += 0.04
         if score >= min_similarity:
             scored.append((score, row))
     scored.sort(key=lambda item: item[0], reverse=True)
@@ -162,6 +171,9 @@ def _grade(
 
     microgravity = [item for item in evidence if item["gravity"] == "microgravity"]
     documented = [item for item in microgravity if item["outcome"]]
+    one_g_documented = [
+        item for item in evidence if item["gravity"] != "microgravity" and item["outcome"]
+    ]
     o2_values = [item["o2_initial_pct"] for item in microgravity if item["o2_initial_pct"] is not None]
     min_o2 = min(o2_values) if o2_values else None
     max_o2 = max(o2_values) if o2_values else None
@@ -192,8 +204,17 @@ def _grade(
         if condition and pressure_condition:
             at_or_beyond.append(item)
 
+    comparable = [
+        item
+        for item in documented
+        if item["o2_initial_pct"] is not None
+        and abs(item["o2_initial_pct"] - o2_pct) <= o2_tolerance
+    ]
     outcomes = {item["outcome"] for item in documented}
-    conflict = "spread" in outcomes and ({"no_spread", "not_ignited"} & outcomes)
+    comparable_outcomes = {item["outcome"] for item in comparable}
+    conflict = "spread" in comparable_outcomes and (
+        {"no_spread", "not_ignited"} & comparable_outcomes
+    )
 
     if at_or_beyond:
         grade = "A"
@@ -206,11 +227,7 @@ def _grade(
     else:
         grade = "C"
 
-    if outside_pressure and grade == "A":
-        grade = "B"
-    if outside and grade == "A":
-        grade = "B"
-    elif outside and grade == "B":
+    if outside and grade in {"A", "B"}:
         grade = "C"
     if conflict and grade in {"A", "B"}:
         grade = "C"
@@ -228,12 +245,26 @@ def _grade(
 
     best = evidence[0]
     reasons = [
-        f"Retrieved {len(evidence)} solid-material tests; {len(documented)} include a documented outcome.",
+        (
+            f"Retrieved {len(evidence)} solid-material tests; {len(documented)} microgravity "
+            f"and {len(one_g_documented)} 1-g rows carry a documented outcome."
+        ),
         (
             f"Closest evidence: {best['experiment_id']} ({best['material']}, "
             f"{best['o2_initial_pct']}% O2, outcome={best['outcome']})."
         ),
     ]
+    if grade == "A" and at_or_beyond:
+        anchor = max(
+            at_or_beyond,
+            key=lambda item: item["o2_initial_pct"]
+            if item["o2_initial_pct"] is not None
+            else float("-inf"),
+        )
+        reasons.append(
+            f"Grade A anchor: {anchor['experiment_id']} at {anchor['o2_initial_pct']}% O2 "
+            f"and {anchor['pressure_psia']} psia, outcome={anchor['outcome']}."
+        )
     if outside_o2:
         reasons.append(
             f"Query O2={o2_pct}% exceeds the tested maximum of {max_o2}% by more than "
@@ -242,25 +273,38 @@ def _grade(
     if outside_pressure:
         reasons.append("Query pressure is below the tested pressure envelope; grade downgraded.")
     if not pressure_known and documented:
-        reasons.append("Source tables do not report pressure; A grade is capped at B.")
+        reasons.append("Matched documentation does not report pressure; A grade is capped at B.")
     if conflict:
-        reasons.append("Documented outcomes conflict at comparable conditions; grade lowered.")
+        reasons.append("Documented microgravity outcomes conflict near the query O2; grade lowered.")
     if not documented:
-        reasons.append("No documented spread or extinction outcome; conditions support a test plan, not acceptance.")
+        if one_g_documented:
+            reasons.append(
+                f"No microgravity outcome; {len(one_g_documented)} 1-g test(s) provide an "
+                "external anchor. R6 caps the grade at C."
+            )
+        else:
+            reasons.append(
+                "No documented spread or extinction outcome; conditions support a test "
+                "plan, not acceptance."
+            )
 
     gaps = []
     if not documented:
-        gaps.append("Documented outcome (spread, extinction, or no ignition) at the query condition.")
+        gaps.append("Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.")
     if outside_o2:
         gaps.append(f"Microgravity test at or above {o2_pct}% O2.")
-    if not pressure_known:
-        gaps.append("Pressure-resolved test data.")
+    if outside_pressure:
+        gaps.append(f"Test data at or below {pressure_psia} psia.")
+    if not pressure_known and microgravity:
+        gaps.append("Pressure-resolved microgravity test data.")
+    if not pressure_known and not microgravity:
+        gaps.append(
+            f"Microgravity test at or below {o2_pct}% O2 with a documented outcome and pressure."
+        )
     if not any(item["flow_direction"] for item in evidence):
         gaps.append("Flow direction (concurrent versus opposed).")
     if material_class(best["material"]) == "Other":
         gaps.append("Material identification or alias mapping.")
-    if not microgravity:
-        gaps.append("Microgravity data.")
     if not gaps:
         gaps.append("Configuration-level layup or combined-material test.")
 

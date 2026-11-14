@@ -15,12 +15,12 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parents[1]
 
 CASES = [
-    ("PMMA", "iss_internal", "B", "test_needed"),
+    ("PMMA", "iss_internal", "A", "high_risk"),
     ("PMMA", "lunar_surface", "C", "test_needed"),
     ("Silicone", "iss_internal", "B", "test_needed"),
-    ("SIBAL", "iss_internal", "B", "test_needed"),
+    ("SIBAL", "iss_internal", "A", "high_risk"),
     ("Nomex", "iss_internal", "B", "test_needed"),
-    ("Kevlar/PBI", "lunar_surface", "D", "insufficient_evidence"),
+    ("Kevlar/PBI", "lunar_surface", "C", "test_needed"),
     ("unobtainium", "iss_internal", "D", "insufficient_evidence"),
 ]
 
@@ -42,10 +42,10 @@ def check_api(base: str) -> list[str]:
     failures = []
     stats = get_json(base, "/api/stats")
     expectations = {
-        "total": 629,
-        "solid": 140,
-        "documents": 7,
-        "pages": 356,
+        "total": 637,
+        "solid": 148,
+        "documents": 9,
+        "pages": 501,
         "atmospheres": 8,
     }
     for key, expected in expectations.items():
@@ -75,11 +75,11 @@ def check_api(base: str) -> list[str]:
     gap_rows = gaps if isinstance(gaps, list) else gaps.get("gaps", [])
     classes = {row["material_class"]: row["grade"] for row in gap_rows}
     for material_class, grade in {
-        "PMMA": "B",
-        "SIBAL": "B",
+        "PMMA": "A",
+        "SIBAL": "A",
         "Nomex": "B",
         "Silicone": "B",
-        "Kevlar/PBI": "D",
+        "Kevlar/PBI": "C",
     }.items():
         if classes.get(material_class) != grade:
             failures.append(f"gap map {material_class}={classes.get(material_class)!r}, expected {grade!r}")
@@ -114,6 +114,13 @@ def check_ui(base: str) -> list[str]:
         except Exception:
             browser = p.chromium.launch(channel="chrome")
         page = browser.new_page(viewport={"width": 1440, "height": 900})
+        external_requests: list[str] = []
+
+        def track(request) -> None:
+            if not request.url.startswith(base) and not request.url.startswith("data:"):
+                external_requests.append(request.url)
+
+        page.on("request", track)
         page.goto(base + "/", wait_until="networkidle")
 
         page.fill("#material", "PMMA")
@@ -121,8 +128,8 @@ def check_ui(base: str) -> list[str]:
         page.click("button.primary")
         page.wait_for_selector(".grade-letter")
         grade = page.locator(".grade-letter").inner_text().strip()
-        if grade != "B":
-            failures.append(f"UI form grade={grade!r}, expected 'B'")
+        if grade != "A":
+            failures.append(f"UI form grade={grade!r}, expected 'A'")
         if page.locator(".ledger table tbody tr").count() < 5:
             failures.append("UI evidence ledger has fewer than 5 rows")
         print(
@@ -152,6 +159,9 @@ def check_ui(base: str) -> list[str]:
         if hits < 1:
             failures.append("UI library search returned no hits")
         print(f"UI library search -> {hits} hits")
+        if external_requests:
+            failures.append(f"UI made external requests: {external_requests[:3]}")
+        print(f"UI external requests -> {len(external_requests)}")
         browser.close()
     return failures
 

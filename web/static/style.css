@@ -624,10 +624,15 @@ input::placeholder {
   gap: 5px;
 }
 
+.legend .dot { margin-right: 0; }
+
 .dot {
+  display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 
 .dot-ms { background: var(--cyan); }

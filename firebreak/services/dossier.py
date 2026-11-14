@@ -65,6 +65,18 @@ def document_metadata(connection: sqlite3.Connection) -> list[dict[str, Any]]:
     return [_row_dict(row) for row in rows]
 
 
+def _resolve_text_path(stored: str) -> Path | None:
+    candidates = [Path(stored)]
+    relative = ROOT / stored
+    if relative != candidates[0]:
+        candidates.append(relative)
+    candidates.append(ROOT / "data" / "raw" / "ntrs" / Path(stored).name)
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def search_documents(
     connection: sqlite3.Connection,
     query: str,
@@ -78,8 +90,8 @@ def search_documents(
     ).fetchall()
     hits = []
     for row in rows:
-        path = Path(row["text_path"])
-        if not path.exists():
+        path = _resolve_text_path(row["text_path"])
+        if path is None:
             continue
         try:
             text = path.read_text(encoding="utf-8", errors="ignore")

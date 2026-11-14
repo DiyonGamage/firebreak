@@ -31,8 +31,27 @@ is recorded in the `raw_files` table. See the PSI site for terms of use and attr
 | 20180004258 | Spacecraft Fire Safety: Protecting Vehicles and Crews on Long-Duration Exploration Missions | 29 | https://ntrs.nasa.gov/citations/20180004258 |
 | 20170000230 | Operation and Development Status of the Spacecraft Fire Experiments (Saffire) | 9 | https://ntrs.nasa.gov/citations/20170000230 |
 | 20150020937 | Flammability Configuration Analysis for Spacecraft Applications | 54 | https://ntrs.nasa.gov/citations/20150020937 |
+| 20210011385 | Burning and Suppression of Solids-II (BASS-II) Summary Report | 144 | https://ntrs.nasa.gov/citations/20210011385 |
+| 20260006043 | Webbings for Use in Elevated Oxygen Environments (TB 26-05) | 1 | https://ntrs.nasa.gov/citations/20260006043 |
 
 Note: 20150020937 is **JSC 29353B**, a historical revision, not JSC 29353D.
+
+PDFs are resolved through `https://ntrs.nasa.gov/api/citations/{id}` download links,
+cached under `data/raw/ntrs/`, and validated to start with `%PDF` before use. Text and
+per-page JSON are cached alongside.
+
+## External curated datasets
+
+Two small, page-cited datasets are ingested separately from PSI and clearly labeled:
+
+| Dataset | Rows | Source | What the source states |
+|---|---:|---|---|
+| BASS-II (NTRS) | 6 | NASA/TM-20210011385 | PMMA 100 µm at 20.7% O2 spread 2.2 mm/s and extinguished near 16% O2 (§2.2.4–2.2.5); monitored total pressure 99.2–99.5 kPa (§2.3.5); SIBAL tests 16–21% O2 at 1 atm with Table 7.1 outcomes (§7.1.3) |
+| TB 26-05 (1-g) | 2 | NTRS 20260006043 | Natural and black Kevlar/PBI webbing, 37%/35% MOC at 8.2 psia, NASA-STD-6001B Test 1 unshielded J, 1-g |
+
+Each row stores the quoted source text, page/section note, and a provenance hash.
+These rows are not presented as PSI measurements. The 1-g TB rows cannot satisfy the
+microgravity requirement and are used only as an external anchor capped at Grade C.
 
 ## NASA standards
 
@@ -47,12 +66,6 @@ Key clauses used:
   five specimens; worst-case atmosphere; MOC is the maximum O2 at which at least five
   specimens pass.
 - JSC 29353D Table 1: cabin atmosphere presets used in `firebreak/rules/rules.yaml`.
-
-## External anchor not yet ingested
-
-- TB 26-05 reports 37%/35% MOC for Kevlar/PBI webbing at 8.2 psia. The source URL has
-  not been located and ingested. It appears only as a flagged case-study note, not as
-  database evidence.
 
 ## Excluded sources
 

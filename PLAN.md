@@ -8,13 +8,15 @@
 
 ## Current status (2026-11-14)
 
-Core is built and validated: PSI/NTRS/standards ingestion, 629-row SQLite corpus,
-A/B/C/D rule engine, 38 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
-assistant, extraction audit at 100%, and six generated case studies. Submission
-package is drafted in `docs/submission.md` (project page, 90 s video script, checklist,
-offline demo). The repo is public and MIT licensed, and the team name is confirmed as
-LFR. Remaining work: record and upload the video, publish the project page, and confirm
-the Kandy virtual judging details.
+Core is built and validated: PSI/NTRS/standards ingestion, 637-row SQLite corpus,
+A/B/C/D rule engine, 41 passing tests, ML gates passed, FastAPI UI, optional Cactus 3
+assistant, extraction audit at 100%, and six generated case studies. Page-cited external
+rows from the BASS-II summary and TB 26-05 add pressure-resolved evidence, so PMMA and
+SIBAL now reach Grade A while materials without pressure-bearing evidence stay capped.
+Submission package is drafted in `docs/submission.md` (project page, 90 s video script,
+checklist, offline demo). The repo is public and MIT licensed, and the team name is
+confirmed as LFR. Remaining work: record and upload the video, publish the project page,
+and confirm the Kandy virtual judging details.
 
 ## Mission
 
@@ -50,10 +52,11 @@ Users: mission planners, materials engineers, researchers without MAPTIS, educat
 | PSI-100 Saffire-III | 2 | metadata JSON -> presigned CSV |
 | PSI-20 ACME BRE | 18 | metadata JSON -> presigned CSV |
 | PSI-107 SPICE | 469 | metadata JSON -> presigned CSV |
-| **Total** | **629** | |
-| NTRS PDFs | 5 verified | direct PDF |
+| BASS-II (NTRS) | 6 | page-cited rows from NASA/TM-20210011385 |
+| TB 26-05 (1-g) | 2 | page-cited 1-g rows from NTRS 20260006043 |
+| **Total** | **637** | |
+| NTRS PDFs | 7 verified | direct PDF |
 | Standards | JSC 29353D, NASA-STD-6001B | public PDFs |
-| External anchor | TB 26-05 (URL pending) | flagged, not ingested |
 
 Endpoints:
 - `https://psi.nasa.gov/geode-py/ws/repo/investigations/{ACC}`
@@ -68,7 +71,7 @@ Key facts:
 - Saffire-II: numeric micro-g rates for ~3 samples; 1-g rates partly qualitative.
 - NTRS 20160000593: PMMA 1-g blowoff at 16% O2 vs steady micro-g spread at 13.6%;
   negative O2 margin 2.4%.
-- TB 26-05: webbing MOC 37%/35% at 8.2 psia.
+- TB 26-05: webbing MOC 37%/35% at 8.2 psia; ingested as two labeled 1-g rows.
 - NASA-STD-6001B/JSC 29353D: extract exact clause values during build; do not hardcode
   unverified numbers.
 
@@ -105,8 +108,8 @@ logged; duplicates deduplicated by platform + test ID + condition.
 |---|---|---|
 | A | Micro-g data at or beyond target; same/similar material and geometry; documented outcome | Acceptable, with caveats |
 | B | Micro-g data bracketing target within one condition step | Conditional / test needed |
-| C | 1-g screening/standard only, or non-comparable micro-g data | High uncertainty / test needed |
-| D | No usable evidence, conflicting evidence, or outside envelope | Insufficient evidence |
+| C | 1-g screening/standard only, non-comparable micro-g data, or query outside the tested envelope | High uncertainty / test needed |
+| D | No usable evidence or conflicting evidence | Insufficient evidence |
 
 "Acceptable" always means screening support, not certification.
 
@@ -125,16 +128,17 @@ Versioned YAML + Python evaluator. Every rule has a citation, unit test, and fai
 9. Outside tested envelope downgrades the grade.
 10. Cross-material transfer only with explicit similarity; otherwise D.
 
-Gate: 38/38 tests pass (rules, ML, assistant). A is defined but not awarded from the
-current PSI corpus because pressure is not reported; grades cap at B instead of
-inventing pressure.
+Gate: 41/41 tests pass (rules, ML, assistant). A is awarded only when a documented
+microgravity outcome has reported pressure; PSI solid rows lack pressure and cap at B,
+while page-cited BASS-II rows at 1 atm enable A for PMMA and SIBAL. TB 26-05 is 1-g, so
+Kevlar/PBI caps at C.
 
 ## ML layer (approved)
 
 | Module | Task | Data | Validation | Gate |
 |---|---|---|---|---|
 | ML-1 Evidence Matcher | Retrieve analogous tests | 129 BASS-II + 9 Saffire-II + metadata | Recall@3 on case queries | >= 0.8 (actual 1.0) |
-| ML-2 Coverage Detector | Inside/near/outside tested envelope | All solid-material conditions | Held-out material cases | 4/4 expected labels |
+| ML-2 Coverage Detector | Inside/near/outside tested envelope | All solid-material conditions | Held-out material cases | 5/5 expected labels |
 | ML-3 Severity Classifier | High/low dCO2 (BASS-II) | 121 usable rows | GroupKFold by material; baseline | AUC 0.834 vs O2-only 0.607 |
 
 ML-3 is exploratory, never certification. dO2 is not used as a target (calibration artifacts).
@@ -154,12 +158,12 @@ Demo must work with Wi-Fi disabled.
 ## Validation
 
 1. Extraction audit: 30 stratified rows; 60/60 fields, 30/30 rows; 100%.
-2. Rule/application tests: 38/38 pass.
+2. Rule/application tests: 41/41 pass.
 3. Case studies:
-   - PMMA: negative 2.4% O2 margin; 16% 1-g blowoff vs 13.6% micro-g steady spread.
+   - PMMA: negative 2.4% O2 margin; pressure-bearing BASS-II NTRS row at 20.7% O2.
    - Saffire-II: silicone/SIBAL micro-g vs 1-g behavior.
    - Nomex: brand/weight/color variability.
-   - Kevlar/PBI webbing: 37%/35% MOC at 8.2 psia (TB 26-05).
+   - Kevlar/PBI webbing: 1-g only, 37%/35% MOC at 8.2 psia, capped at C.
 4. ML metrics: recall@3, leave-one-material-out coverage, grouped CV AUC/calibration;
    report failures honestly.
 5. Reproducibility: one command rebuilds data and validation report; deterministic seeds;
@@ -172,7 +176,7 @@ Demo must work with Wi-Fi disabled.
 |---|---|---|
 | 0 (30 min) | Folder, PLAN.md, scaffold, requirements | Repo runs |
 | 1 (3 h) | PSI ingestion, NTRS pulls, standards text, schema, audit sample | >= 120 solid-material rows; audit >= 95% |
-| 2 (5 h) | Rule engine, evidence grades, verdicts, Gap Map, dossier | 15/15 tests; 4/4 case studies |
+| 2 (5 h) | Rule engine, evidence grades, verdicts, Gap Map, dossier | 15/15 tests; 6/6 case studies |
 | 3 (3 h) | ML-1, ML-2, ML-3 + gates | Matcher >= 0.8; severity gate |
 | 4 (5 h) | UI + Cactus tools + offline packaging | End-to-end demo offline |
 | 5 (4 h) | Validation report, README, sources, project page | Package complete |
@@ -215,7 +219,7 @@ Firebreak/
   app/main.py
   firebreak/
     config.py
-    data/psi.py, ntrs.py, standards.py, harmonize.py
+    data/psi.py, ntrs.py, standards.py, harmonize.py, external.py
     rules/engine.py, rules.yaml
     ml/evidence.py, coverage.py, severity.py
     services/dossier.py

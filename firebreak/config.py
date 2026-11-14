@@ -17,4 +17,5 @@ PSI_DOWNLOAD = (
 )
 PSI_PAGE = PSI_BASE + "/physci/repo/data/investigations/{acc}"
 
-NTRS_API = "https://ntrs.nasa.gov/api/citations"
+NTRS_SITE = "https://ntrs.nasa.gov"
+NTRS_API = NTRS_SITE + "/api/citations"

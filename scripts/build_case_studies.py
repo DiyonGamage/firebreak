@@ -46,7 +46,7 @@ CASES = [
         "o2": 22.1,
         "pressure": 14.5,
         "flow": "concurrent",
-        "note": "A documented microgravity spread outcome at 22.1% O2; pressure is not reported in the source table.",
+        "note": "A documented microgravity spread outcome at 22.1% O2; the PSI table omits pressure, so the A anchor comes from a pressure-reported BASS-II NTRS row.",
     },
     {
         "key": "nomex",
@@ -64,7 +64,7 @@ CASES = [
         "o2": 37.0,
         "pressure": 8.2,
         "flow": None,
-        "note": "No Firebreak microgravity evidence. TB 26-05 reports 37%/35% MOC at 8.2 psia; source URL not yet ingested.",
+        "note": "TB 26-05 is now ingested as two explicitly labeled 1-g rows at 8.2 psia; no microgravity row exists, so R6 caps the result at C.",
     },
 ]
 

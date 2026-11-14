@@ -31,8 +31,8 @@
           It does not guess.
         </p>
         <div class="hero-badges">
-          <span class="badge">629 curated records</span>
-          <span class="badge">6 NASA datasets</span>
+          <span class="badge">{{ stats.total }} curated records</span>
+          <span class="badge">{{ stats.datasets|length }} datasets</span>
           <span class="badge">A–D evidence grade</span>
           <span class="badge">No fabricated outcome data</span>
         </div>
@@ -207,7 +207,10 @@
           <tbody>
             {% for e in result.evidence[:12] %}
             <tr>
-              <td class="mono">{{ e.experiment_id }}</td>
+              <td class="mono">
+                <i class="dot dot-{{ 'ms' if e.gravity == 'microgravity' else '1g' }}"></i>
+                {{ e.experiment_id }}{% if e.derived %} <i class="dot dot-derived"></i>{% endif %}
+              </td>
               <td>{{ e.dataset }}</td>
               <td class="material-cell">{{ e.material }}</td>
               <td class="mono">{{ e.o2_initial_pct if e.o2_initial_pct is not none else '—' }}</td>
@@ -221,7 +224,7 @@
                 {% endif %}
               </td>
               <td class="mono">{{ e.score }}</td>
-              <td><a class="source-link" href="{{ e.source_url }}" target="_blank" rel="noopener">PSI ↗</a></td>
+              <td><a class="source-link" href="{{ e.source_url }}" target="_blank" rel="noopener">{{ 'NTRS' if 'ntrs.nasa.gov' in e.source_url else 'PSI' }} ↗</a></td>
             </tr>
             {% endfor %}
           </tbody>

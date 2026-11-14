@@ -102,5 +102,5 @@ facts:
     statement: Maximum Oxygen Concentration is the maximum O2 at which at least five specimens pass the Test 1 acceptance criteria.
 
 gap_targets:
-  - material: Kevlar/PBI
-    note: Exploration habitat webbing candidate; TB 26-05 external anchor only, no ingested microgravity row.
+  - material: Nylon webbing
+    note: TB 26-05 reports standard meta-aramid or nylon webbings do not meet elevated-oxygen requirements; no microgravity row is ingested.

@@ -18,11 +18,12 @@ ALIAS_BENCHMARK = [
     ("Nomex III", "Nomex"),
     ("silicone rubber", "Silicone"),
     ("PMMA & Nomex", "PMMA/Nomex"),
+    ("Kevlar/PBI webbing", "Kevlar/PBI"),
 ]
 
 UNKNOWN_BENCHMARK = [
     "polyethylene film",
-    "Kevlar/PBI",
+    "Vectran fabric",
     "unobtainium composite",
 ]
 

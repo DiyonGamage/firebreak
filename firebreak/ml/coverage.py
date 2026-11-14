@@ -120,6 +120,8 @@ def assess_coverage(
         gaps.append("Query pressure is below the tested pressure envelope.")
     if not pressure_values:
         gaps.append("Pressure is not reported in the matched evidence.")
+    if not any(row["gravity"] == "microgravity" for row in compatible):
+        gaps.append("No microgravity evidence in the matched material class; 1-g evidence only.")
     if not any(row["flow_direction"] for row in compatible):
         gaps.append("Flow direction is not reported in the matched evidence.")
     if not gaps:
@@ -143,7 +145,8 @@ def evaluate_coverage(connection: sqlite3.Connection) -> dict[str, Any]:
         ("PMMA", 24.1, 14.5, "in_distribution"),
         ("PMMA", 37.0, 8.2, "out_of_distribution"),
         ("Silicone", 22.1, 14.5, "in_distribution"),
-        ("Kevlar/PBI", 37.0, 8.2, "no_material_evidence"),
+        ("Kevlar/PBI", 37.0, 8.2, "in_distribution"),
+        ("Vectran fabric", 24.1, 14.5, "no_material_evidence"),
     ]
     results = []
     correct = 0

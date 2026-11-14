@@ -43,12 +43,12 @@ Firebreak answers four questions for any material and atmosphere:
 3. What uncertainty remains?
 4. What test should be run next?
 
-The app ingests 629 curated PSI experiment records and 356 pages of NASA reports and
-standards into a local SQLite corpus. Retrieval, coverage, and severity models run
-locally. A deterministic rule engine applies documented evidence rules, caps grades when
-pressure is not reported, and never fabricates a condition or outcome. Every result
-links to a PSI test row, NTRS page, or NASA standard clause. The whole demo runs with
-Wi-Fi disabled.
+The app ingests 637 curated PSI and page-cited NTRS experiment records and 501 pages of
+NASA reports and standards into a local SQLite corpus. Retrieval, coverage, and severity
+models run locally. A deterministic rule engine applies documented evidence rules, caps
+grades when pressure is not reported, and never fabricates a condition or outcome. Every
+result links to a PSI test row, NTRS page, or NASA standard clause. The whole demo runs
+with Wi-Fi disabled.
 
 ### How it works
 
@@ -59,8 +59,9 @@ Wi-Fi disabled.
 - **Cover** — a nearest-condition detector labels each query in, near, or outside the
   tested O2/pressure/flow envelope.
 - **Grade** — a versioned rule engine (10 rules, each with a citation) assigns an
-  evidence grade and verdict. A grade requires reported pressure, so the current PSI
-  solid-material corpus caps at B rather than inventing pressure.
+  evidence grade and verdict. A grade requires reported pressure; PSI solid-material
+  rows lack it and cap at B, while page-cited BASS-II rows that report 1 atm enable A
+  for PMMA and SIBAL at ISS-internal conditions.
 - **Screen severity** — an optional, scoped random-forest model estimates BASS-II
   CO2-rise severity for material classes seen in training. It does not predict ignition
   or flame spread.
@@ -77,8 +78,10 @@ submission screenshots. All data is built once, cached, hashed, and then served 
 
 ### Challenges we ran into
 
-- PSI solid-material tables do not report pressure. We capped grades at B instead of
-  filling in a plausible value.
+- PSI solid-material tables do not report pressure. We refused to fill in a plausible
+  value; instead we located the page-cited BASS-II summary passages that do report
+  pressure and ingested them as a separate, clearly labeled dataset. Grades rise only
+  where the source actually states the condition.
 - Most BASS-II rows have no documented spread outcome, so "no evidence" must not become
   "safe." The engine returns test-needed, never acceptance, in that case.
 - ACME-BRE rows are daily aggregates with inconsistent O2 text; they are retained but
@@ -91,12 +94,14 @@ submission screenshots. All data is built once, cached, hashed, and then served 
 
 - **100% extraction audit** — 30 stratified rows, 60/60 field checks, 30/30 raw rows
   preserved.
-- **38/38 tests pass** across rules, ML, and assistant behavior.
+- **41/41 tests pass** across rules, ML, and assistant behavior.
 - **ML gates passed** — evidence matcher recall@3 1.0 with 0.0 false-match rate;
-  coverage detector 4/4; severity AUC 0.834 versus 0.607 for an O2-only baseline,
+  coverage detector 5/5; severity AUC 0.834 versus 0.607 for an O2-only baseline,
   grouped by material description.
+- **Pressure-resolved A grades** — PMMA and SIBAL reach Grade A from page-cited BASS-II
+  rows, while materials without pressure-bearing evidence stay capped at B or C.
 - **Six source-linked case studies**, including the PMMA negative margin and the
-  Kevlar/PBI evidence gap.
+  Kevlar/PBI 1-g-only evidence gap.
 - **Offline runtime** — no external API is needed during the demo.
 
 ### What we learned
@@ -108,9 +113,7 @@ credible, not less.
 
 ### What is next
 
-- Ingest a pressure-resolved microgravity solid-material source to enable Grade A.
-- Locate and ingest the TB 26-05 Kevlar/PBI source URL (currently an external anchor,
-  not database evidence).
+- Extend the pressure-resolved external layer to Saffire and Nomex evidence.
 - Run a formal 25-query Cactus routing benchmark.
 - Add material layup/configuration handling and dossier PDF polish.
 
@@ -130,16 +133,17 @@ credible, not less.
 ### Data and attribution
 
 NASA PSI (BASS-II, Saffire-I/II/III, ACME-BRE, SPICE via the public PSI API), NASA NTRS
-(5 reports), NASA Standards (JSC 29353D, NASA-STD-6001B Change 3). Full citations and
-links: `docs/sources.md`. MAPTIS and all authenticated sources are excluded.
+(7 reports, including the BASS-II summary report and TB 26-05), NASA Standards
+(JSC 29353D, NASA-STD-6001B Change 3). Full citations and links: `docs/sources.md`.
+MAPTIS and all authenticated sources are excluded.
 
 ### Limitations (state these on the project page)
 
 Screening support only — not certification, flight approval, or a substitute for
-NASA-STD-6001 Test 1. Grade A is currently unreachable because the PSI solid-material
-tables do not report pressure. The severity model is scoped to BASS-II material classes
-and CO2-rise, not ignition or flame spread. Cactus is an optional local router, not a
-predictor.
+NASA-STD-6001 Test 1. Grade A depends on page-cited pressure-bearing microgravity
+evidence, which currently covers PMMA and SIBAL only; other materials remain capped at B
+or C. The severity model is scoped to BASS-II material classes and CO2-rise, not
+ignition or flame spread. Cactus is an optional local router, not a predictor.
 
 ---
 
@@ -153,17 +157,17 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 |---|---|---|
 | 0:00–0:08 | Title card over the hero screenshot. Text: **FIREBREAK** / *Know what the evidence actually supports.* | Fire in microgravity doesn't follow Earth rules. NASA's own data shows PMMA can keep spreading at 13.6% oxygen — below the 16% where it blows out in 1-g. |
 | 0:08–0:20 | Split screen: `docs/screenshots/02-assessment.png` and a text card: **−2.4% O₂ margin**. | That negative margin is why engineers need evidence, not intuition. Firebreak turns NASA microgravity tests, standards, and literature into source-linked A-to-D evidence grades. |
-| 0:20–0:38 | Live screen recording. Type `PMMA`, select **ISS Internal**, click **Assess evidence**. Hold on the Grade B card. | Ask for PMMA at ISS atmosphere. Firebreak returns Grade B: evidence exists, but no documented outcome, so it recommends a test — not acceptance. |
-| 0:38–0:50 | Scroll the evidence ledger; highlight the PSI links and the sensitivity panel. | Every row links to the original PSI test. The sensitivity panel shows exactly what would change the grade. |
+| 0:20–0:38 | Live screen recording. Type `PMMA`, select **ISS Internal**, click **Assess evidence**. Hold on the Grade A card. | Ask for PMMA at ISS atmosphere. Firebreak returns Grade A and high risk: a documented microgravity spread outcome at 1 atm, anchored to a page-cited test. |
+| 0:38–0:50 | Scroll the evidence ledger; highlight the NTRS/PSI links and the sensitivity panel. | Every row links to the original test or report. The sensitivity panel shows exactly what would change the grade. |
 | 0:50–1:02 | Switch atmosphere to **Lunar/Mars Surface (HLS max)**; show Grade C and the out-of-envelope flag; cut to the Gap Map. | Ask the same material for the lunar surface: oxygen is outside the tested envelope, and the grade drops to C. The Gap Map ranks missing evidence across material classes. |
-| 1:02–1:14 | Terminal: `python -m pytest -q` → `38 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 629 curated records, 356 pages of NASA documents, a 100% extraction audit, 38 passing tests, and a scoped CO2-rise screen at 0.834 AUC against a 0.607 baseline. |
-| 1:14–1:24 | Footer boundary text and the **OFFLINE-READY** badge; toggle Wi-Fi off if recording live. | Firebreak does not fabricate. It caps grades when pressure is missing, labels every limitation, and runs offline. |
+| 1:02–1:14 | Terminal: `python -m pytest -q` → `41 passed`. Then the validation table or `artifacts/ml_severity_metrics.json`. | 637 curated records, 501 pages of NASA documents, a 100% extraction audit, 41 passing tests, and a scoped CO2-rise screen at 0.834 AUC against a 0.607 baseline. |
+| 1:14–1:24 | Footer boundary text and the **OFFLINE-READY** badge; toggle Wi-Fi off if recording live. | Firebreak does not fabricate. It refuses to fill missing pressure, labels every limitation, and runs offline. |
 | 1:24–1:30 | End card: **FIREBREAK** / *Know what the evidence actually supports.* / repo URL. | Firebreak. Know what the evidence actually supports. |
 
 ### Assets
 
 - `docs/screenshots/01-overview.png` — hero + full app (1440 px full page)
-- `docs/screenshots/02-assessment.png` — Grade B card, reasons, gaps, sensitivity
+- `docs/screenshots/02-assessment.png` — Grade A card, reasons, gaps, sensitivity
 - `docs/screenshots/03-gap-map.png` — Gap Map and verified anchors
 - `docs/screenshots/04-library.png` — source-document search
 - Live capture: PMMA ISS → lunar surface, ledger scroll, Gap Map
@@ -214,18 +218,18 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
 - [x] Open license present (MIT)
 - [ ] No MAPTIS or authenticated data redistributed
 - [ ] No fabricated measurements, outcomes, or pressure values
-- [ ] Claims match `docs/validation.md` (100% audit, 38 tests, ML metrics)
+- [ ] Claims match `docs/validation.md` (100% audit, 41 tests, ML metrics)
 - [ ] Video ≤ 90 s and publicly viewable
 - [ ] Submission completed before **15 Nov 2026 23:59 SLST**
 
 ### Final pre-submit verification
 
 ```powershell
-python -m pytest -q                 # 38 passed
+python -m pytest -q                 # 41 passed
 python scripts\smoke_e2e.py --cactus # PASS: API, UI, assistant, Cactus
 python scripts\audit_extraction.py  # 100%
 python scripts\eval_ml.py           # gates passed
-curl http://127.0.0.1:8010/healthz  # {"status":"ok","experiments":629,"documents":7}
+curl http://127.0.0.1:8010/healthz  # {"status":"ok","experiments":637,"documents":9}
 ```
 
 ---
@@ -253,18 +257,20 @@ python -m uvicorn app.main:app --port 8010
 ```
 
 Open `http://127.0.0.1:8010`. Confirm the header shows **EVIDENCE GRADED /
-OFFLINE-READY** and the footer shows 629 records, 140 solid-material tests, 7 documents,
+OFFLINE-READY** and the footer shows 637 records, 148 solid-material tests, 9 documents,
 and AUC 0.834. Disable Wi-Fi and reload once; the page must render identically.
 
 ### 3-minute demo path
 
 1. **Home (0:00)** — one sentence on the negative O2 margin; do not tour the UI.
-2. **PMMA / ISS Internal (0:20)** — assess. Point to Grade B, "no documented outcome,"
-   the 12 matched tests, and the sensitivity panel. Emphasize: no pressure → cap at B.
+2. **PMMA / ISS Internal (0:20)** — assess. Point to Grade A / high risk, the page-cited
+   microgravity spread at 20.7% O2 and 1 atm, the 12 matched tests, and the sensitivity
+   panel. Emphasize: pressure is reported, so the A anchor is legitimate.
 3. **PMMA / Lunar surface (1:00)** — assess. Grade C, outside tested envelope. This is
    the honesty feature: a well-studied material still downgrades.
-4. **Gap Map (1:30)** — Kevlar/PBI Grade D (no evidence) vs PMMA B; explain ranked gaps.
-5. **Evidence ledger (1:50)** — click one PSI source link; show the raw record.
+4. **Gap Map (1:30)** — Kevlar/PBI Grade C (two 1-g anchors, no microgravity) vs PMMA
+   and SIBAL A; explain ranked gaps.
+5. **Evidence ledger (1:50)** — click the NTRS source link; show the page-cited row.
 6. **Library search (2:10)** — search `PMMA margin` or `Test 1`; show NTRS/standard hits.
 7. **Offline assistant (2:30)** — ask `Assess SIBAL at ISS internal` with the fallback
    engine; show the tool trace. Do not enable Cactus unless asked.
@@ -272,7 +278,7 @@ and AUC 0.834. Disable Wi-Fi and reload once; the page must render identically.
 
 ### 60-second version
 
-PMMA ISS → Grade B → lunar surface → Grade C → Gap Map → one source link → close.
+PMMA ISS → Grade A → lunar surface → Grade C → Gap Map → one source link → close.
 
 ### Contingencies
 

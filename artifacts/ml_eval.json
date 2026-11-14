@@ -1,6 +1,6 @@
 {
   "evidence_matcher": {
-    "known_queries": 8,
+    "known_queries": 9,
     "recall_at_3": 1.0,
     "unknown_queries": 3,
     "false_match_rate": 0.0,
@@ -81,6 +81,15 @@
           "Nomex",
           "PMMA"
         ]
+      },
+      {
+        "query": "Kevlar/PBI webbing",
+        "expected_class": "Kevlar/PBI",
+        "hit_at_3": true,
+        "returned": [
+          "Kevlar/PBI",
+          "Kevlar/PBI"
+        ]
       }
     ],
     "unknown_details": [
@@ -90,7 +99,7 @@
         "returned": []
       },
       {
-        "query": "Kevlar/PBI",
+        "query": "Vectran fabric",
         "false_match": false,
         "returned": []
       },
@@ -139,6 +148,15 @@
         "material": "Kevlar/PBI",
         "o2_pct": 37.0,
         "pressure_psia": 8.2,
+        "expected": "in_distribution",
+        "actual": "in_distribution",
+        "score": 0.9,
+        "passed": true
+      },
+      {
+        "material": "Vectran fabric",
+        "o2_pct": 24.1,
+        "pressure_psia": 14.5,
         "expected": "no_material_evidence",
         "actual": "no_material_evidence",
         "score": 0.0,

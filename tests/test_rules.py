@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sqlite3
+
 import pytest
 
 from firebreak.rules.engine import (
@@ -11,6 +13,7 @@ from firebreak.rules.engine import (
     open_connection,
     retrieve_evidence,
 )
+from firebreak.services.dossier import search_documents
 
 
 @pytest.fixture()
@@ -65,21 +68,24 @@ def test_assessment_shape(conn):
 
 def test_pmma_iss_internal_grade(conn):
     result = assess(conn, "PMMA", 24.1, 14.5)
-    assert result["grade"] == "B"
-    assert result["verdict"] == "test_needed"
+    assert result["grade"] == "A"
+    assert result["verdict"] == "high_risk"
     assert result["outside_envelope"] is False
+    assert any(item["pressure_psia"] is not None for item in result["evidence"])
 
 
 def test_pmma_exploration_is_outside(conn):
     result = assess(conn, "PMMA", 37.0, 8.2)
     assert result["outside_envelope"] is True
-    assert result["grade"] in {"C", "D"}
+    assert result["grade"] == "C"
 
 
 def test_sibal_outcome_is_documented(conn):
     result = assess(conn, "SIBAL", 24.1, 14.5)
     outcomes = [item["outcome"] for item in result["evidence"] if item["outcome"]]
     assert "spread" in outcomes
+    assert result["grade"] == "A"
+    assert result["verdict"] == "high_risk"
 
 
 def test_silicone_outcome_is_no_spread(conn):
@@ -94,10 +100,13 @@ def test_no_a_grade_when_pressure_unknown(conn):
     assert any("pressure" in reason.lower() for reason in result["reasons"])
 
 
-def test_kevlar_pbi_insufficient(conn):
+def test_kevlar_pbi_has_1g_anchor(conn):
     result = assess(conn, "Kevlar/PBI", 37.0, 8.2)
-    assert result["grade"] == "D"
-    assert result["verdict"] == "insufficient_evidence"
+    assert result["grade"] == "C"
+    assert result["verdict"] == "test_needed"
+    assert len(result["evidence"]) >= 2
+    assert all(item["gravity"] == "1-g" for item in result["evidence"])
+    assert any("1-g" in reason for reason in result["reasons"])
 
 
 def test_sensitivity_variants(conn):
@@ -108,7 +117,7 @@ def test_sensitivity_variants(conn):
 
 def test_inventory_solid_total(conn):
     rows = inventory(conn)
-    assert sum(row["tests"] for row in rows) == 140
+    assert sum(row["tests"] for row in rows) == 148
     assert all(row["material_class"] != "Gas fuel" for row in rows)
 
 
@@ -120,11 +129,20 @@ def test_gap_map_contract(conn):
     assert priorities == sorted(priorities, reverse=True)
 
 
-def test_gap_map_includes_absent_target(conn):
+def test_gap_map_includes_kevlar_evidence(conn):
+    rows = gap_map(conn, "iss_internal")
+    kevlar = [row for row in rows if row["material_class"] == "Kevlar/PBI"]
+    assert kevlar
+    assert kevlar[0]["source"] == "database"
+    assert kevlar[0]["tests"] == 2
+    assert kevlar[0]["grade"] == "C"
+
+
+def test_gap_map_includes_requested_target(conn):
     rows = gap_map(conn, "iss_internal")
     absent = [row for row in rows if row.get("source") == "requested_target"]
     assert absent
-    assert any(row["material_class"] == "Kevlar/PBI" for row in absent)
+    assert any(row["material_class"] == "Nylon webbing" for row in absent)
     assert all(row["grade"] == "D" and row["tests"] == 0 for row in absent)
 
 
@@ -140,3 +158,30 @@ def test_assessment_is_deterministic(conn):
     assert first["grade"] == second["grade"]
     assert first["confidence"] == second["confidence"]
     assert first["evidence"][0]["experiment_id"] == second["evidence"][0]["experiment_id"]
+
+
+def test_document_search_resolves_ported_paths():
+    connection = sqlite3.connect(":memory:")
+    connection.row_factory = sqlite3.Row
+    connection.execute(
+        """
+        CREATE TABLE documents (
+            citation_id TEXT, title TEXT, role TEXT, pages INTEGER,
+            source_url TEXT, text_path TEXT
+        )
+        """
+    )
+    connection.execute(
+        "INSERT INTO documents VALUES (?, ?, ?, ?, ?, ?)",
+        (
+            "20210011385",
+            "BASS-II Summary Report",
+            "report",
+            144,
+            "https://ntrs.nasa.gov/citations/20210011385",
+            "C:\\missing\\20210011385.txt",
+        ),
+    )
+    hits = search_documents(connection, "PMMA margin")
+    connection.close()
+    assert hits and hits[0]["citation_id"] == "20210011385"

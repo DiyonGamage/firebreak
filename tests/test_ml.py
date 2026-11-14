@@ -52,8 +52,14 @@ def test_coverage_out_of_distribution(conn):
 
 
 def test_coverage_unknown_material(conn):
-    result = assess_coverage(conn, "Kevlar/PBI", 37.0, 8.2)
+    result = assess_coverage(conn, "Vectran fabric", 37.0, 8.2)
     assert result["label"] == "no_material_evidence"
+
+
+def test_coverage_kevlar_1g_only(conn):
+    result = assess_coverage(conn, "Kevlar/PBI", 37.0, 8.2)
+    assert result["label"] == "in_distribution"
+    assert any("No microgravity evidence" in gap for gap in result["gaps"])
 
 
 def test_severity_gate(conn):
