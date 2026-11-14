@@ -125,6 +125,7 @@ credible, not less.
 
 ### Try it out
 
+- Project site: `{{SITE_URL}}` (built from `docs/index.html`)
 - Repo: `https://github.com/DiyonGamage/firebreak`
 - Video: `{{VIDEO_URL}}`
 - Run locally: `python -m uvicorn app.main:app --port 8010` then open
@@ -201,6 +202,8 @@ Target length **88–90 s**. Narration is ~190 words; leave room for pauses and 
   2026-11-14; proceed with the offline screen-share plan.
 - [ ] **Record and upload the 90 s video**; add the public URL.
 - [ ] **Publish the project page** with the copy in section 1.
+- [ ] **Publish the showcase site** (`docs/index.html` → GitHub Pages) and set `{{SITE_URL}}`.
+- [ ] **Claim the free domain** (`spaceapps.earth`) and attach it to Pages — section 5.
 
 ### Project page fields
 
@@ -293,3 +296,84 @@ PMMA ISS → Grade A → lunar surface → Grade C → Gap Map → one source li
 - **No microphone:** use the video; the demo path above is the live backup.
 - **Backup assets:** screenshots 01–04, `artifacts/*.json`, the recorded video, and a
   printed dossier PDF.
+
+---
+
+## 5. Global Offers — domain and hosted project site
+
+The 2026 Global Offers are optional and are not scored directly. Use only the ones that
+produce something a judge can click. For Firebreak that is **one domain** and **free
+static hosting**; the other offers add nothing to a microgravity flammability screener.
+
+### 5.1 Claim the free domain (5 minutes, one per team)
+
+1. Open `https://www.spaceapps.earth/`.
+2. Enter the project name and contact email, then **Get it Now**. You are sent to the
+   Porkbun cart.
+3. Search a non-premium name. Suggested: `firebreak.space`, `firebreak.xyz`,
+   `firebreakscreen.space`. Premium names are not covered by the offer.
+4. Complete the Porkbun account and checkout at $0. Verify the email so the domain
+   activates.
+5. Record the exact domain. Do not claim a second offer unless it is actually used.
+
+### 5.2 Publish the project site on GitHub Pages
+
+`docs/index.html` is a self-contained showcase page. It uses the screenshots in
+`docs/screenshots/` and no external assets, so Pages can serve it directly.
+
+```powershell
+gh api -X POST repos/DiyonGamage/firebreak/pages `
+  -f "source[branch]=main" -f "source[path]=/docs"
+```
+
+The site is live at `https://diyongamage.github.io/firebreak/` after the first build
+(about a minute). Set `{{SITE_URL}}` to that URL if the custom domain is not ready.
+
+### 5.3 Point the domain at Pages
+
+At Porkbun → DNS for the claimed domain:
+
+| Type | Host | Value |
+|---|---|---|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `diyongamage.github.io` |
+
+Then attach the domain to the site and turn on HTTPS:
+
+```powershell
+gh api -X PUT repos/DiyonGamage/firebreak/pages -f cname="YOUR-DOMAIN"
+gh api -X PUT repos/DiyonGamage/firebreak/pages -F https_enforced=true
+```
+
+DNS and the certificate can take up to an hour. If the deadline is close, submit the
+`github.io` URL and add the domain when it resolves.
+
+### 5.4 Offers to skip
+
+| Offer | Why not |
+|---|---|
+| Meteomatics Weather API | Firebreak has no weather or Earth-observation data. Adding it would be decoration. |
+| Microsoft Planetary Computer | Same: EO data is unrelated to microgravity flammability. |
+| Azure / Google Cloud | Only worth it if you deploy the live app; `Dockerfile` is ready for either. A live URL needs your account and card verification, so do it only with time to test. |
+| GitHub Copilot / Microsoft Copilot / Teams | Claim only if the team actually uses them; no artifact ends up in the submission. |
+| Miro Business Plan / templates | Planning only. A screenshot of a storyboard is not project evidence. |
+
+### 5.5 Optional live deploy
+
+`Dockerfile` serves the app with the 0.5 MB processed database and no raw PDFs:
+
+```powershell
+docker build -t firebreak .
+docker run -p 8080:8080 firebreak
+```
+
+- Azure App Service (Web App for Containers): set `WEBSITES_PORT=8080`, then deploy the
+  image. Requires an Azure account with the $200 trial credit.
+- Google Cloud Run: push the image to Artifact Registry and deploy with
+  `--allow-unauthenticated --port 8080`. Requires the free-trial billing account.
+
+If neither is tested by 15 Nov, do not list a live URL. The offline screen-share demo is
+the reliable path.

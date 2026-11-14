@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+data/raw
+docs
+tests
+scripts
+artifacts
+critrira etc
+*.log
