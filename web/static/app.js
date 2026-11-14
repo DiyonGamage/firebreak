@@ -28,23 +28,6 @@ document.querySelector("#copy-link")?.addEventListener("click", async (event) =>
   }
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.06 }
-);
-
-document.querySelectorAll(".panel, .grade-card, .stat, .kpi, .finding, .insight-card, .read-card").forEach((element) => {
-  element.classList.add("reveal");
-  observer.observe(element);
-});
-
 const assistantForm = document.querySelector("#assistant-form");
 const assistantQuery = document.querySelector("#assistant-query");
 const assistantAnswer = document.querySelector("#assistant-answer");

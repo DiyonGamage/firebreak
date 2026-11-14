@@ -155,7 +155,7 @@ def _interpret(result: dict[str, Any]) -> str:
     if grade == "C":
         if only_one_g:
             return (
-                "Only 1-g evidence anchors this material. Microgravity behaviour is untested, "
+                "Only 1-g evidence anchors this material. Microgravity behavior is untested, "
                 "so R6 caps the grade at C."
             )
         if result["outside_envelope"]:

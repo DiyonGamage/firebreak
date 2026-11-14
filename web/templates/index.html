@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Firebreak — Microgravity flammability evidence</title>
   <meta name="description" content="Source-linked, evidence-graded spacecraft material flammability screening from NASA microgravity data.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23090b10'/><path d='M17 3 8 18h6l-1 11 11-17h-6z' fill='%23ff6b35'/></svg>">
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css?v=10">
 </head>
 <body>
   {% include "partials/topbar.html" %}
@@ -30,6 +30,7 @@
       </div>
 
       <form class="dossier-search" method="get" action="/assess" id="assess-form">
+        <div class="card-kicker">Assessment condition</div>
         <div class="dossier-search-row">
           <label class="field">
             <span>Material or alias</span>
@@ -166,6 +167,7 @@
           <span><i class="dot dot-derived"></i>derived</span>
         </div>
       </div>
+      <p class="scrollhint">Scroll horizontally →</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -204,6 +206,9 @@
               <td><a class="source-link" href="{{ e.source_url }}" target="_blank" rel="noopener">{{ 'NTRS' if 'ntrs.nasa.gov' in e.source_url else 'PSI' }} ↗</a></td>
             </tr>
             {% endfor %}
+            {% if not result.evidence %}
+            <tr><td colspan="9" class="empty-row">No matched tests. This material has no retrievable record in the corpus.</td></tr>
+            {% endif %}
           </tbody>
         </table>
       </div>
@@ -218,6 +223,7 @@
           </div>
           <span class="micro">ranked by decision need</span>
         </div>
+        <p class="scrollhint">Scroll horizontally →</p>
         <div class="table-wrap">
           <table class="compact">
             <thead>
