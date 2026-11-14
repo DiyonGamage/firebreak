@@ -6,7 +6,7 @@ Deadline: **15 Nov 2026, 23:59 SLST**
 Team: **LFR**
 
 Use this file to fill the project page, record the video, and run the live demo.
-Replace every `{{PLACEHOLDER}}` before publishing.
+Replace `{{VIDEO_URL}}` before publishing.
 
 ---
 
