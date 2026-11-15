@@ -30,6 +30,7 @@ def main() -> None:
     with sync_playwright() as p:
         browser = p.chromium.launch(channel="chrome", headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 1000})
+        page.add_init_script("try{sessionStorage.setItem('fb-tour','1')}catch(e){}")
         page.on("console", lambda m: errors.append(f"{m.type}: {m.text}") if m.type == "error" else None)
         page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
         page.goto(url, wait_until="networkidle")
@@ -46,10 +47,17 @@ def main() -> None:
               "| on:", page.eval_on_selector_all(".mx.on .n", "els => els.map(e => e.textContent)"))
         print("thresholds:", page.inner_text("#thresholds"))
         page.screenshot(path=str(OUT / "dashboard-hero.png"))
-        for name, sel in [("console", "#console"), ("change", "#change"), ("sweep", "#sweep"), ("blind", "#blind")]:
+        for name, sel in [("console", "#console"), ("sweep", "#sweep"), ("coverage", "#coverage"), ("model", "#model"), ("boundary", "#boundary")]:
             page.locator(sel).scroll_into_view_if_needed()
             page.wait_for_timeout(350)
             page.screenshot(path=str(OUT / f"dashboard-{name}.png"))
+        page.click("#theme")
+        page.evaluate("window.scrollTo(0,0)")
+        page.wait_for_timeout(600)
+        page.screenshot(path=str(OUT / "dashboard-light.png"))
+        print("theme label:", page.inner_text("#theme"))
+        page.click("#theme")
+        page.wait_for_timeout(200)
         # interaction check
         page.eval_on_selector("#o2", "e => {e.value='18.1'; e.dispatchEvent(new Event('input',{bubbles:true}))}")
         page.wait_for_timeout(250)
@@ -59,11 +67,12 @@ def main() -> None:
         page.wait_for_timeout(250)
         print("at 24.1 ->", page.inner_text("#ro-verdict"), "| p:", page.inner_text("#ml-p"),
               "| abstain visible:", page.is_visible("#abstain"))
-        page.click(".chip[data-key='kevlar_pbi']")
+        page.click(".case[data-key='kevlar_pbi']")
         page.wait_for_timeout(250)
         print("kevlar case:", page.inner_text("#grade"), page.inner_text("#vword"))
 
         mobile = browser.new_page(viewport={"width": 390, "height": 844})
+        mobile.add_init_script("try{sessionStorage.setItem('fb-tour','1')}catch(e){}")
         mobile.goto(url, wait_until="networkidle")
         mobile.wait_for_timeout(900)
         mobile.screenshot(path=str(OUT / "dashboard-mobile.png"))
