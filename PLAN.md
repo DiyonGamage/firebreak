@@ -232,7 +232,7 @@ Firebreak/
     services/dossier.py
     assistant/tools.py, agent.py
   scripts/build_data.py, build_docs.py, eval_ml.py, audit_extraction.py,
-          build_case_studies.py
+          build_case_studies.py, build_corpus_diagram.py
   data/raw/
   data/processed/firebreak.sqlite
   tests/
