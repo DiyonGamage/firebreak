@@ -547,6 +547,7 @@
     <div class="gt-foot">
       <div class="gt-dots" id="gt-dots"></div>
       <button class="gbtn ghost" id="gt-skip" type="button">Skip</button>
+      <button class="gbtn" id="gt-hold" type="button" aria-pressed="false" title="Space">Hold</button>
       <button class="gbtn" id="gt-prev" type="button">Back</button>
       <button class="gbtn solid" id="gt-next" type="button">Next</button>
     </div>
@@ -927,7 +928,7 @@ const TOUR=[
    body:'No flight approval, no safety rating, no model-written grade. Saying the limits out loud is what keeps the tool honest.'},
 ];
 
-let gtOn=false, gtStep=0, gtTimer=null, gtRaf=0, gtStart=0, gtScrollRaf=0, gtSeq=0, gtRO=null, startCase='pmma', startO2='24.1';
+let gtOn=false, gtStep=0, gtTimer=null, gtRaf=0, gtStart=0, gtMs=0, gtHeld=false, gtScrollRaf=0, gtSeq=0, gtRO=null, startCase='pmma', startO2='24.1';
 
 function selectCase(key){
   const b=document.querySelector(`.case[data-key="${key}"]`);
@@ -1007,11 +1008,14 @@ function gtScroll(){
 }
 
 function gtBar(ms){
+  gtMs=ms;
   clearTimeout(gtTimer); cancelAnimationFrame(gtRaf);
   const bar=el('gt-bar');
-  gtStart=performance.now(); bar.style.width='0%';
+  bar.style.width='0%';
+  if(gtHeld) return;
+  gtStart=performance.now();
   (function tick(t){
-    if(!gtOn) return;
+    if(!gtOn||gtHeld) return;
     const p=Math.min(1,(t-gtStart)/ms);
     bar.style.width=(p*100)+'%';
     if(p<1) gtRaf=requestAnimationFrame(tick);
@@ -1057,6 +1061,15 @@ function gtWatch(target){
   gtRO.observe(target); gtRO.observe(el('gt-card'));
 }
 
+function gtHold(on){
+  gtHeld=on;
+  const b=el('gt-hold');
+  b.textContent=on?'Resume':'Hold';
+  b.setAttribute('aria-pressed',String(on));
+  if(on){ clearTimeout(gtTimer); cancelAnimationFrame(gtRaf); }
+  else gtBar(gtMs);
+}
+
 function gtLeave(){
   const st=TOUR[gtStep];
   if(st.leave) st.leave();
@@ -1070,6 +1083,8 @@ function gtNext(){
 function startTour(){
   if(gtOn) return;
   gtOn=true;
+  gtHeld=false;
+  el('gt-hold').textContent='Hold'; el('gt-hold').setAttribute('aria-pressed','false');
   startCase=caseKey; startO2=el('o2').value;
   const root=el('gt');
   root.hidden=false; root.setAttribute('aria-hidden','false');
@@ -1098,6 +1113,7 @@ function stopTour(){
 }
 
 el('gt-skip').addEventListener('click',stopTour);
+el('gt-hold').addEventListener('click',()=>gtHold(!gtHeld));
 el('gt-prev').addEventListener('click',()=>gtShow(gtStep-1));
 el('gt-next').addEventListener('click',gtNext);
 document.querySelectorAll('[data-demo]').forEach(a=>a.addEventListener('click',e=>{
@@ -1106,6 +1122,7 @@ document.querySelectorAll('[data-demo]').forEach(a=>a.addEventListener('click',e
 document.addEventListener('keydown',e=>{
   if(!gtOn) return;
   if(e.key==='Escape') stopTour();
+  else if(e.key===' '){ e.preventDefault(); gtHold(!gtHeld); }
   else if(e.key==='ArrowRight'||e.key==='Enter'){ e.preventDefault(); gtNext(); }
   else if(e.key==='ArrowLeft'){ e.preventDefault(); gtShow(gtStep-1); }
 });
