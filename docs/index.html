@@ -17,6 +17,18 @@
 <meta property="og:image:alt" content="Firebreak project card: a paper background with the headline 'Know what the evidence actually supports' beside a real NASA photograph of a candle flame in microgravity.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://diyongamage.github.io/firebreak/og-card.png">
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem('firebreak-theme'); } catch (e) {}
+  var dark = stored === 'dark' || stored === 'light'
+    ? stored === 'dark'
+    : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', dark ? '#191916' : '#f7f4ec');
+})();
+</script>
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root {
@@ -30,6 +42,8 @@
     --rule: #d8d2c4;
     --rule-soft: #e6e1d5;
     --accent: #c2410c;
+    --selection: #e8d5c2;
+    --gap-tint: #eae4d5;
     --grade-a: #1f6b45;
     --grade-b: #8a5a00;
     --grade-c: #a33a1c;
@@ -39,6 +53,25 @@
     --mono: "Cascadia Mono", Consolas, "Liberation Mono", monospace;
     --measure: 680px;
     --wide: 1120px;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #191916;
+    --panel: #22221e;
+    --ink: #ece7db;
+    --ink-2: #ddd7c9;
+    --muted: #a8a49a;
+    --faint: #918d83;
+    --rule: #3a3833;
+    --rule-soft: #2c2b27;
+    --accent: #e4693f;
+    --selection: #4a3527;
+    --gap-tint: #2a2823;
+    --grade-a: #7fbf9a;
+    --grade-b: #d9b26a;
+    --grade-c: #e08a66;
+    --grade-d: #a3a6ad;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -55,7 +88,7 @@
   a { color: var(--ink); text-decoration-color: var(--rule); text-underline-offset: 3px; }
   a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   img { max-width: 100%; display: block; }
-  ::selection { background: #e8d5c2; }
+  ::selection { background: var(--selection); }
 
   .skip {
     position: absolute; left: -9999px; top: 0;
@@ -97,6 +130,22 @@
     text-decoration: none; letter-spacing: 0.01em;
   }
   .mastnav a:hover { color: var(--accent); }
+
+  .themetoggle {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; line-height: 1;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--rule); padding: 7px 10px; cursor: pointer;
+    position: relative;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .themetoggle:hover { color: var(--accent); border-color: var(--accent); }
+  .themetoggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .themetoggle svg { display: block; width: 13px; height: 13px; }
+  .themetoggle .icon-sun { display: none; }
+  [data-theme="dark"] .themetoggle .icon-moon { display: none; }
+  [data-theme="dark"] .themetoggle .icon-sun { display: block; }
 
   .wrap { width: min(var(--wide), calc(100% - 48px)); margin: 0 auto; }
   .prose { width: min(var(--measure), 100%); margin-left: auto; margin-right: auto; }
@@ -193,6 +242,7 @@
   }
   .diagramscroll { overflow-x: auto; }
   .diagramscroll img { width: 100%; height: auto; }
+  [data-theme="dark"] .diagramscroll img { border: 1px solid var(--rule); }
   .coverplate img, figure.photo img { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
   @media (hover: hover) {
     .coverplate:hover img, figure.photo:hover img { transform: scale(1.008); }
@@ -286,7 +336,7 @@
     font-family: var(--mono); font-size: 15px; font-weight: 700;
     padding-top: 17px; padding-bottom: 17px;
   }
-  table.matrix td.gapcol, table.matrix th.gapcol { background: #eae4d5; }
+  table.matrix td.gapcol, table.matrix th.gapcol { background: var(--gap-tint); }
   table.matrix th.gapcol { color: var(--grade-c); }
   .matrixlegend {
     display: flex; flex-wrap: wrap; gap: 6px 22px;
@@ -409,6 +459,9 @@
     .titleblock { padding-top: 40px; }
     .masthead-inner { flex-wrap: wrap; gap: 10px; padding: 13px 0; }
     .mastnav { gap: 16px; }
+    .themetoggle { padding: 6px; }
+    .themetoggle::after { content: ""; position: absolute; inset: -9px; }
+    .themetoggle-label { display: none; }
     .abstract p.lead { font-size: 18px; }
     section { padding-top: 34px; }
     table { min-width: 500px; }
@@ -427,6 +480,23 @@
     html { scroll-behavior: auto; }
   }
   @media print {
+    :root,
+    [data-theme="dark"] {
+      --paper: #fff;
+      --panel: #f4f2ec;
+      --ink: #1c1e22;
+      --ink-2: #2a2c31;
+      --muted: #5f636b;
+      --faint: #6f727a;
+      --rule: #d8d2c4;
+      --rule-soft: #e6e1d5;
+      --accent: #c2410c;
+      --gap-tint: #efece3;
+      --grade-a: #1f6b45;
+      --grade-b: #8a5a00;
+      --grade-c: #a33a1c;
+      --grade-d: #5f636b;
+    }
     body { background: #fff; font-size: 11pt; }
     .masthead, .links, button.copy, .skip { display: none; }
     section + section { border-top: 1px solid #ccc; }
@@ -455,6 +525,11 @@
       <a href="#limits">Limitations</a>
       <a href="#code">Code</a>
     </nav>
+    <button class="themetoggle" type="button" data-theme-toggle aria-label="Switch to dark theme">
+      <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M13.4 9.6A5.8 5.8 0 0 1 6.4 2.6a5.8 5.8 0 1 0 7 7Z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M12.8 3.2l-1.1 1.1M4.3 11.7l-1.1 1.1"/></svg>
+      <span class="themetoggle-label">Dark</span>
+    </button>
   </div>
 </header>
 
@@ -965,6 +1040,32 @@ pytest -q                        # 63 passed</code></pre>
   document.querySelectorAll('ol.limits li').forEach(function (el, i) {
     el.style.setProperty('--d', (i * 0.05) + 's');
     watch(el);
+  });
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var meta = document.querySelector('meta[name="theme-color"]');
+
+  function paint() {
+    var dark = root.dataset.theme === 'dark';
+    var button = document.querySelector('[data-theme-toggle]');
+    if (button) {
+      button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+      var label = button.querySelector('.themetoggle-label');
+      if (label) label.textContent = dark ? 'Light' : 'Dark';
+    }
+    if (meta) meta.setAttribute('content', dark ? '#191916' : '#f7f4ec');
+  }
+
+  paint();
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-theme-toggle]');
+    if (!button) return;
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('firebreak-theme', root.dataset.theme); } catch (e) {}
+    paint();
   });
 })();
 </script>

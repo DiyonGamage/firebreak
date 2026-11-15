@@ -6,7 +6,8 @@
   <title>Firebreak — Evidence dashboard</title>
   <meta name="description" content="Evidence-graded spacecraft material flammability screening from NASA microgravity data.">
   <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/style.css?v=11">
+  {% include "partials/theme-head.html" %}
+  <link rel="stylesheet" href="/static/style.css?v=14">
 </head>
 <body>
   {% include "partials/topbar.html" %}
@@ -17,7 +18,7 @@
         <p class="eyebrow">MICROGRAVITY FLAMMABILITY · EVIDENCE DASHBOARD</p>
         <h1>What does the evidence <em>actually</em> support?</h1>
         <p class="lede">
-          Firebreak turns {{ dashboard.counts.all_records }} NASA combustion records into
+          Firebreak turns {{ '{:,}'.format(dashboard.counts.all_records) }} NASA combustion records into
           evidence-graded answers for spacecraft materials. Pick a material and an
           atmosphere. Get a grade, its sources, and the exact gap that would change it.
         </p>

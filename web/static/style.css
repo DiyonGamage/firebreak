@@ -2,6 +2,7 @@
    Paper, ink, hairline rules. Display serif, UI sans, data mono. */
 
 :root {
+  color-scheme: light;
   --paper: #f7f4ec;
   --paper-2: #efece3;
   --paper-3: #e8e3d6;
@@ -20,6 +21,25 @@
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --sans: "Segoe UI", Inter, system-ui, -apple-system, Arial, sans-serif;
   --mono: "Cascadia Mono", Consolas, "SF Mono", "Courier New", monospace;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #191916;
+  --paper-2: #22221e;
+  --paper-3: #2a2823;
+  --ink: #ece7db;
+  --ink-2: #ddd7c9;
+  --muted: #a8a49a;
+  --faint: #918d83;
+  --rule: #3a3833;
+  --rule-soft: #2c2b27;
+  --accent: #e4693f;
+  --accent-soft: #3a241b;
+  --a: #7fbf9a;
+  --b: #d9b26a;
+  --c: #e08a66;
+  --d: #a3a6ad;
 }
 
 *,
@@ -193,6 +213,53 @@ select {
 
 .topnav a:hover {
   color: var(--ink);
+}
+
+.themetoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 8px 10px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.themetoggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.themetoggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.themetoggle svg {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
+
+.themetoggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .themetoggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .themetoggle .icon-sun {
+  display: block;
 }
 
 .topnav a[aria-current="page"] {
@@ -376,12 +443,12 @@ select {
 }
 
 input::placeholder {
-  color: #8d8a80;
+  color: var(--faint);
 }
 
 input:hover,
 select:hover {
-  border-color: #c3bca9;
+  border-color: var(--faint);
 }
 
 input:focus,
@@ -2202,6 +2269,20 @@ footer strong {
     font-size: 10px;
   }
 
+  .themetoggle {
+    padding: 7px;
+  }
+
+  .themetoggle::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+  }
+
+  .themetoggle-label {
+    display: none;
+  }
+
   .dash-hero,
   .library-hero,
   .dossier-head {
@@ -2482,6 +2563,25 @@ footer strong {
 /* ---------- Print ---------- */
 
 @media print {
+  :root,
+  [data-theme="dark"] {
+    --paper: #fff;
+    --paper-2: #fff;
+    --paper-3: #f4f2ec;
+    --ink: #1c1e22;
+    --ink-2: #2a2c31;
+    --muted: #5f636b;
+    --faint: #6f727a;
+    --rule: #d8d2c4;
+    --rule-soft: #e6e1d5;
+    --accent: #c2410c;
+    --accent-soft: #f2e2d6;
+    --a: #1f6b45;
+    --b: #8a5a00;
+    --c: #a33a1c;
+    --d: #5f636b;
+  }
+
   body {
     background: #fff;
     font-size: 11px;
@@ -2493,6 +2593,7 @@ footer strong {
     border-bottom: 1px solid #000;
   }
 
+  .themetoggle,
   .topnav,
   .mission,
   .status,

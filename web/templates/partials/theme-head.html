@@ -1,0 +1,36 @@
+<meta name="theme-color" content="#f7f4ec">
+<script>
+(function () {
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('firebreak-theme'); } catch (e) {}
+  var theme = stored === 'dark' || stored === 'light'
+    ? stored
+    : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.dataset.theme = theme;
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#191916' : '#f7f4ec');
+
+  function paint() {
+    var dark = root.dataset.theme === 'dark';
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#191916' : '#f7f4ec');
+    var button = document.querySelector('[data-theme-toggle]');
+    if (!button) return;
+    button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    var label = button.querySelector('.themetoggle-label');
+    if (label) label.textContent = dark ? 'Light' : 'Dark';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    paint();
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-theme-toggle]');
+      if (!button) return;
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('firebreak-theme', root.dataset.theme); } catch (e) {}
+      paint();
+    });
+  });
+})();
+</script>
