@@ -90,7 +90,7 @@ def _fallback(query: str) -> dict[str, Any]:
             (
                 f"{row['name']} ({row['pillar']}, {row['records']} rows)"
                 if row["extracted"]
-                else f"{row['name']} (catalogued only)"
+                else f"{row['name']} (no records)"
             )
             for row in result["investigations"][:4]
         ) + "."
@@ -214,7 +214,7 @@ def _answer_from_trace(trace: list[dict[str, Any]]) -> str:
                     (
                         f"{row['name']} ({row['pillar']}, {row['records']} rows)"
                         if row["extracted"]
-                        else f"{row['name']} (catalogued only)"
+                        else f"{row['name']} (no records)"
                     )
                     for row in result["investigations"][:4]
                 )

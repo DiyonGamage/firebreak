@@ -43,6 +43,8 @@ def check_api(base: str) -> list[str]:
     stats = get_json(base, "/api/stats")
     expectations = {
         "total": 637,
+        "records": 1170,
+        "characterisation": 533,
         "solid": 148,
         "documents": 9,
         "pages": 501,

@@ -36,6 +36,7 @@ def get_stats(connection: sqlite3.Connection, config: dict[str, Any] | None = No
         "SELECT count(*) FROM experiments WHERE outcome IS NOT NULL"
     ).fetchone()[0]
     documents = connection.execute("SELECT count(*), coalesce(sum(pages), 0) FROM documents").fetchone()
+    characterisation = connection.execute("SELECT count(*) FROM investigation_records").fetchone()[0]
     ml_metrics = None
     if ARTIFACT.exists():
         try:
@@ -44,6 +45,8 @@ def get_stats(connection: sqlite3.Connection, config: dict[str, Any] | None = No
             ml_metrics = None
     return {
         "total": total,
+        "records": total + characterisation,
+        "characterisation": characterisation,
         "solid": solid,
         "outcomes": outcomes,
         "datasets": datasets,

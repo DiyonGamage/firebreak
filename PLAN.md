@@ -6,17 +6,17 @@
 **Challenge:** Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data
 **Repo:** public, open license, no restricted data
 
-## Current status (2026-11-14)
+## Current status (2026-11-15)
 
-Core is built and validated: PSI/NTRS/standards ingestion, 637-row SQLite corpus,
-A/B/C/D rule engine, 55 passing tests, ML gates passed, FastAPI UI, optional Cactus Needle
-assistant, extraction audit at 100%, and six generated case studies. Page-cited external
-rows from the BASS-II summary and TB 26-05 add pressure-resolved evidence, so PMMA and
-SIBAL now reach Grade A while materials without pressure-bearing evidence stay capped.
-Submission package is drafted in `docs/submission.md` (project page, 90 s video script,
-checklist, offline demo). The repo is public and MIT licensed, and the team name is
-confirmed as LFR. Remaining work: record and upload the video, publish the project page,
-and confirm the Kandy virtual judging details.
+Core is built, validated and published: PSI/NTRS/standards ingestion over 1,170 records
+(637 experiment rows plus 533 non-graded characterisation records), A/B/C/D rule engine,
+63 passing tests, ML gates passed, FastAPI UI with an investigations view and a four-role
+evidence court, optional Cactus Needle assistant, extraction audit at 100%, and six
+generated case studies. Page-cited external rows from the BASS-II summary and TB 26-05 add
+pressure-resolved evidence, so PMMA and SIBAL reach Grade A while materials without
+pressure-bearing evidence stay capped. Submission package lives in `docs/submission.md`,
+slide copy in `docs/deck.md`, and the public report at `https://diyongamage.github.io/firebreak/`.
+Remaining work: record and upload the video and file the project page.
 
 ## Mission
 
@@ -54,7 +54,13 @@ Users: mission planners, materials engineers, researchers without MAPTIS, educat
 | PSI-107 SPICE | 469 | metadata JSON -> presigned CSV |
 | BASS-II (NTRS) | 6 | page-cited rows from NASA/TM-20210011385 |
 | TB 26-05 (1-g) | 2 | page-cited 1-g rows from NTRS 20260006043 |
-| **Total** | **637** | |
+| **Experiment total** | **637** | |
+| PSI-69/68 FLEX + FLEX-2 | 282 | characterisation: droplet extinction, never graded |
+| PSI-26 BASS | 122 | characterisation: test log, never graded |
+| PSI-101 SAME-R | 109 | characterisation: smoke aerosol, never graded |
+| PSI-106 SLICE | 12 | characterisation: test log, never graded |
+| PSI-102 SAME | 8 | characterisation: smoke aerosol, never graded |
+| **Records total** | **1,170** | |
 | NTRS PDFs | 7 verified | direct PDF |
 | Standards | JSC 29353D, NASA-STD-6001B | public PDFs |
 
@@ -128,7 +134,7 @@ Versioned YAML + Python evaluator. Every rule has a citation, unit test, and fai
 9. Outside tested envelope downgrades the grade.
 10. Cross-material transfer only with explicit similarity; otherwise D.
 
-Gate: 55/55 tests pass (rules, insights, ML, assistant). A is awarded only when a documented
+Gate: 63/63 tests pass (rules, insights, investigations, ML, assistant). A is awarded only when a documented
 microgravity outcome has reported pressure; PSI solid rows lack pressure and cap at B,
 while page-cited BASS-II rows at 1 atm enable A for PMMA and SIBAL. TB 26-05 is 1-g, so
 Kevlar/PBI caps at C.
@@ -146,13 +152,14 @@ SPICE smoke-point model is optional and cut unless core is done by 18:00.
 
 Cactus Needle is the orchestrator, not the predictor. Strict enum schemas; visible call trace;
 deterministic fallback router. Tools: assess_material, retrieve_evidence, coverage_check,
-severity_estimate, find_gaps, build_dossier. Manual smoke tests route correctly; a
+severity_estimate, find_gaps, build_dossier, investigation_lookup, pillar_coverage. Manual smoke tests route correctly; a
 formal 25-query routing benchmark is optional and not yet run. No fine-tuning.
 
 ## UI
 
 FastAPI + Jinja + vanilla JS + vendored Chart.js; SQLite; offline badge.
-Pages: Overview, Material Matrix, Material Detail, Gap Map, Ask, Validation, Dossier export.
+Pages: Overview, Investigations (ranked, pillars, readiness, contradictions), Material Matrix,
+Material Detail, Gap Map, Ask, Validation, Dossier export.
 Demo must work with Wi-Fi disabled.
 
 ## Validation

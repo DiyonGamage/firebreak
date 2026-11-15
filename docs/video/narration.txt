@@ -1,0 +1,40 @@
+FIREBREAK — 90-SECOND NARRATION
+Target 88–90 s. About 175 words, read at ~2 words per second.
+Pause 0.5 s at every cut. Do not mention Cactus in the timed video.
+
+[0:00–0:08]  TITLE CARD (docs/video/title-card.png)
+Fire in microgravity doesn't follow Earth rules. NASA's own data shows PMMA can
+keep spreading at 13.6% oxygen — below the 16% where it blows out in 1-g.
+
+[0:08–0:20]  SPLIT: ASSESSMENT SCREENSHOT + "−2.4% O₂ MARGIN" CARD
+That negative margin is why engineers need evidence, not intuition. Firebreak
+turns NASA microgravity tests, standards, and literature into source-linked
+A-to-D evidence grades.
+
+[0:20–0:38]  LIVE: PMMA / ISS INTERNAL → ASSESS. HOLD ON GRADE A.
+Ask for PMMA at ISS atmosphere. Firebreak returns Grade A and high risk: a
+documented microgravity spread outcome at one atmosphere, anchored to a
+page-cited test.
+
+[0:38–0:50]  SCROLL THE EVIDENCE LEDGER, THEN THE SENSITIVITY PANEL
+Every row links to the original test or report. The sensitivity panel shows
+exactly what would change the grade.
+
+[0:50–1:02]  LIVE: LUNAR SURFACE → GRADE C, THEN THE GAP MAP
+Ask the same material for the lunar surface: oxygen is outside the tested
+envelope, and the grade drops to C. The Gap Map ranks missing evidence across
+material classes.
+
+[1:02–1:14]  TERMINAL: pytest -q → 63 passed, THEN ML METRICS
+1,170 curated records across eleven investigations, 501 pages of NASA documents,
+a full extraction audit, 63 passing tests, and a scoped CO₂-rise screen at
+0.811 AUC against a 0.605 baseline.
+
+[1:14–1:24]  FOOTER BOUNDARY + OFFLINE BADGE (Wi-Fi visibly off)
+Firebreak does not fabricate. It refuses to fill missing pressure, labels every
+limitation, and runs offline.
+
+[1:24–1:30]  END CARD (docs/video/end-card.png)
+Firebreak. Know what the evidence actually supports.
+
+WORD COUNT: ~175
