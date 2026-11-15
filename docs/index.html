@@ -257,6 +257,9 @@
 
   #plate{margin:18px 0 0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
     padding:16px 18px 12px;box-shadow:var(--shadow)}
+  .catalog-note{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line);
+    font:500 10px/1.7 var(--mono);color:var(--dim);max-width:96ch}
+  .catalog-note a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-2)}
   #plate figcaption{margin-top:8px}
   .plate-key{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font:500 8.5px/1 var(--mono);
     letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
@@ -333,6 +336,7 @@
     <a href="#sweep">Threshold</a>
     <a href="#coverage">Coverage</a>
     <a href="#model">Model</a>
+    <a href="demo.html">Demo</a>
     <a href="report.html">Report</a>
     <a href="https://github.com/diyongamage/firebreak" target="_blank" rel="noopener">Repo</a>
   </nav>
@@ -348,7 +352,7 @@
     <p class="lede">Firebreak grades NASA's microgravity combustion evidence from A to D, traces every answer to its source row, and refuses to answer where the evidence stops short.</p>
     <div class="cta">
       <a class="btn solid" href="#console">Open the console</a>
-      <a class="btn" href="report.html">Read the report</a>
+      <a class="btn" href="demo.html">Watch the demo</a>
     </div>
     <p class="boundary">Screening support only — not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.</p>
   </div>
@@ -446,6 +450,7 @@
   <div class="blind" id="pillars"></div>
   <div class="matrix-wrap"><div class="matrix" id="matrix" aria-label="Investigations against safety pillars"></div></div>
   <figure id="plate" aria-label="Oxygen levels of every pressure-bearing documented outcome, against spacecraft cabin atmospheres"></figure>
+  <p class="catalog-note">PSI's public catalog lists 24 combustion investigations. This corpus uses 12; the other 12 are gas-jet and cool-flame physics, dust, or ground modelling — none carries a solid-material, pressure-resolved outcome. Saffire IV–VI have no PSI datasets; those results appear only in NTRS reports. <a href="https://psi.nasa.gov/physci/repo/data/investigations" target="_blank" rel="noopener">PSI catalog ↗</a></p>
 </section>
 
 <section data-reveal id="model">
@@ -500,6 +505,7 @@
 
 <footer>
   <span>Team LFR · Diyon Gamage</span>
+  <a href="demo.html">Demo</a>
   <a href="report.html">Full report</a>
   <a href="https://github.com/diyongamage/firebreak" target="_blank" rel="noopener">GitHub</a>
   <a href="https://ntrs.nasa.gov/citations/20210011385" target="_blank" rel="noopener">BASS-II summary</a>

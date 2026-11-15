@@ -9,6 +9,7 @@ Challenge: *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity
 
 <p align="center">
   <a href="https://diyongamage.github.io/firebreak/"><b>Technical report</b></a> ·
+  <a href="https://diyongamage.github.io/firebreak/demo.html"><b>Watch the demo</b></a> ·
   <a href="#quick-start">Quick start</a> ·
   <a href="docs/validation.md">Validation</a> ·
   <a href="docs/sources.md">Sources</a> ·
