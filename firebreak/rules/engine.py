@@ -324,7 +324,10 @@ def _grade(
     if layup:
         gaps.append("Configuration-level microgravity test of the as-built layup.")
     if not gaps:
-        gaps.append("No evidence gap at this condition; validate the as-built article.")
+        gaps.append(
+            "No missing evidence at this condition; a contradicting pressure-resolved "
+            "microgravity outcome would change the verdict."
+        )
 
     confidence = min(0.95, 0.2 + 0.08 * len(evidence) + 0.2 * best["score"])
     if not pressure_known:

@@ -24,7 +24,7 @@ Evidence:
 - `PSI-25:B4` — 300 micron PMMA film 2 cm wide, 22.2% O2, pressure n/r psia, outcome: not reported; [source](https://psi.nasa.gov/physci/repo/data/investigations/PSI-25)
 
 Gaps:
-- No evidence gap at this condition; validate the as-built article.
+- No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.
 
 ## PMMA at lunar surface atmosphere
 
@@ -97,7 +97,7 @@ Evidence:
 - `NTRS-BASS2:SIBAL-GMT45-T4` — SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide, 18.7% O2, 14.696 psia, outcome: no_spread; [source](https://ntrs.nasa.gov/citations/20210011385)
 
 Gaps:
-- No evidence gap at this condition; validate the as-built article.
+- No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.
 
 ## Nomex at ISS internal atmosphere
 

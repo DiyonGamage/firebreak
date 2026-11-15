@@ -16,7 +16,7 @@ Challenge: *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity
 </p>
 
 <p align="center">
-  <img alt="Test suite: 55 passing" src="https://img.shields.io/badge/tests-55%20passing-1c1e22?style=flat-square">
+  <img alt="Test suite: 63 passing" src="https://img.shields.io/badge/tests-63%20passing-1c1e22?style=flat-square">
   <img alt="ML-3 severity AUC 0.811" src="https://img.shields.io/badge/ML--3%20AUC-0.811-c2410c?style=flat-square">
   <img alt="1,170 curated records" src="https://img.shields.io/badge/records-1%2C170-1c1e22?style=flat-square">
   <img alt="Runs offline with no API keys" src="https://img.shields.io/badge/offline-no%20API%20keys-4a4d52?style=flat-square">
@@ -67,7 +67,7 @@ extrapolating. It cannot write the grade.
 
 ## The app
 
-<a href="docs/screenshots/00-dashboard.png"><img src="docs/screenshots/00-dashboard.png" alt="Firebreak dashboard: assess a material and atmosphere, with corpus KPIs and three findings computed from the local corpus." width="100%"></a>
+<a href="https://diyongamage.github.io/firebreak/"><img src="docs/screenshots/dashboard-hero.png" alt="Firebreak console: the claim, the 2.4-point oxygen margin quoted from NASA/TM-20210011385, and a transfer-gap plate plotting every pressure-bearing outcome against cabin atmospheres." width="100%"></a>
 
 | <a href="docs/screenshots/02-assessment.png"><img src="docs/screenshots/02-assessment.png" alt="PMMA dossier at ISS internal atmosphere: Grade A, 12 matched tests, and a sensitivity table."></a> | <a href="docs/screenshots/03-gap-map.png"><img src="docs/screenshots/03-gap-map.png" alt="Gap map for ISS internal atmosphere: material classes ranked by evidence gap, with the standards that constrain the answer."></a> |
 |---|---|

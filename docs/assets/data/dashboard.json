@@ -1,0 +1,1936 @@
+{
+ "stats": {
+  "all_records": 1170,
+  "experiments": 637,
+  "characterisation": 533,
+  "solid_tests": 148,
+  "outcomes": 13,
+  "microgravity_outcomes": 11,
+  "one_g_outcomes": 2,
+  "anchors": 6,
+  "documents": 9,
+  "pages": 501,
+  "datasets": 14
+ },
+ "presets": [
+  {
+   "key": "iss_internal",
+   "label": "ISS Internal",
+   "o2": 24.1,
+   "pressure": 14.5
+  },
+  {
+   "key": "iss_airlock",
+   "label": "ISS Airlock",
+   "o2": 30.0,
+   "pressure": 10.2
+  },
+  {
+   "key": "gateway",
+   "label": "Gateway",
+   "o2": 30.0,
+   "pressure": 10.2
+  },
+  {
+   "key": "mpcv",
+   "label": "MPCV Crew Module",
+   "o2": 30.0,
+   "pressure": 10.2
+  },
+  {
+   "key": "lunar_surface",
+   "label": "Lunar/Mars Surface (HLS max)",
+   "o2": 37.0,
+   "pressure": 8.2
+  },
+  {
+   "key": "artemis_iii",
+   "label": "Artemis III",
+   "o2": 30.0,
+   "pressure": 9.6
+  },
+  {
+   "key": "shuttle_legacy",
+   "label": "Shuttle Legacy Cabin",
+   "o2": 30.0,
+   "pressure": 10.2
+  },
+  {
+   "key": "iss_payload_bay",
+   "label": "ISS External / Payload Bay",
+   "o2": 20.9,
+   "pressure": 14.7
+  }
+ ],
+ "iss": {
+  "label": "ISS Internal",
+  "o2": 24.1,
+  "pressure": 14.5
+ },
+ "cases": [
+  {
+   "key": "pmma",
+   "title": "PMMA at ISS internal atmosphere",
+   "material": "PMMA",
+   "o2": 24.1,
+   "pressure": 14.5,
+   "grade": "A",
+   "verdict": "high_risk",
+   "confidence": 0.95,
+   "outside_envelope": false,
+   "reasons": [
+    "Retrieved 12 solid-material tests; 1 microgravity and 0 1-g rows carry a documented outcome.",
+    "Closest evidence: NTRS-BASS2:PMMA-100um-20.7 (PMMA sheet, 100 micron, 20.7% O2, outcome=spread).",
+    "Grade A anchor: NTRS-BASS2:PMMA-100um-20.7 at 20.7% O2 and 14.409 psia, outcome=spread."
+   ],
+   "gaps": [
+    "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-20.7",
+     "dataset": "BASS-II (NTRS)",
+     "material": "PMMA sheet, 100 micron",
+     "o2": 20.7,
+     "pressure_psia": 14.409,
+     "outcome": "spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "provenance_hash": "003101463fc19a3c",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-25:B1",
+     "dataset": "BASS-II",
+     "material": "100 micron PMMA film 2 cm wide",
+     "o2": 22.2,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "060a3bdc0e53aff4",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-25:B2",
+     "dataset": "BASS-II",
+     "material": "200 micron PMMA film 2 cm wide",
+     "o2": 22.2,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "a1b5d13a1e505c55",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-20.7",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "dataset": "BASS-II (NTRS)",
+     "provenance_hash": "003101463fc19a3c"
+    },
+    {
+     "experiment_id": "PSI-25:B1",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "060a3bdc0e53aff4"
+    },
+    {
+     "experiment_id": "PSI-25:B2",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "a1b5d13a1e505c55"
+    },
+    {
+     "experiment_id": "PSI-25:B3",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "86ad957f52ea0359"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "12 matching rows from 1 investigation (BASS-II), spanning 20.7\u201322.2% O2. 12 are microgravity, 1 of those report pressure, and 1 carry a documented outcome.",
+     "basis": [
+      "12 rows",
+      "1 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication.",
+     "basis": [
+      "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence documents spread \u2014 the material is the hazard. Grade A: The evidence is strong. The answer is usable for screening. Governing reason: Retrieved 12 solid-material tests; 1 microgravity and 0 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade A",
+      "high_risk",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.",
+     "basis": [
+      "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 24.1,
+     "pressure_psia": 14.5,
+     "grade": "A",
+     "verdict": "high_risk"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 14.5,
+     "grade": "A",
+     "verdict": "high_risk"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 26.1,
+     "pressure_psia": 14.5,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 12.5,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 16.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": true
+  },
+  {
+   "key": "pmma_lunar",
+   "title": "PMMA at lunar surface atmosphere",
+   "material": "PMMA",
+   "o2": 37.0,
+   "pressure": 8.2,
+   "grade": "C",
+   "verdict": "test_needed",
+   "confidence": 0.85,
+   "outside_envelope": true,
+   "reasons": [
+    "Retrieved 12 solid-material tests; 2 microgravity and 0 1-g rows carry a documented outcome.",
+    "Closest evidence: NTRS-BASS2:PMMA-100um-20.7 (PMMA sheet, 100 micron, 20.7% O2, outcome=spread).",
+    "Query O2=37.0% exceeds the tested maximum of 22.2% by more than 2.0%; grade downgraded.",
+    "Query pressure is below the tested pressure envelope; grade downgraded."
+   ],
+   "gaps": [
+    "Microgravity test at or above 37.0% O2.",
+    "Test data at or below 8.2 psia."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-20.7",
+     "dataset": "BASS-II (NTRS)",
+     "material": "PMMA sheet, 100 micron",
+     "o2": 20.7,
+     "pressure_psia": 14.409,
+     "outcome": "spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "provenance_hash": "003101463fc19a3c",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-16.0",
+     "dataset": "BASS-II (NTRS)",
+     "material": "PMMA sheet, 100 micron",
+     "o2": 16.0,
+     "pressure_psia": 14.409,
+     "outcome": "no_spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "provenance_hash": "f4f8e6f7648e06c3",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-25:B1",
+     "dataset": "BASS-II",
+     "material": "100 micron PMMA film 2 cm wide",
+     "o2": 22.2,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "060a3bdc0e53aff4",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-20.7",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "dataset": "BASS-II (NTRS)",
+     "provenance_hash": "003101463fc19a3c"
+    },
+    {
+     "experiment_id": "NTRS-BASS2:PMMA-100um-16.0",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "dataset": "BASS-II (NTRS)",
+     "provenance_hash": "f4f8e6f7648e06c3"
+    },
+    {
+     "experiment_id": "PSI-25:B1",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "060a3bdc0e53aff4"
+    },
+    {
+     "experiment_id": "PSI-25:B2",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "a1b5d13a1e505c55"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "12 matching rows from 1 investigation (BASS-II), spanning 16.0\u201322.2% O2. 12 are microgravity, 2 of those report pressure, and 2 carry a documented outcome.",
+     "basis": [
+      "12 rows",
+      "1 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication. The requested condition sits outside the tested envelope.",
+     "basis": [
+      "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication.",
+      "The requested condition sits outside the tested envelope."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence is insufficient to accept. Grade C: The evidence ended here. C is a test requirement, not a pass. Governing reason: Retrieved 12 solid-material tests; 2 microgravity and 0 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade C",
+      "test_needed",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "Microgravity test at or above 37.0% O2.",
+     "basis": [
+      "Microgravity test at or above 37.0% O2.",
+      "Test data at or below 8.2 psia."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 37.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 35.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 39.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 37.0,
+     "pressure_psia": 6.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 37.0,
+     "pressure_psia": 10.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": false
+  },
+  {
+   "key": "saffire",
+   "title": "Saffire-II silicone and SIBAL",
+   "material": "Silicone",
+   "o2": 22.1,
+   "pressure": 14.5,
+   "grade": "B",
+   "verdict": "test_needed",
+   "confidence": 0.64,
+   "outside_envelope": false,
+   "reasons": [
+    "Retrieved 4 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.",
+    "Closest evidence: PSI-99:2-2 (Silicone, 22.1% O2, outcome=no_spread).",
+    "Matched documentation does not report pressure; A grade is capped at B."
+   ],
+   "gaps": [
+    "Pressure-resolved microgravity test data."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "PSI-99:2-2",
+     "dataset": "Saffire-II",
+     "material": "Silicone",
+     "o2": 22.1,
+     "pressure_psia": null,
+     "outcome": "no_spread",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "provenance_hash": "d5836c2d862e7c5b",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-99:2-3",
+     "dataset": "Saffire-II",
+     "material": "Silicone",
+     "o2": 22.1,
+     "pressure_psia": null,
+     "outcome": "no_spread",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "provenance_hash": "83387cd01e27dfd1",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-99:2-1",
+     "dataset": "Saffire-II",
+     "material": "Silicone",
+     "o2": 21.5,
+     "pressure_psia": null,
+     "outcome": "no_spread",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "provenance_hash": "ceca8a64af7ba8fb",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "PSI-99:2-2",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "dataset": "Saffire-II",
+     "provenance_hash": "d5836c2d862e7c5b"
+    },
+    {
+     "experiment_id": "PSI-99:2-3",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "dataset": "Saffire-II",
+     "provenance_hash": "83387cd01e27dfd1"
+    },
+    {
+     "experiment_id": "PSI-99:2-1",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "dataset": "Saffire-II",
+     "provenance_hash": "ceca8a64af7ba8fb"
+    },
+    {
+     "experiment_id": "PSI-99:2-4",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "dataset": "Saffire-II",
+     "provenance_hash": "0a0cc484965535b1"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "4 matching rows from 1 investigation (Saffire-II), spanning 21.5\u201322.1% O2. 4 are microgravity, 0 of those report pressure, and 4 carry a documented outcome.",
+     "basis": [
+      "4 rows",
+      "1 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "Every microgravity row traces back to a single investigation (Saffire-II); there is no independent replication. No microgravity row reports pressure, so the A grade cannot be reached.",
+     "basis": [
+      "Every microgravity row traces back to a single investigation (Saffire-II); there is no independent replication.",
+      "No microgravity row reports pressure, so the A grade cannot be reached."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence is insufficient to accept. Grade B: The evidence brackets the condition but is incomplete. Treat as provisional. Governing reason: Retrieved 4 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade B",
+      "test_needed",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "Pressure-resolved microgravity test data.",
+     "basis": [
+      "Pressure-resolved microgravity test data."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 22.1,
+     "pressure_psia": 14.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 20.1,
+     "pressure_psia": 14.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 14.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 12.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 16.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": false
+  },
+  {
+   "key": "saffire_sibal",
+   "title": "Saffire-II SIBAL spread",
+   "material": "SIBAL",
+   "o2": 22.1,
+   "pressure": 14.5,
+   "grade": "A",
+   "verdict": "high_risk",
+   "confidence": 0.95,
+   "outside_envelope": false,
+   "reasons": [
+    "Retrieved 12 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.",
+    "Closest evidence: PSI-99:2-5 (Cotton-Fiberglass (SIBAL), 22.1% O2, outcome=spread).",
+    "Grade A anchor: NTRS-BASS2:SIBAL-GMT96-T7 at 21.0% O2 and 14.696 psia, outcome=spread."
+   ],
+   "gaps": [
+    "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "PSI-99:2-5",
+     "dataset": "Saffire-II",
+     "material": "Cotton-Fiberglass (SIBAL)",
+     "o2": 22.1,
+     "pressure_psia": null,
+     "outcome": "spread",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "provenance_hash": "a83082681e6ac169",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "NTRS-BASS2:SIBAL-GMT96-T7",
+     "dataset": "BASS-II (NTRS)",
+     "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+     "o2": 21.0,
+     "pressure_psia": 14.696,
+     "outcome": "spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "provenance_hash": "6b2543d7d8a0f960",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "NTRS-BASS2:SIBAL-GMT216-T25",
+     "dataset": "BASS-II (NTRS)",
+     "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+     "o2": 20.8,
+     "pressure_psia": 14.696,
+     "outcome": "ignited",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "provenance_hash": "f530fdc74f66b0bf",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "PSI-99:2-5",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+     "dataset": "Saffire-II",
+     "provenance_hash": "a83082681e6ac169"
+    },
+    {
+     "experiment_id": "NTRS-BASS2:SIBAL-GMT96-T7",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "dataset": "BASS-II (NTRS)",
+     "provenance_hash": "6b2543d7d8a0f960"
+    },
+    {
+     "experiment_id": "NTRS-BASS2:SIBAL-GMT216-T25",
+     "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+     "dataset": "BASS-II (NTRS)",
+     "provenance_hash": "f530fdc74f66b0bf"
+    },
+    {
+     "experiment_id": "PSI-98:S1",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+     "dataset": "Saffire-I",
+     "provenance_hash": "4da49067781982d2"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "12 matching rows from 3 investigations (BASS-II, Saffire-I, Saffire-II), spanning 18.7\u201322.1% O2. 12 are microgravity, 3 of those report pressure, and 4 carry a documented outcome.",
+     "basis": [
+      "12 rows",
+      "3 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "No structural weakness found in the matched set; the gap is the open condition.",
+     "basis": [
+      "No structural weakness found in the matched set; the gap is the open condition."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence documents spread \u2014 the material is the hazard. Grade A: The evidence is strong. The answer is usable for screening. Governing reason: Retrieved 12 solid-material tests; 4 microgravity and 0 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade A",
+      "high_risk",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.",
+     "basis": [
+      "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 22.1,
+     "pressure_psia": 14.5,
+     "grade": "A",
+     "verdict": "high_risk"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 20.1,
+     "pressure_psia": 14.5,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 14.5,
+     "grade": "A",
+     "verdict": "high_risk"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 12.5,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 16.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": true
+  },
+  {
+   "key": "nomex",
+   "title": "Nomex at ISS internal atmosphere",
+   "material": "Nomex",
+   "o2": 24.1,
+   "pressure": 14.5,
+   "grade": "B",
+   "verdict": "test_needed",
+   "confidence": 0.51,
+   "outside_envelope": false,
+   "reasons": [
+    "Retrieved 3 solid-material tests; 0 microgravity and 0 1-g rows carry a documented outcome.",
+    "Closest evidence: PSI-25:F1 (Nomex natural (nomex III), 22.2% O2, outcome=None).",
+    "No documented spread or extinction outcome; conditions support a test plan, not acceptance."
+   ],
+   "gaps": [
+    "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+    "Pressure-resolved microgravity test data.",
+    "Flow direction (concurrent versus opposed)."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "PSI-25:F1",
+     "dataset": "BASS-II",
+     "material": "Nomex natural (nomex III)",
+     "o2": 22.2,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "11a67916025c7bf9",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-25:F3",
+     "dataset": "BASS-II",
+     "material": "Nomex natural (nomex III)",
+     "o2": 21.7,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "721eef670057cafc",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "PSI-25:F2",
+     "dataset": "BASS-II",
+     "material": "Nomex natural (nomex III)",
+     "o2": 21.0,
+     "pressure_psia": null,
+     "outcome": null,
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "provenance_hash": "74edb9575be056a0",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "PSI-25:F1",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "11a67916025c7bf9"
+    },
+    {
+     "experiment_id": "PSI-25:F3",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "721eef670057cafc"
+    },
+    {
+     "experiment_id": "PSI-25:F2",
+     "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+     "dataset": "BASS-II",
+     "provenance_hash": "74edb9575be056a0"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "3 matching rows from 1 investigation (BASS-II), spanning 21.0\u201322.2% O2. 3 are microgravity, 0 of those report pressure, and 0 carry a documented outcome.",
+     "basis": [
+      "3 rows",
+      "1 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication. No microgravity row reports pressure, so the A grade cannot be reached. No microgravity row reports an outcome; the record is bracket-only.",
+     "basis": [
+      "Every microgravity row traces back to a single investigation (BASS-II); there is no independent replication.",
+      "No microgravity row reports pressure, so the A grade cannot be reached.",
+      "No microgravity row reports an outcome; the record is bracket-only."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence is insufficient to accept. Grade B: The evidence brackets the condition but is incomplete. Treat as provisional. Governing reason: Retrieved 3 solid-material tests; 0 microgravity and 0 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade B",
+      "test_needed",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+     "basis": [
+      "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+      "Pressure-resolved microgravity test data.",
+      "Flow direction (concurrent versus opposed)."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 24.1,
+     "pressure_psia": 14.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 22.1,
+     "pressure_psia": 14.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 26.1,
+     "pressure_psia": 14.5,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 12.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 24.1,
+     "pressure_psia": 16.5,
+     "grade": "B",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": true
+  },
+  {
+   "key": "kevlar_pbi",
+   "title": "Kevlar/PBI webbing at lunar surface",
+   "material": "Kevlar/PBI",
+   "o2": 37.0,
+   "pressure": 8.2,
+   "grade": "C",
+   "verdict": "test_needed",
+   "confidence": 0.47,
+   "outside_envelope": false,
+   "reasons": [
+    "Retrieved 2 solid-material tests; 0 microgravity and 2 1-g rows carry a documented outcome.",
+    "Closest evidence: TB26-05:natural-37 (Kevlar/PBI webbing (60% Kevlar, 40% PBI), natural, 37.0% O2, outcome=no_spread).",
+    "No microgravity outcome; 2 1-g test(s) provide an external anchor. R6 caps the grade at C."
+   ],
+   "gaps": [
+    "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+    "Microgravity test at or below 37.0% O2 with a documented outcome and pressure.",
+    "Flow direction (concurrent versus opposed)."
+   ],
+   "boundary": "Screening support, not certification or flight approval.",
+   "nearest": [
+    {
+     "experiment_id": "TB26-05:natural-37",
+     "dataset": "TB 26-05 (1-g)",
+     "material": "Kevlar/PBI webbing (60% Kevlar, 40% PBI), natural",
+     "o2": 37.0,
+     "pressure_psia": 8.2,
+     "outcome": "no_spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+     "provenance_hash": "027b6db1f4b8f9af",
+     "o2_gap": null
+    },
+    {
+     "experiment_id": "TB26-05:black-35",
+     "dataset": "TB 26-05 (1-g)",
+     "material": "Kevlar/PBI webbing (60% Kevlar, 40% PBI), black",
+     "o2": 35.0,
+     "pressure_psia": 8.2,
+     "outcome": "no_spread",
+     "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+     "provenance_hash": "9f5def544ca0d1a4",
+     "o2_gap": null
+    }
+   ],
+   "citations": [
+    {
+     "experiment_id": "TB26-05:natural-37",
+     "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+     "dataset": "TB 26-05 (1-g)",
+     "provenance_hash": "027b6db1f4b8f9af"
+    },
+    {
+     "experiment_id": "TB26-05:black-35",
+     "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+     "dataset": "TB 26-05 (1-g)",
+     "provenance_hash": "9f5def544ca0d1a4"
+    }
+   ],
+   "court": [
+    {
+     "role": "Curator",
+     "question": "What do we actually have?",
+     "statement": "2 matching rows from 1 investigation (TB 26-05 (1-g)), spanning 35.0\u201337.0% O2. 0 are microgravity, 0 of those report pressure, and 2 carry a documented outcome.",
+     "basis": [
+      "2 rows",
+      "1 datasets"
+     ]
+    },
+    {
+     "role": "Critic",
+     "question": "Where is this weak?",
+     "statement": "No microgravity row reports pressure, so the A grade cannot be reached. No microgravity row reports an outcome; the record is bracket-only. Only 1-g evidence exists; R6 caps the grade at C.",
+     "basis": [
+      "No microgravity row reports pressure, so the A grade cannot be reached.",
+      "No microgravity row reports an outcome; the record is bracket-only.",
+      "Only 1-g evidence exists; R6 caps the grade at C."
+     ]
+    },
+    {
+     "role": "Safety Officer",
+     "question": "What does this mean for a crew?",
+     "statement": "At ISS Internal, the evidence is insufficient to accept. Grade C: The evidence ended here. C is a test requirement, not a pass. Governing reason: Retrieved 2 solid-material tests; 0 microgravity and 2 1-g rows carry a documented outcome.",
+     "basis": [
+      "grade C",
+      "test_needed",
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+     ]
+    },
+    {
+     "role": "Experimentalist",
+     "question": "What would settle it?",
+     "statement": "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+     "basis": [
+      "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+      "Microgravity test at or below 37.0% O2 with a documented outcome and pressure.",
+      "Flow direction (concurrent versus opposed)."
+     ]
+    }
+   ],
+   "sensitivity": [
+    {
+     "variant": "baseline",
+     "o2_pct": 37.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_minus_2",
+     "o2_pct": 35.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "o2_plus_2",
+     "o2_pct": 39.0,
+     "pressure_psia": 8.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_minus_2",
+     "o2_pct": 37.0,
+     "pressure_psia": 6.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    },
+    {
+     "variant": "pressure_plus_2",
+     "o2_pct": 37.0,
+     "pressure_psia": 10.2,
+     "grade": "C",
+     "verdict": "test_needed"
+    }
+   ],
+   "flips": false
+  }
+ ],
+ "curve": [
+  {
+   "o2": 13.6,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 13.85,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 14.1,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 14.35,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 14.6,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 14.85,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 15.1,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 15.35,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 15.6,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 15.85,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 16.1,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 16.35,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 16.6,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 16.85,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 17.1,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 17.35,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.198,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 17.6,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.244,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 17.85,
+   "grade": "A",
+   "verdict": "acceptable",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.244,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 18.1,
+   "grade": "B",
+   "verdict": "test_needed",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.244,
+   "set": [
+    "low"
+   ],
+   "band": "low"
+  },
+  {
+   "o2": 18.35,
+   "grade": "B",
+   "verdict": "test_needed",
+   "enabled": true,
+   "status": "indeterminate",
+   "p": 0.611,
+   "set": [
+    "low",
+    "high"
+   ],
+   "band": "indeterminate"
+  },
+  {
+   "o2": 18.6,
+   "grade": "B",
+   "verdict": "test_needed",
+   "enabled": true,
+   "status": "indeterminate",
+   "p": 0.611,
+   "set": [
+    "low",
+    "high"
+   ],
+   "band": "indeterminate"
+  },
+  {
+   "o2": 18.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "indeterminate",
+   "p": 0.611,
+   "set": [
+    "low",
+    "high"
+   ],
+   "band": "indeterminate"
+  },
+  {
+   "o2": 19.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 19.35,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 19.6,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 19.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 20.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 20.35,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 20.6,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 20.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 21.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 21.35,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 21.6,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 21.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 22.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": true,
+   "status": "resolved",
+   "p": 0.67,
+   "set": [
+    "high"
+   ],
+   "band": "high"
+  },
+  {
+   "o2": 22.35,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 22.6,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 22.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 23.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 23.35,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 23.6,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 23.85,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  },
+  {
+   "o2": 24.1,
+   "grade": "A",
+   "verdict": "high_risk",
+   "enabled": false,
+   "status": "outside_support",
+   "p": null,
+   "set": null,
+   "band": null
+  }
+ ],
+ "model": {
+  "auc": 0.811,
+  "o2_only_auc": 0.605,
+  "brier": 0.148,
+  "ece": 0.035,
+  "coverage": 0.896,
+  "target_coverage": 0.8,
+  "set_size": 1.45,
+  "o2_min": 13.6,
+  "o2_max": 22.2,
+  "n": 121,
+  "positives": 35,
+  "violations": 0
+ },
+ "pillars": [
+  {
+   "pillar": "Prevention",
+   "investigations": 8,
+   "extracted": 8,
+   "records": 769,
+   "experiments": 635,
+   "status": "experiment evidence",
+   "names": [
+    "BASS",
+    "BASS-II",
+    "Saffire-I",
+    "Saffire-II",
+    "Saffire-III",
+    "ACME-BRE",
+    "SPICE",
+    "SLICE"
+   ]
+  },
+  {
+   "pillar": "Detection",
+   "investigations": 2,
+   "extracted": 2,
+   "records": 117,
+   "experiments": 0,
+   "status": "characterisation only",
+   "names": [
+    "SAME",
+    "SAME-R"
+   ]
+  },
+  {
+   "pillar": "Suppression",
+   "investigations": 1,
+   "extracted": 1,
+   "records": 282,
+   "experiments": 0,
+   "status": "characterisation only",
+   "names": [
+    "FLEX"
+   ]
+  }
+ ],
+ "catalog": [
+  {
+   "name": "BASS",
+   "pillar": "Prevention",
+   "records": 122,
+   "experiments": 0,
+   "outcomes": 0
+  },
+  {
+   "name": "BASS-II",
+   "pillar": "Prevention",
+   "records": 135,
+   "experiments": 135,
+   "outcomes": 6
+  },
+  {
+   "name": "Saffire-I",
+   "pillar": "Prevention",
+   "records": 2,
+   "experiments": 2,
+   "outcomes": 0
+  },
+  {
+   "name": "Saffire-II",
+   "pillar": "Prevention",
+   "records": 9,
+   "experiments": 9,
+   "outcomes": 6
+  },
+  {
+   "name": "Saffire-III",
+   "pillar": "Prevention",
+   "records": 2,
+   "experiments": 2,
+   "outcomes": 0
+  },
+  {
+   "name": "ACME-BRE",
+   "pillar": "Prevention",
+   "records": 18,
+   "experiments": 18,
+   "outcomes": 18
+  },
+  {
+   "name": "SPICE",
+   "pillar": "Prevention",
+   "records": 469,
+   "experiments": 469,
+   "outcomes": 0
+  },
+  {
+   "name": "SAME",
+   "pillar": "Detection",
+   "records": 8,
+   "experiments": 0,
+   "outcomes": 0
+  },
+  {
+   "name": "SAME-R",
+   "pillar": "Detection",
+   "records": 109,
+   "experiments": 0,
+   "outcomes": 0
+  },
+  {
+   "name": "FLEX",
+   "pillar": "Suppression",
+   "records": 282,
+   "experiments": 0,
+   "outcomes": 0
+  },
+  {
+   "name": "SLICE",
+   "pillar": "Prevention",
+   "records": 12,
+   "experiments": 0,
+   "outcomes": 0
+  }
+ ],
+ "gapmap": [
+  {
+   "material_class": "Nylon webbing",
+   "example_material": "Nylon webbing",
+   "tests": 0,
+   "outcomes": 0,
+   "min_o2": null,
+   "max_o2": null,
+   "datasets": "",
+   "grade": "D",
+   "verdict": "insufficient_evidence",
+   "priority": 4,
+   "top_gap": "TB 26-05 reports standard meta-aramid or nylon webbings do not meet elevated-oxygen requirements; no microgravity row is ingested.",
+   "source": "requested_target",
+   "source_url": "https://ntrs.nasa.gov/citations/20260006043"
+  },
+  {
+   "material_class": "Other",
+   "example_material": "4 cm spherical section",
+   "tests": 4,
+   "outcomes": 0,
+   "min_o2": 17.2,
+   "max_o2": 18.4,
+   "datasets": "BASS-II",
+   "grade": "C",
+   "verdict": "test_needed",
+   "priority": 2,
+   "top_gap": "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+   "source": "database"
+  },
+  {
+   "material_class": "PMMA/Nomex",
+   "example_material": "PMMA & Nomex",
+   "tests": 1,
+   "outcomes": 0,
+   "min_o2": 22.1,
+   "max_o2": 22.1,
+   "datasets": "Saffire-II",
+   "grade": "C",
+   "verdict": "test_needed",
+   "priority": 2,
+   "top_gap": "Configuration-level microgravity test of the as-built layup.",
+   "source": "database"
+  },
+  {
+   "material_class": "Kevlar/PBI",
+   "example_material": "Kevlar/PBI webbing (60% Kevlar, 40% PBI), natural",
+   "tests": 2,
+   "outcomes": 2,
+   "min_o2": 35.0,
+   "max_o2": 37.0,
+   "datasets": "TB 26-05 (1-g)",
+   "grade": "C",
+   "verdict": "test_needed",
+   "priority": 2,
+   "top_gap": "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+   "source": "database"
+  },
+  {
+   "material_class": "Nomex",
+   "example_material": "Nomex natural (nomex III)",
+   "tests": 3,
+   "outcomes": 0,
+   "min_o2": 21.0,
+   "max_o2": 22.2,
+   "datasets": "BASS-II",
+   "grade": "B",
+   "verdict": "test_needed",
+   "priority": 1,
+   "top_gap": "Documented microgravity outcome (spread, extinction, or no ignition) at the query condition.",
+   "source": "database"
+  },
+  {
+   "material_class": "Silicone",
+   "example_material": "Silicone",
+   "tests": 4,
+   "outcomes": 4,
+   "min_o2": 21.5,
+   "max_o2": 22.1,
+   "datasets": "Saffire-II",
+   "grade": "B",
+   "verdict": "test_needed",
+   "priority": 1,
+   "top_gap": "Pressure-resolved microgravity test data.",
+   "source": "database"
+  },
+  {
+   "material_class": "PMMA",
+   "example_material": "1/4\" clear rod",
+   "tests": 98,
+   "outcomes": 2,
+   "min_o2": 13.6,
+   "max_o2": 22.2,
+   "datasets": "BASS-II,Saffire-II,BASS-II (NTRS)",
+   "grade": "A",
+   "verdict": "high_risk",
+   "priority": 0,
+   "top_gap": "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.",
+   "source": "database"
+  },
+  {
+   "material_class": "SIBAL",
+   "example_material": "2 cm SIBAL",
+   "tests": 36,
+   "outcomes": 5,
+   "min_o2": 16.4,
+   "max_o2": 22.1,
+   "datasets": "BASS-II,Saffire-I,Saffire-II,Saffire-III,BASS-II (NTRS)",
+   "grade": "A",
+   "verdict": "high_risk",
+   "priority": 0,
+   "top_gap": "No missing evidence at this condition; a contradicting pressure-resolved microgravity outcome would change the verdict.",
+   "source": "database"
+  }
+ ],
+ "anchors": [
+  {
+   "material": "Cotton-Fiberglass (SIBAL)",
+   "material_class": "SIBAL",
+   "o2": 22.1,
+   "pressure_kpa": null,
+   "gravity": "microgravity",
+   "outcome": "spread",
+   "dataset": "Saffire-II",
+   "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+   "provenance_hash": "a83082681e6ac169",
+   "pressure_psia": null
+  },
+  {
+   "material": "Kevlar/PBI webbing (60% Kevlar, 40% PBI), black",
+   "material_class": "Kevlar/PBI",
+   "o2": 35.0,
+   "pressure_kpa": 56.537,
+   "gravity": "1-g",
+   "outcome": "no_spread",
+   "dataset": "TB 26-05 (1-g)",
+   "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+   "provenance_hash": "9f5def544ca0d1a4",
+   "pressure_psia": 8.2
+  },
+  {
+   "material": "Kevlar/PBI webbing (60% Kevlar, 40% PBI), natural",
+   "material_class": "Kevlar/PBI",
+   "o2": 37.0,
+   "pressure_kpa": 56.537,
+   "gravity": "1-g",
+   "outcome": "no_spread",
+   "dataset": "TB 26-05 (1-g)",
+   "source_url": "https://ntrs.nasa.gov/citations/20260006043",
+   "provenance_hash": "027b6db1f4b8f9af",
+   "pressure_psia": 8.2
+  },
+  {
+   "material": "PMMA sheet, 100 micron",
+   "material_class": "PMMA",
+   "o2": 16.0,
+   "pressure_kpa": 99.35,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "f4f8e6f7648e06c3",
+   "pressure_psia": 14.41
+  },
+  {
+   "material": "PMMA sheet, 100 micron",
+   "material_class": "PMMA",
+   "o2": 20.7,
+   "pressure_kpa": 99.35,
+   "gravity": "microgravity",
+   "outcome": "spread",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "003101463fc19a3c",
+   "pressure_psia": 14.41
+  },
+  {
+   "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+   "material_class": "SIBAL",
+   "o2": 16.4,
+   "pressure_kpa": 101.325,
+   "gravity": "microgravity",
+   "outcome": "not_ignited",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "07b373ab471a17a7",
+   "pressure_psia": 14.7
+  },
+  {
+   "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+   "material_class": "SIBAL",
+   "o2": 18.7,
+   "pressure_kpa": 101.325,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "26724d2834eef778",
+   "pressure_psia": 14.7
+  },
+  {
+   "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+   "material_class": "SIBAL",
+   "o2": 20.8,
+   "pressure_kpa": 101.325,
+   "gravity": "microgravity",
+   "outcome": "ignited",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "f530fdc74f66b0bf",
+   "pressure_psia": 14.7
+  },
+  {
+   "material": "SIBAL fabric (75% cotton, 25% fiberglass), 2.2 cm wide",
+   "material_class": "SIBAL",
+   "o2": 21.0,
+   "pressure_kpa": 101.325,
+   "gravity": "microgravity",
+   "outcome": "spread",
+   "dataset": "BASS-II (NTRS)",
+   "source_url": "https://ntrs.nasa.gov/citations/20210011385",
+   "provenance_hash": "6b2543d7d8a0f960",
+   "pressure_psia": 14.7
+  },
+  {
+   "material": "Silicone",
+   "material_class": "Silicone",
+   "o2": 21.5,
+   "pressure_kpa": null,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "Saffire-II",
+   "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+   "provenance_hash": "ceca8a64af7ba8fb",
+   "pressure_psia": null
+  },
+  {
+   "material": "Silicone",
+   "material_class": "Silicone",
+   "o2": 22.1,
+   "pressure_kpa": null,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "Saffire-II",
+   "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+   "provenance_hash": "d5836c2d862e7c5b",
+   "pressure_psia": null
+  },
+  {
+   "material": "Silicone",
+   "material_class": "Silicone",
+   "o2": 22.1,
+   "pressure_kpa": null,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "Saffire-II",
+   "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+   "provenance_hash": "83387cd01e27dfd1",
+   "pressure_psia": null
+  },
+  {
+   "material": "Silicone",
+   "material_class": "Silicone",
+   "o2": 22.1,
+   "pressure_kpa": null,
+   "gravity": "microgravity",
+   "outcome": "no_spread",
+   "dataset": "Saffire-II",
+   "source_url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+   "provenance_hash": "0a0cc484965535b1",
+   "pressure_psia": null
+  }
+ ],
+ "reported": {
+  "one_g_o2": 16.0,
+  "microgravity_o2": 13.6,
+  "margin": 2.4,
+  "quote": "PMMA 1-g blowoff at 16 percent O2 versus steady microgravity spread at 13.6 percent O2: negative oxygen margin of safety 2.4 percent.",
+  "citation": "NASA/TM-20210011385",
+  "url": "https://ntrs.nasa.gov/citations/20210011385"
+ }
+}
