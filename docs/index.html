@@ -304,25 +304,47 @@
 
   [data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
   [data-reveal].in{opacity:1;transform:none}
-  .flash{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 24%,transparent)!important;border-radius:var(--r)}
-  .tour{position:fixed;left:50%;bottom:20px;transform:translate(-50%,16px);z-index:80;display:flex;align-items:center;gap:14px;
-    background:var(--panel-2);border:1px solid var(--line-2);border-radius:999px;padding:8px 10px 8px 16px;
-    box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
-  .tour.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
-  .tour #tour-label{font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .tour .prog{width:104px;height:2px;background:var(--line);border-radius:1px;overflow:hidden}
-  .tour .prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s ease}
-  .tour button{appearance:none;border:0;border-radius:999px;background:var(--text);color:var(--bg);
-    padding:7px 12px;font:600 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-  @media(max-width:640px){.tour{left:12px;right:12px;transform:translate(0,16px);justify-content:space-between}
-    .tour.on{transform:none}.tour .prog{flex:1;width:auto}}
+  .gt{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;transition:opacity .25s ease}
+  .gt.on{opacity:1}
+  .gt[hidden]{display:none}
+  .gt-spot{position:fixed;border-radius:12px;pointer-events:none;
+    box-shadow:0 0 0 9999px rgba(6,7,9,.74),0 0 0 1px var(--accent) inset;
+    transition:left .5s cubic-bezier(.2,.7,.2,1),top .5s cubic-bezier(.2,.7,.2,1),
+      width .5s cubic-bezier(.2,.7,.2,1),height .5s cubic-bezier(.2,.7,.2,1)}
+  .gt-card{position:fixed;width:min(368px,calc(100vw - 24px));background:var(--panel);border:1px solid var(--line-2);
+    border-radius:12px;pointer-events:auto;box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden}
+  .gt-bar{height:2px;background:var(--line)}
+  .gt-bar i{display:block;height:100%;width:0;background:var(--accent)}
+  .gt-in{padding:14px 16px 0}
+  .gt-meta{display:flex;align-items:center;gap:9px;font:600 8.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+  .gt-meta b{color:var(--accent)}
+  .gt-meta span{color:var(--dim)}
+  .gt-card h3{font:600 16px/1.25 var(--sans);letter-spacing:-.018em;margin:9px 0 6px}
+  .gt-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .gt-foot{display:flex;align-items:center;gap:7px;padding:14px 16px 15px}
+  .gt-dots{display:flex;align-items:center;gap:5px;margin-right:auto}
+  .gt-dots button{width:5px;height:5px;border-radius:50%;border:0;padding:0;background:var(--line-2);cursor:pointer}
+  .gt-dots button.on{width:16px;border-radius:3px;background:var(--accent)}
+  .gbtn{appearance:none;border:1px solid var(--line-2);background:transparent;color:var(--muted);border-radius:7px;
+    padding:7px 11px;font:500 9px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+  .gbtn:hover{color:var(--text)}
+  .gbtn.solid{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .gbtn.ghost{border-color:transparent;padding-left:4px;padding-right:4px}
+  .gbtn:disabled{opacity:.35;cursor:default}
+  .gt-arrow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+  .gt-arrow path{stroke:var(--accent);stroke-width:1.5;fill:none;stroke-linecap:round}
+  .gt-arrow path.head{fill:var(--accent);stroke:none;opacity:0;transition:opacity .3s ease .45s}
+  .gt.on .gt-arrow path.head{opacity:1}
+  @media(max-width:700px){.gt-card{left:12px!important;right:12px;top:auto!important;bottom:12px;width:auto}
+    .gt-arrow{display:none}.gt-spot{transition:none}}
 
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none!important;transition:none!important}
     [data-reveal],.voice{opacity:1!important;transform:none!important}
     .plate-dot{opacity:1!important}
-    .tour{display:none}
+    .gt-spot,.gt-card{transition:none}
+    .gt-arrow{display:none}
   }
 </style>
 </head>
@@ -336,7 +358,7 @@
     <a href="#sweep">Threshold</a>
     <a href="#coverage">Coverage</a>
     <a href="#model">Model</a>
-    <a href="demo.html">Demo</a>
+    <a href="?tour=1" data-demo>Demo</a>
     <a href="report.html">Report</a>
     <a href="https://github.com/diyongamage/firebreak" target="_blank" rel="noopener">Repo</a>
   </nav>
@@ -352,7 +374,7 @@
     <p class="lede">Firebreak grades NASA's microgravity combustion evidence from A to D, traces every answer to its source row, and refuses to answer where the evidence stops short.</p>
     <div class="cta">
       <a class="btn solid" href="#console">Open the console</a>
-      <a class="btn" href="demo.html">Watch the demo</a>
+      <a class="btn" href="?tour=1" data-demo>Watch the demo</a>
     </div>
     <p class="boundary">Screening support only — not certification, flight approval, or a substitute for NASA-STD-6001 Test 1.</p>
   </div>
@@ -505,17 +527,30 @@
 
 <footer>
   <span>Team LFR · Diyon Gamage</span>
-  <a href="demo.html">Demo</a>
+  <a href="?tour=1" data-demo>Demo</a>
   <a href="report.html">Full report</a>
   <a href="https://github.com/diyongamage/firebreak" target="_blank" rel="noopener">GitHub</a>
   <a href="https://ntrs.nasa.gov/citations/20210011385" target="_blank" rel="noopener">BASS-II summary</a>
   <span class="sp">Data: NASA PSI · NTRS · JSC 29353D</span>
 </footer>
 
-<div class="tour" id="tour" role="status">
-  <span id="tour-label">Guided tour</span>
-  <div class="prog"><i id="tour-prog"></i></div>
-  <button id="tour-stop" type="button">Skip</button>
+<div class="gt" id="gt" aria-hidden="true" hidden>
+  <div class="gt-spot" id="gt-spot"></div>
+  <svg class="gt-arrow" id="gt-arrow" aria-hidden="true"><path id="gt-path"/><path id="gt-head" class="head"/></svg>
+  <div class="gt-card" id="gt-card" role="dialog" aria-modal="false" aria-labelledby="gt-title" aria-describedby="gt-body" tabindex="-1">
+    <div class="gt-bar"><i id="gt-bar"></i></div>
+    <div class="gt-in">
+      <div class="gt-meta"><b id="gt-step">01</b><span id="gt-kicker">The corpus</span></div>
+      <h3 id="gt-title">—</h3>
+      <p id="gt-body">—</p>
+    </div>
+    <div class="gt-foot">
+      <div class="gt-dots" id="gt-dots"></div>
+      <button class="gbtn ghost" id="gt-skip" type="button">Skip</button>
+      <button class="gbtn" id="gt-prev" type="button">Back</button>
+      <button class="gbtn solid" id="gt-next" type="button">Next</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -669,7 +704,7 @@ function renderChips(){
     </button>`;
   }).join('');
   el('chips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    caseKey=b.dataset.key; renderChips(); renderCase(); stopTour();
+    caseKey=b.dataset.key; renderChips(); renderCase();
     const d=el('case-detail');
     if(d){d.classList.remove('swap-in'); void d.offsetWidth; d.classList.add('swap-in');}
   }));
@@ -870,53 +905,210 @@ function observeReveals(){
   document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
 }
 
-/* ---------- tour ---------- */
-let tourTimers=[], touring=false;
-function stopTour(){
-  if(!touring) return;
-  touring=false; el('tour').classList.remove('on');
-  tourTimers.forEach(clearTimeout); tourTimers=[];
-  document.querySelectorAll('.flash').forEach(n=>n.classList.remove('flash'));
-  ['wheel','touchstart','keydown'].forEach(e=>window.removeEventListener(e,stopTour));
+/* ---------- guided tour ---------- */
+const TOUR=[
+  {sel:'.hero-panel',kicker:'The corpus',title:'Every answer starts here',ms:5600,
+   body:'1,170 curated NASA records, 501 pages read, 13 documented outcomes. Only those outcomes can carry a grade.'},
+  {sel:'#chips',kicker:'The console',title:'Pick a material and a cabin',ms:5600,
+   body:'Six graded cases from the same corpus. Each one is a real condition with a source row behind it.',
+   act(){ selectCase('kevlar_pbi'); }},
+  {sel:'#case-detail .detail-top',kicker:'The grade',title:'A letter about evidence, not safety',ms:6800,
+   body:'Kevlar/PBI caps at C: its only data is 1-g. The grade says how strong the evidence is, never how safe the material is.'},
+  {sel:'#change',kicker:'The falsifier',title:'What would change the answer',ms:6400,
+   body:'Every verdict names the test that would overturn it. If no test could, the case would not be graded at all.'},
+  {sel:'#sweep .sweep-panel',kicker:'The threshold',title:'Drag the oxygen below 18.1%',ms:7800,
+   body:'At 18.10% the rules flip to test needed. Between 18.35 and 18.60% the model’s 80% set cannot separate the labels.',
+   act(){ animateSweep(24.1,18.1,2400); }, leave(){ animateSweep(18.1,24.1,700); }},
+  {sel:'#plate',kicker:'Coverage',title:'No microgravity outcome beyond 21% O₂',ms:6400,
+   body:'Every pressure-bearing outcome in the corpus. The ISS, airlock and lunar cabins all sit to the right of the evidence.'},
+  {sel:'#model .model-grid',kicker:'The model',title:'One learned stage — and it abstains',ms:6400,
+   body:'AUC 0.811 against 0.605 for oxygen alone. Outside 13.6–22.2% O₂ the model returns no probability instead of extrapolating.'},
+  {sel:'#boundary .boundary-grid',kicker:'The boundary',title:'Screening support. Never certification.',ms:6400,
+   body:'No flight approval, no safety rating, no model-written grade. Saying the limits out loud is what keeps the tool honest.'},
+];
+
+let gtOn=false, gtStep=0, gtTimer=null, gtRaf=0, gtStart=0, gtScrollRaf=0, gtSeq=0, gtRO=null, startCase='pmma', startO2='24.1';
+
+function selectCase(key){
+  const b=document.querySelector(`.case[data-key="${key}"]`);
+  if(b) b.click();
 }
-function startTour(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if(sessionStorage.getItem('fb-tour')) return;
-  sessionStorage.setItem('fb-tour','1');
-  touring=true; el('tour').classList.add('on');
-  const steps=[
-    {sel:'#console .workbench',ms:3400},
-    {sel:'#change',ms:3000},
-    {sel:'#sweep .sweep-panel',ms:5200,slide:true},
-    {sel:'#coverage .blind',ms:3400},
-    {sel:'#coverage .matrix-wrap',ms:2800},
-  ];
-  let t=0;
-  steps.forEach(st=>{
-    tourTimers.push(setTimeout(()=>{
-      const node=document.querySelector(st.sel); if(!node) return;
-      document.querySelectorAll('.flash').forEach(n=>n.classList.remove('flash'));
-      node.scrollIntoView({behavior:'smooth',block:'center'});
-      node.classList.add('flash');
-      if(st.slide) animateSlider();
-      el('tour-prog').style.width=(t/steps.length*100)+'%';
-    },t));
-    t+=st.ms;
-  });
-  tourTimers.push(setTimeout(()=>{el('tour-prog').style.width='100%'},t));
-  tourTimers.push(setTimeout(stopTour,t+900));
-  ['wheel','touchstart','keydown'].forEach(e=>window.addEventListener(e,stopTour,{passive:true}));
-}
-function animateSlider(){
-  const input=el('o2'); const from=24.1,to=18.0,dur=2600,t0=performance.now();
+
+function animateSweep(from,to,ms){
+  const input=el('o2'), t0=performance.now();
   (function step(now){
-    if(!touring) return;
-    const k=Math.min(1,(now-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    if(!gtOn) return;
+    const k=Math.min(1,(now-t0)/ms), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
     const v=from+(to-from)*e;
     input.value=v; updateSweep(parseFloat(v));
     if(k<1) requestAnimationFrame(step);
   })(t0);
 }
+
+function gtDots(){
+  const d=el('gt-dots');
+  if(d.children.length) return;
+  TOUR.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.type='button'; b.setAttribute('aria-label','Step '+(i+1));
+    b.addEventListener('click',()=>gtShow(i));
+    d.appendChild(b);
+  });
+}
+
+function drawArrow(x,y,w,h,cx,cy,cw,ch){
+  const path=el('gt-path'), head=el('gt-head');
+  const above=cy+ch<=y+1, below=cy>=y+h-1;
+  let d='', hd='';
+  if(above||below){
+    const x1=cx+cw/2;
+    const x2=Math.min(Math.max(x1,x+w*.22),x+w*.78);
+    const y1=above?cy+ch+5:cy-5;
+    const y2=above?y-9:y+h+9;
+    if(Math.abs(y2-y1)>=20){
+      const mid=(y1+y2)/2, dir=above?1:-1;
+      d=`M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}`;
+      hd=`M ${x2-5} ${y2-7*dir} L ${x2+5} ${y2-7*dir} L ${x2} ${y2} Z`;
+    }
+  }
+  if(path.getAttribute('d')===d) return;
+  path.setAttribute('d',d); head.setAttribute('d',hd);
+  if(!d) return;
+  const len=path.getTotalLength();
+  path.style.transition='none';
+  path.style.strokeDasharray=len; path.style.strokeDashoffset=len;
+  void path.getBoundingClientRect();
+  path.style.transition='stroke-dashoffset .6s ease .12s';
+  path.style.strokeDashoffset='0';
+}
+
+function gtLayout(){
+  const st=TOUR[gtStep], target=document.querySelector(st.sel);
+  if(!target) return;
+  const r=target.getBoundingClientRect(), pad=10;
+  const x=Math.max(6,r.left-pad), y=Math.max(6,r.top-pad);
+  const w=Math.min(innerWidth-12,r.width+pad*2), h=Math.min(innerHeight-12,r.height+pad*2);
+  const spot=el('gt-spot'), card=el('gt-card');
+  spot.style.left=x+'px'; spot.style.top=y+'px';
+  spot.style.width=w+'px'; spot.style.height=h+'px';
+  const cw=card.offsetWidth, ch=card.offsetHeight;
+  let cy;
+  if(y-52-ch>=12) cy=y-ch-52;
+  else if(y+h+52+ch<=innerHeight-12) cy=y+h+52;
+  else cy=y>innerHeight/2?12:innerHeight-ch-12;
+  const cx=Math.min(Math.max(14,x+w/2-cw/2),innerWidth-cw-14);
+  card.style.left=cx+'px'; card.style.top=cy+'px';
+  drawArrow(x,y,w,h,cx,cy,cw,ch);
+}
+
+function gtScroll(){
+  if(gtScrollRaf) return;
+  gtScrollRaf=requestAnimationFrame(()=>{gtScrollRaf=0; if(gtOn) gtLayout();});
+}
+
+function gtBar(ms){
+  clearTimeout(gtTimer); cancelAnimationFrame(gtRaf);
+  const bar=el('gt-bar');
+  gtStart=performance.now(); bar.style.width='0%';
+  (function tick(t){
+    if(!gtOn) return;
+    const p=Math.min(1,(t-gtStart)/ms);
+    bar.style.width=(p*100)+'%';
+    if(p<1) gtRaf=requestAnimationFrame(tick);
+  })(gtStart);
+  gtTimer=setTimeout(()=>gtNext(),ms);
+}
+
+function gtShow(i){
+  gtStep=Math.max(0,Math.min(TOUR.length-1,i));
+  const st=TOUR[gtStep], n=TOUR.length;
+  el('gt-step').textContent=String(gtStep+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');
+  el('gt-kicker').textContent=st.kicker;
+  el('gt-title').textContent=st.title;
+  el('gt-body').textContent=st.body;
+  el('gt-prev').disabled=gtStep===0;
+  el('gt-next').textContent=gtStep===n-1?'Finish':'Next';
+  [...el('gt-dots').children].forEach((d,j)=>d.classList.toggle('on',j===gtStep));
+  const target=document.querySelector(st.sel);
+  if(target){ target.scrollIntoView({behavior:'smooth',block:'center'}); gtWatch(target); }
+  const seq=++gtSeq;
+  gtLayout();
+  gtSettle(seq);
+  gtBar(st.ms);
+  setTimeout(()=>{
+    if(!gtOn||seq!==gtSeq) return;
+    if(st.act) st.act();
+  },460);
+}
+
+function gtSettle(seq){
+  const t0=performance.now();
+  (function loop(t){
+    if(!gtOn||seq!==gtSeq) return;
+    gtLayout();
+    if(t-t0<1800) requestAnimationFrame(loop);
+  })(t0);
+}
+
+function gtWatch(target){
+  if(!window.ResizeObserver) return;
+  if(gtRO) gtRO.disconnect();
+  gtRO=new ResizeObserver(()=>{ if(gtOn) gtLayout(); });
+  gtRO.observe(target); gtRO.observe(el('gt-card'));
+}
+
+function gtLeave(){
+  const st=TOUR[gtStep];
+  if(st.leave) st.leave();
+}
+
+function gtNext(){
+  if(gtStep>=TOUR.length-1){ stopTour(); return; }
+  gtLeave(); gtShow(gtStep+1);
+}
+
+function startTour(){
+  if(gtOn) return;
+  gtOn=true;
+  startCase=caseKey; startO2=el('o2').value;
+  const root=el('gt');
+  root.hidden=false; root.setAttribute('aria-hidden','false');
+  requestAnimationFrame(()=>root.classList.add('on'));
+  gtDots();
+  window.addEventListener('scroll',gtScroll,{passive:true});
+  window.addEventListener('resize',gtScroll);
+  gtShow(0);
+}
+
+function stopTour(){
+  if(!gtOn) return;
+  clearTimeout(gtTimer); cancelAnimationFrame(gtRaf);
+  if(gtRO){ gtRO.disconnect(); gtRO=null; }
+  gtLeave();
+  gtOn=false;
+  const root=el('gt');
+  root.classList.remove('on');
+  root.setAttribute('aria-hidden','true');
+  setTimeout(()=>{ if(!gtOn) root.hidden=true; },260);
+  window.removeEventListener('scroll',gtScroll);
+  window.removeEventListener('resize',gtScroll);
+  if(caseKey!==startCase) selectCase(startCase);
+  el('o2').value=startO2;
+  updateSweep(parseFloat(startO2));
+}
+
+el('gt-skip').addEventListener('click',stopTour);
+el('gt-prev').addEventListener('click',()=>gtShow(gtStep-1));
+el('gt-next').addEventListener('click',gtNext);
+document.querySelectorAll('[data-demo]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); startTour();
+}));
+document.addEventListener('keydown',e=>{
+  if(!gtOn) return;
+  if(e.key==='Escape') stopTour();
+  else if(e.key==='ArrowRight'||e.key==='Enter'){ e.preventDefault(); gtNext(); }
+  else if(e.key==='ArrowLeft'){ e.preventDefault(); gtShow(gtStep-1); }
+});
 
 /* ---------- boot ---------- */
 fetch('assets/data/dashboard.json')
@@ -931,9 +1123,8 @@ fetch('assets/data/dashboard.json')
       ` · the model reports no probability beyond <b>${DATA.model.o2_max.toFixed(2)}%</b>`;
     observeReveals();
     updateSweep(24.1);
-    el('o2').addEventListener('input',e=>{stopTour(); updateSweep(parseFloat(e.target.value))});
-    el('tour-stop').addEventListener('click',stopTour);
-    setTimeout(startTour,1400);
+    el('o2').addEventListener('input',e=>updateSweep(parseFloat(e.target.value)));
+    if(new URLSearchParams(location.search).get('tour')) setTimeout(startTour,800);
   })
   .catch(err=>{
     document.querySelector('.hero').insertAdjacentHTML('afterend',

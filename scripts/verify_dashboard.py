@@ -30,7 +30,6 @@ def main() -> None:
     with sync_playwright() as p:
         browser = p.chromium.launch(channel="chrome", headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 1000})
-        page.add_init_script("try{sessionStorage.setItem('fb-tour','1')}catch(e){}")
         page.on("console", lambda m: errors.append(f"{m.type}: {m.text}") if m.type == "error" else None)
         page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
         page.goto(url, wait_until="networkidle")
@@ -72,7 +71,6 @@ def main() -> None:
         print("kevlar case:", page.inner_text("#grade"), page.inner_text("#vword"))
 
         mobile = browser.new_page(viewport={"width": 390, "height": 844})
-        mobile.add_init_script("try{sessionStorage.setItem('fb-tour','1')}catch(e){}")
         mobile.goto(url, wait_until="networkidle")
         mobile.wait_for_timeout(900)
         mobile.screenshot(path=str(OUT / "dashboard-mobile.png"))
